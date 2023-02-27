@@ -1,0 +1,88 @@
+---
+- type: 0
+  hit_dice:
+    - 1
+    - 10
+  strength: 10
+  constitution: 14
+  dexterity: 10
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  wealth:
+    - 100
+    - 4
+    - 10
+- type: 1
+  hit_dice:
+    - 2
+    - 10
+  strength: 12
+  constitution: 14
+  dexterity: 12
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  wealth:
+    - 100
+    - 4
+    - 10
+- type: 2
+  hit_dice:
+    - 3
+    - 10
+  strength: 14
+  constitution: 14
+  dexterity: 14
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  wealth:
+    - 100
+    - 4
+    - 10
+- type: 3
+    - 3
+    - 10
+  strength: 16
+  constitution: 14
+  dexterity: 16
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  armor:
+    - light
+  weapon:
+    - light
+  wealth:
+    - 100
+    - 4
+    - 10
+- type: 4
+  hit_dice:
+    - 4
+    - 10
+  strength: 18
+  constitution: 14
+  dexterity: 18
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  wealth:
+    - 100
+    - 4
+    - 10
+- type: 5
+  hit_dice:
+    - 5
+    - 10
+  strength: 20
+  constitution: 14
+  dexterity: 20
+  wisdom: 12
+  charisma: 10
+  intelligence: 8
+  wealth:
+    - 100
+    - 4
+    - 10

@@ -56,6 +56,16 @@ class Room:
         self.rooms.append(self._d3)
         self.rooms.append(self._d9)
 
+    def is_exit(self, exit):
+        """ check to see if this is an exit command """
+        _is_exit = False
+        for short, long in self.exits.items():
+            if short == exit or long == exit:
+                _is_exit = True
+                break
+
+        return _is_exit
+
     @staticmethod
     def get_exit_text(exits):
         """ get the exit text """

@@ -13,6 +13,7 @@ import time
 # import library objects
 from lib.room import Room
 from lib.dungeon import Dungeon
+from lib.info import Info
 
 # import the MUD server class
 from server.mud import Mud
@@ -32,6 +33,7 @@ class Game:
         self._mud = mud
         self._players = {}
         self._monsters = {}
+        self._info = Info(mud)
         self._tick = 6  # 6 seconds
 
         # counter for assigning each client a new id
@@ -66,7 +68,7 @@ class Game:
 
         return room, exits
 
-    def _process_look_command(self, uid, loc=None):
+    def _process_look_command(self, uid, command=None, params=None, loc=None):
         """
         write out the room and any players or items in it
         """
@@ -74,38 +76,85 @@ class Game:
         if not loc:
             loc = self._players[uid]["room"]
 
-        print("cur_room", loc)
+        print("loc", loc)
         room, _ = self._movement(loc)
         cur_room = self._rooms[loc[0]][room]
 
         print("room", room)
+        print("cur_room", cur_room)
+        print("player", self._players[uid]["name"])
 
-        players_here = []
+        players_here = self._info.get_players_here(uid, loc, self._players)
 
-        # go through every player in the game
-        for pid, player in self._players.items():
-            # if they're in the same room as the player
-            if player["room"] == loc and \
-                    pid != uid:
-                # ... and they have a name to be shown
-                if player["name"] is not None:
-                    # add their name to the list
-                    players_here.append(player["name"])
+        if command and not params:
+            self._mud.send_message(uid, cur_room["long"])
+            for pid, _ in self._players.items():
+                if pid != uid:
+                    self._mud.send_message(pid, "{} is looking at around.".format(
+                        self._players[uid]["name"]))
+            return
+
+        if params:
+            if self._room.is_exit(params):
+                self._mud.send_message(
+                    uid, "You are looking to the {}.".format(self._room.exits[params[0]]))
+                return
+
+            if self._players[uid]["name"].lower() == params.lower():
+                self._mud.send_message(uid, "You can't look at yourself!")
+                return
+            can_see = [x for x in players_here if x.lower() == params.lower()]
+            if can_see:
+                self._mud.send_message(uid, "You see {}.".format(can_see[0]))
+                for pid, player in self._players.items():
+                    if player["name"].lower() == params.lower():
+                        self._mud.send_message(pid, "{} is looking at you!".format(
+                            self._players[uid]["name"]))
+                    elif pid != uid:
+                        self._mud.send_message(pid, "{} is looking at {}.".format(
+                            self._players[uid]["name"], params.capitalize()))
+            else:
+                self._mud.send_message(uid, "You don't see {} nearby.".format(params.capitalize()))
+            return
 
         # send player a message containing the list of players in the room
-        if players_here:
-            who = "{} are here with you.".format(", ".join(players_here))
-        else:
-            who = "There is nobody here."
-
         self._mud.send_message(uid, cur_room["short"])
-        self._mud.send_message(uid, who)
+
+        if len(players_here) == 0:
+            self._mud.send_message(uid, "There is nobody here.")
+        elif len(players_here) == 1:
+            self._mud.send_message(uid, "{} is here with you.".format(players_here[0]))
+        elif len(players_here) == 2:
+            self._mud.send_message(uid, "{} and {} are here with you.".format(players_here[0], players_here[1]))
+        else:
+            self._mud.send_message(uid, "{} and {} are here with you.".format(", ".join(players_here[:-1]), players_here[-1]))
+
         self._mud.send_message(uid, "There is nothing on the floor.")
 
-    def _process_help_command(self, uid):
+    def _process_help_command(self, uid, command, params):
         """
         write out the room and any players or items in it
         """
+        if params == "info":
+            self._mud.send_message(uid, """
++=========================================================================+
+| The following commands deal with information.                           |
++=========================================================================+
+|  COMMAND          |  DESCRIPTION                          |  SHORTHAND  |
+|-------------------+---------------------------------------+-------------|
+| PLAYERS           | List the players currently in game    | PL          |
+| LOOK              | Examine your current surroundings     | L           |
+| LOOK <WHO>        | Look at this denizen                  | L <W>       |
+| LOOK <DIR>        | Look in this direction                | L <D>       |
+| EXITS             | Display available exits               | EX          |
+| INVENTORY         | List items in your inventory          | I           |
+| STATUS            | Display your status                   | ST          |
+| HEALTH            | Display brief status                  | HE          |
+| EXPERIENCE        | Display experience                    | EP          |
+| SPELLS            | List spells in your spellbook         | SP          |
+| HELP              | Display general help message          | ?           |
++=========================================================================+    
+            """)
         self._mud.send_message(uid, "Commands:")
         self._mud.send_message(
             uid, "  say <message>  - Says something out loud.")
@@ -162,6 +211,23 @@ class Game:
             uid, "Sorry, that is not an appropriate command.")
 
         return False
+
+    def _process_players_command(self, uid, command, params):
+        """
+        list players currently in the game
+        """
+
+        players = self._info.get_current_players(self._players)
+
+        if not players:
+            return
+
+        if len(players) == 1:
+            self._mud.send_message(uid, "{} is playing.".format(players[0]))
+        elif len(players) == 2:
+            self._mud.send_message(uid, "{} and {} are playing.".format(players[0], players[1]))
+        else:
+            self._mud.send_message(uid, "{} and {} are playing.".format(", ".join(players[:-1]), players[-1]))
 
     def _process_quit_command(self, uid):
         """
@@ -306,14 +372,10 @@ class Game:
 
             # 'help' command
             elif command == "help":
-
-                # send the player back the list of possible commands
-                self._process_help_command(uid)
+                self._process_help_command(uid, command, params)
 
             # 'look' command
             elif command in [""]:
-
-                # look around to see who and what is around
                 self._process_look_command(uid)
 
             # 'go' command
@@ -325,21 +387,46 @@ class Game:
                 "up", "u",
                 "down", "d"
             ]:
-
-                # go to another rooms
                 self._process_go_command(uid, command)
 
-            # 'exit' command
-            elif command == "quit":
+            # 'look' command
+            elif command == "look" or command == "l":
+                self._process_look_command(uid, command, params)
 
-                # go to another rooms
+            # 'players' command
+            elif command == "players" or command == "pl":
+                self._process_players_command(uid, command, params)
+
+            # 'exits' command
+            elif command == "exits" or command == "ex":
+                self._process_exits_command(uid, command, params)
+
+            # 'inventory' command
+            elif command == "inventory" or command == "i":
+                self._process_inventory_command(uid, command, params)
+
+            # 'status' command
+            elif command == "status" or command == "st":
+                self._process_status_command(uid, command, params)
+
+            # 'health' command
+            elif command == "health" or command == "he":
+                self._process_health_command(uid, command, params)
+
+            # 'experience' command
+            elif command == "experience" or command == "ep":
+                self._process_experience_command(uid, command, params)
+
+            # 'spells' command
+            elif command == "spells" or command == "sp":
+                self._process_spells_command(uid, command, params)
+
+            # 'quit' command
+            elif command == "quit":
                 self._process_quit_command(uid)
 
-            # some other, unrecognised command
+            # everything else assume player is talking
             else:
-                # if it's not a command we know, assume they are trying to say
-                # something
-
                 self._process_say_command(uid, command, params)
 
 

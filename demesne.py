@@ -234,71 +234,42 @@ class Game:
         command = command[:1].lower()
 
         # get current room and list of exits
-        cur_room_num = self._room.get_cur_room(self._players[uid]["room"])
         cur_exits = self._room.get_cur_exits(self._players[uid]["room"])
 
-        cur_room = self._rooms[self._players[uid]["room"][0]][cur_room_num]
+        if command not in cur_exits:
+            self._mud.send_message(uid, "You can't go that way!")
+            return
+
         cur_player_room = self._players[uid]["room"]
-        next_player_room = cur_player_room.copy()
+        next_player_room = self._room.get_next_room(cur_player_room, command)
 
-        # if the specified exit is found in the room's exits list
-        if command in cur_exits:
-            print("_process_go_command:cur_room", cur_room)
-            print("next_player_room", next_player_room)
-            # update the player's current room to the one the exit leads to
-            if command == "s":
-                next_player_room[1] += 1
-            if command == "n":
-                next_player_room[1] -= 1
-            if command == "e":
-                next_player_room[2] += 1
-            if command == "w":
-                next_player_room[2] -= 1
-            if command == "u":
-                next_player_room[0] -= 1
-            if command == "d":
-                next_player_room[0] += 1
+        next_room_num = self._room.get_cur_room(next_player_room)
+        next_room = self._rooms[next_player_room[0]][next_room_num]
+        print("next_player_room", next_player_room)
+        print("next_room_num", next_room_num)
+        print("next_room", next_room)
 
-            next_room_num = self._room.get_cur_room(next_player_room)
-            next_room = self._rooms[next_player_room[0]][next_room_num]
-            print("next_player_room", next_player_room)
-            print("next_room_num", next_room_num)
-            print("next_room", next_room)
+        # tell people you're leaving
+        for pid, player in self._players.items():
+            if player["room"] == self._players[uid]["room"] \
+                    and pid != uid:
+                self._mud.send_message(
+                    pid, "{} just left to the {}.".format(
+                        self._players[uid]["name"], self._room.exits[command]))
 
-            # go through all the players in the game
-            for pid, player in self._players.items():
-                # if player is in the same room and isn't the player
-                # sending the command
-                if player["room"] == self._players[uid]["room"] \
-                        and pid != uid:
-                    # send them a message telling them that the player
-                    # left the room
-                    self._mud.send_message(
-                        pid, "{} just left to the {}.".format(
-                            self._players[uid]["name"], self._room.exits[command]))
+        # move player to next room
+        self._players[uid]["room"] = next_player_room
 
-            # move player to next room
-            self._players[uid]["room"] = next_player_room
+        # tell people you've arrived
+        for pid, player in self._players.items():
+            if player["room"] == self._players[uid]["room"] \
+                    and pid != uid:
+                self._mud.send_message(
+                    pid, "{} just arrived from the {}.".format(
+                        self._players[uid]["name"], self._room.exits[command]))
 
-            # go through all the players in the game
-            for pid, player in self._players.items():
-                # if player is in the same (new) room and isn't the player
-                # sending the command
-                if player["room"] == self._players[uid]["room"] \
-                        and pid != uid:
-                    # send them a message telling them that the player
-                    # entered the room
-                    self._mud.send_message(
-                        pid, "{} just arrived from the {}.".format(
-                            self._players[uid]["name"], self._room.exits[command]))
-
-            # send the player a message telling them where they are now
-            self._process_look_command(uid)
-
-        # the specified exit wasn't found in the current room
-        else:
-            # send back an 'unknown exit' message
-            self._mud.send_message(uid, "You can't go that way.")
+        # send the player a message telling them where they are now
+        self._process_look_command(uid)
 
     def check_for_new_players(self):
         """

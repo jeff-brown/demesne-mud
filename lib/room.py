@@ -6,7 +6,7 @@ from lib.dungeon import Dungeon
 
 class Room:
     """
-    This class contains all of the functions to allow the game to operate
+    This class contains all the functions to allow the game to operate
     """
 
     def __init__(self):

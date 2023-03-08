@@ -39,35 +39,6 @@ class Game:
         # counter for assigning each client a new id
         self._nextid = 0
 
-    def _movement(self, coords):
-        """
-        return current room and possible exits
-        """
-        exits = []
-
-        z_coord = coords[0]
-        x_coord = coords[1]
-        y_coord = coords[2]
-
-        room = self._grid[z_coord][x_coord][y_coord]
-        print("current loc [{},{},{}] in {}.".format(
-            z_coord, x_coord, y_coord, self._rooms[z_coord][room]["short"]))
-        if self._grid[z_coord][x_coord - 1][y_coord] > 0:
-            exits.append("n")
-        if self._grid[z_coord][x_coord + 1][y_coord] > 0:
-            exits.append("s")
-        if self._grid[z_coord][x_coord][y_coord + 1] > 0:
-            exits.append("e")
-        if self._grid[z_coord][x_coord][y_coord - 1] > 0:
-            exits.append("w")
-        if self._rooms[z_coord][room]["stairs"]:
-            if self._grid[z_coord + 1][x_coord][y_coord] > 0:
-                exits.append("d")
-            if self._grid[z_coord - 1][x_coord][y_coord] > 0:
-                exits.append("u")
-
-        return room, exits
-
     def _process_look_command(self, uid, command=None, params=None, loc=None):
         """
         write out the room and any players or items in it
@@ -77,7 +48,8 @@ class Game:
             loc = self._players[uid]["room"]
 
         print("loc", loc)
-        room, _ = self._movement(loc)
+        room = self._room.get_cur_room(loc)
+        exits = self._room.get_cur_exits(loc)
         cur_room = self._rooms[loc[0]][room]
 
         print("room", room)
@@ -96,8 +68,11 @@ class Game:
 
         if params:
             if self._room.is_exit(params):
-                self._mud.send_message(
-                    uid, "You are looking to the {}.".format(self._room.exits[params[0]]))
+                if params[0] in exits:
+                    print(self._room.get_next_room(loc, params[0]))
+                    self._process_look_command(uid, loc=self._room.get_next_room(loc, params[0]))
+                else:
+                    self._mud.send_message(uid, "You can't see anything in that direction!")
                 return
 
             if self._players[uid]["name"].lower() == params.lower():
@@ -212,6 +187,22 @@ class Game:
 
         return False
 
+    def _process_exits_command(self, uid):
+        """
+        list players currently in the game
+        """
+        exits = [self._room.exits[x] for x in self._room.get_cur_exits(self._players[uid]["room"])]
+        if len(exits) == 0:
+            self._mud.send_message(uid, "There are no exits.")
+        elif len(exits) == 1:
+            self._mud.send_message(uid, "There is an exit to the {}.".format(exits[0]))
+        elif len(exits) == 2:
+            self._mud.send_message(uid, "There are exits to the {} and {}.".format(exits[0], exits[1]))
+        else:
+            self._mud.send_message(uid, "There are exits to the {} and {}.".format(", ".join(exits[:-1]),
+                                                                              exits[-1]))
+        return
+
     def _process_players_command(self, uid, command, params):
         """
         list players currently in the game
@@ -243,7 +234,8 @@ class Game:
         command = command[:1].lower()
 
         # get current room and list of exits
-        cur_room_num, cur_exits = self._movement(self._players[uid]["room"])
+        cur_room_num = self._room.get_cur_room(self._players[uid]["room"])
+        cur_exits = self._room.get_cur_exits(self._players[uid]["room"])
 
         cur_room = self._rooms[self._players[uid]["room"][0]][cur_room_num]
         cur_player_room = self._players[uid]["room"]
@@ -267,9 +259,7 @@ class Game:
             if command == "d":
                 next_player_room[0] += 1
 
-            next_room_num, _ = (
-                self._movement(next_player_room)
-            )
+            next_room_num = self._room.get_cur_room(next_player_room)
             next_room = self._rooms[next_player_room[0]][next_room_num]
             print("next_player_room", next_player_room)
             print("next_room_num", next_room_num)
@@ -399,7 +389,7 @@ class Game:
 
             # 'exits' command
             elif command == "exits" or command == "ex":
-                self._process_exits_command(uid, command, params)
+                self._process_exits_command(uid)
 
             # 'inventory' command
             elif command == "inventory" or command == "i":

@@ -1,0 +1,14 @@
+max_cha: 16
+max_con: 22
+max_dex: 21
+max_int: 18
+max_str: 22
+max_vit: 34
+max_wis: 18
+min_cha: 8
+min_con: 14
+min_dex: 13
+min_int: 10
+min_str: 14
+min_vit: 20
+min_wis: 10

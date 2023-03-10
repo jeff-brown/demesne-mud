@@ -1,0 +1,1302 @@
+21:
+  charges: 0
+  description: a torch
+  equip_sub_type: 16
+  equip_type: 21
+  level: 255
+  max_equip_effect: 450
+  message: message
+  min_equip_effect: 0
+  name: torch
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: torch
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 1
+  weight: 10
+22:
+  charges: 0
+  description: a coil of rope
+  equip_sub_type: 0
+  equip_type: 21
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: rope
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: rope
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 3
+  weight: 25
+23:
+  charges: 0
+  description: a ration of food
+  equip_sub_type: 1
+  equip_type: 21
+  level: 255
+  max_equip_effect: 3600
+  message: ''
+  min_equip_effect: 0
+  name: ration of food
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: ration_of_food
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 2
+  weight: 5
+24:
+  charges: 3
+  description: a waterskin
+  equip_sub_type: 2
+  equip_type: 21
+  level: 255
+  max_equip_effect: 1800
+  message: ''
+  min_equip_effect: 0
+  name: waterskin
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: waterskin
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 1
+  weight: 10
+25:
+  charges: 0
+  description: a glowstone
+  equip_sub_type: 17
+  equip_type: 31
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: glowstone
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: glowstone
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 50
+  weight: 5
+26:
+  charges: 0
+  description: a heartstone
+  equip_sub_type: 9
+  equip_type: 31
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: heartstone
+  quest_stat: -96
+  range: 0
+  town: 1
+  type: heartstone
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '5'
+  v6: '0'
+  value: 100
+  weight: 5
+27:
+  charges: 0
+  description: a rue potion
+  equip_sub_type: 3
+  equip_type: 32
+  level: 255
+  max_equip_effect: 16
+  message: ''
+  min_equip_effect: 4
+  name: rue potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: rue_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 5
+  weight: 10
+28:
+  charges: 0
+  description: an amaranth potion
+  equip_sub_type: 3
+  equip_type: 32
+  level: 255
+  max_equip_effect: 64
+  message: ''
+  min_equip_effect: 16
+  name: amaranth potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: amaranth_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 10
+29:
+  charges: 0
+  description: an anemone potion
+  equip_sub_type: 3
+  equip_type: 32
+  level: 255
+  max_equip_effect: 128
+  message: ''
+  min_equip_effect: 32
+  name: anemone potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: anemone_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 25
+  weight: 10
+30:
+  charges: 0
+  description: a verbena potion
+  equip_sub_type: 4
+  equip_type: 32
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: verbena potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: verbena_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 10
+31:
+  charges: 0
+  description: a yarrow potion
+  equip_sub_type: 5
+  equip_type: 32
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: yarrow potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: yarrow_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 10
+32:
+  charges: 0
+  description: a rowan potion
+  equip_sub_type: 6
+  equip_type: 32
+  level: 255
+  max_equip_effect: 600
+  message: ''
+  min_equip_effect: 20
+  name: rowan potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: rowan_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 10
+33:
+  charges: 0
+  description: a hyssop potion
+  equip_sub_type: 7
+  equip_type: 32
+  level: 255
+  max_equip_effect: 600
+  message: ''
+  min_equip_effect: 20
+  name: hyssop potion
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: hyssop_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 10
+34:
+  charges: 0
+  description: a vervain potion
+  equip_sub_type: 8
+  equip_type: 33
+  level: 255
+  max_equip_effect: 600
+  message: ''
+  min_equip_effect: 0
+  name: vervain potion
+  quest_stat: 0
+  range: 0
+  town: 2
+  type: vervain_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 100
+  weight: 10
+35:
+  charges: 15
+  description: a horn of frost
+  equip_sub_type: 12
+  equip_type: 31
+  level: 2
+  max_equip_effect: 24
+  message: a blast of frost
+  min_equip_effect: 4
+  name: horn of frost
+  quest_stat: 0
+  range: 1
+  town: 1
+  type: horn_of_frost
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '3'
+  v6: '0'
+  value: 50
+  weight: 50
+36:
+  charges: 20
+  description: a wand of lightning
+  equip_sub_type: 12
+  equip_type: 31
+  level: 2
+  max_equip_effect: 48
+  message: a bolt of lightning
+  min_equip_effect: 8
+  name: wand of lightning
+  quest_stat: 0
+  range: 1
+  town: 1
+  type: wand_of_lightning
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '5'
+  v6: '0'
+  value: 100
+  weight: 10
+37:
+  charges: 25
+  description: a rod of flame
+  equip_sub_type: 12
+  equip_type: 31
+  level: 2
+  max_equip_effect: 72
+  message: a blast of flame
+  min_equip_effect: 12
+  name: rod of flame
+  quest_stat: 0
+  range: 1
+  town: 1
+  type: rod_of_flame
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '8'
+  v6: '0'
+  value: 200
+  weight: 20
+38:
+  charges: 0
+  description: an iron key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: iron key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: iron_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+39:
+  charges: 0
+  description: a copper key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: copper key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: copper_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+40:
+  charges: 0
+  description: a brass key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: brass key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: brass_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+41:
+  charges: 0
+  description: a bronze key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: bronze key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: bronze_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+42:
+  charges: 0
+  description: a silver key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: silver key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: silver_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+43:
+  charges: 0
+  description: an electrum key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: electrum key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: electrum_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+44:
+  charges: 0
+  description: a gold key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: gold key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: gold_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+45:
+  charges: 0
+  description: a platinum key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: platinum key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: platinum_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+46:
+  charges: 0
+  description: a pearl key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: pearl key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: pearl_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+47:
+  charges: 0
+  description: an onyx key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: onyx key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: onyx_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+48:
+  charges: 0
+  description: a jade key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: jade key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: jade_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+49:
+  charges: 0
+  description: a ruby key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: ruby key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: ruby_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+50:
+  charges: 8
+  description: a runestaff
+  equip_sub_type: 13
+  equip_type: 33
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: runestaff
+  quest_stat: 429
+  range: 0
+  town: 0
+  type: runestaff
+  v10: '0'
+  v16: '3'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 20
+56:
+  charges: 0
+  description: a dart
+  equip_sub_type: 0
+  equip_type: 22
+  level: 255
+  max_equip_effect: 4
+  message: ''
+  min_equip_effect: 1
+  name: dart
+  quest_stat: 0
+  range: 3
+  town: 1
+  type: dart
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '1'
+  v6: '2'
+  value: 1
+  weight: 5
+57:
+  charges: 0
+  description: a knife
+  equip_sub_type: 0
+  equip_type: 22
+  level: 25
+  max_equip_effect: 6
+  message: ''
+  min_equip_effect: 1
+  name: knife
+  quest_stat: 0
+  range: 2
+  town: 1
+  type: knife
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '3'
+  v6: '2'
+  value: 5
+  weight: 7
+58:
+  charges: 0
+  description: a spear
+  equip_sub_type: 0
+  equip_type: 22
+  level: 25
+  max_equip_effect: 8
+  message: ''
+  min_equip_effect: 2
+  name: spear
+  quest_stat: 0
+  range: 2
+  town: 1
+  type: spear
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '2'
+  v6: '2'
+  value: 10
+  weight: 40
+59:
+  charges: 0
+  description: an axe
+  equip_sub_type: 0
+  equip_type: 22
+  level: 17
+  max_equip_effect: 12
+  message: ''
+  min_equip_effect: 3
+  name: axe
+  quest_stat: 0
+  range: 1
+  town: 1
+  type: axe
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '5'
+  v6: '2'
+  value: 15
+  weight: 30
+60:
+  charges: 0
+  description: an arrow
+  equip_sub_type: 20
+  equip_type: 24
+  level: 255
+  max_equip_effect: 7
+  message: ''
+  min_equip_effect: 0
+  name: arrow
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: arrow
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+61:
+  charges: 20
+  description: a quiver
+  equip_sub_type: 19
+  equip_type: 25
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 60
+  name: quiver
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: quiver
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 30
+65:
+  charges: 0
+  description: a soulstone
+  equip_sub_type: 18
+  equip_type: 33
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: soulstone
+  quest_stat: 0
+  range: 0
+  town: 2
+  type: soulstone
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 1000
+  weight: 5
+66:
+  charges: 0
+  description: a manastone
+  equip_sub_type: 10
+  equip_type: 31
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: manastone
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: manastone
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 5
+67:
+  charges: 0
+  description: a zarynthium potion
+  equip_sub_type: 3
+  equip_type: 33
+  level: 255
+  max_equip_effect: 256
+  message: ''
+  min_equip_effect: 64
+  name: zarynthium potion
+  quest_stat: 0
+  range: 0
+  town: 2
+  type: zarynthium_potion
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 50
+  weight: 10
+69:
+  charges: 0
+  description: a dragon ring
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: dragon ring
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: dragon_ring
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+70:
+  charges: 0
+  description: a gome ring
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: gome ring
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: gome_ring
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+71:
+  charges: 0
+  description: a strato ring
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: strato ring
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: strato_ring
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+72:
+  charges: 0
+  description: a pink rose
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: pink rose
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: pink_rose
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+73:
+  charges: 0
+  description: a white rose
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: white rose
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: white_rose
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+77:
+  charges: 0
+  description: a wynharp
+  equip_sub_type: 11
+  equip_type: 33
+  level: 255
+  max_equip_effect: 128
+  message: ''
+  min_equip_effect: 32
+  name: wynharp
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: wynharp
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '1000'
+  v6: '0'
+  value: 0
+  weight: 20
+79:
+  charges: 0
+  description: a red rose
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: red rose
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: red_rose
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+81:
+  charges: 1
+  description: a black rose
+  equip_sub_type: 12
+  equip_type: 31
+  level: 2
+  max_equip_effect: 2
+  message: a dark mist
+  min_equip_effect: 1
+  name: black rose
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: black_rose
+  v10: '0'
+  v16: '0'
+  v17: '1'
+  v18: '1000'
+  v6: '0'
+  value: 0
+  weight: 5
+82:
+  charges: 0
+  description: an opal key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: opal key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: opal_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+83:
+  charges: 0
+  description: a tigereye key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: tigereye key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: tigereye_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+84:
+  charges: 0
+  description: a quartz key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: quartz key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: quartz_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+85:
+  charges: 0
+  description: a topaz key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: topaz key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: topaz_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+86:
+  charges: 0
+  description: a rod of power
+  equip_sub_type: 14
+  equip_type: 33
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: rod of power
+  quest_stat: 2809
+  range: 0
+  town: 0
+  type: rod_of_power
+  v10: '3'
+  v16: '5'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 20
+87:
+  charges: 0
+  description: a flame crystal
+  equip_sub_type: 15
+  equip_type: 33
+  level: 255
+  max_equip_effect: 4
+  message: a flame storm
+  min_equip_effect: 2
+  name: flame crystal
+  quest_stat: 0
+  range: 1
+  town: 0
+  type: flame_crystal
+  v10: '3'
+  v16: '0'
+  v17: '0'
+  v18: '30'
+  v6: '0'
+  value: 0
+  weight: 10
+88:
+  charges: 10
+  description: a case of darts
+  equip_sub_type: 19
+  equip_type: 23
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 56
+  name: case
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: case
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 12
+  weight: 15
+89:
+  charges: 0
+  description: a stone
+  equip_sub_type: 20
+  equip_type: 24
+  level: 255
+  max_equip_effect: 4
+  message: ''
+  min_equip_effect: 0
+  name: stone
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: stone
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 1
+90:
+  charges: 20
+  description: a pouch of stones
+  equip_sub_type: 19
+  equip_type: 25
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 89
+  name: pouch
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: pouch
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 2
+  weight: 5
+92:
+  charges: 0
+  description: a blowdart
+  equip_sub_type: 20
+  equip_type: 21
+  level: 255
+  max_equip_effect: 2
+  message: ''
+  min_equip_effect: 0
+  name: blowdart
+  quest_stat: 0
+  range: 0
+  town: 3
+  type: blowdart
+  v10: '0'
+  v16: '0'
+  v17: '1'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 1
+93:
+  charges: 10
+  description: a tube of blowdarts
+  equip_sub_type: 19
+  equip_type: 21
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 92
+  name: tube
+  quest_stat: 0
+  range: 0
+  town: 3
+  type: tube
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 5
+  weight: 5
+95:
+  charges: 0
+  description: an ice crystal
+  equip_sub_type: 15
+  equip_type: 33
+  level: 255
+  max_equip_effect: 3
+  message: a frost storm
+  min_equip_effect: 1
+  name: ice crystal
+  quest_stat: 0
+  range: 1
+  town: 0
+  type: ice_crystal
+  v10: '2'
+  v16: '0'
+  v17: '0'
+  v18: '25'
+  v6: '0'
+  value: 0
+  weight: 10
+97:
+  charges: 0
+  description: an ornate stone key
+  equip_sub_type: 0
+  equip_type: 41
+  level: 255
+  max_equip_effect: 0
+  message: ''
+  min_equip_effect: 0
+  name: stone key
+  quest_stat: 0
+  range: 0
+  town: 0
+  type: stone_key
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 0
+  weight: 2
+98:
+  charges: 15
+  description: a small barrel
+  equip_sub_type: 2
+  equip_type: 21
+  level: 255
+  max_equip_effect: 1800
+  message: ''
+  min_equip_effect: 0
+  name: small barrel
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: small_barrel
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 100
+99:
+  charges: 5
+  description: some preserved rations
+  equip_sub_type: 1
+  equip_type: 21
+  level: 255
+  max_equip_effect: 2400
+  message: ''
+  min_equip_effect: 0
+  name: preserved rations
+  quest_stat: 0
+  range: 0
+  town: 1
+  type: preserved_rations
+  v10: '0'
+  v16: '0'
+  v17: '0'
+  v18: '0'
+  v6: '0'
+  value: 10
+  weight: 20

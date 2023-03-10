@@ -14,6 +14,7 @@ import time
 from lib.room import Room
 from lib.dungeon import Dungeon
 from lib.info import Info
+from lib.player import Player
 
 # import the MUD server class
 from server.mud import Mud
@@ -33,8 +34,10 @@ class Game:
         self._mud = mud
         self._players = {}
         self._monsters = {}
-        self._info = Info(mud)
+        self._info = Info()
         self._tick = 6  # 6 seconds
+        self._species = self._info.get_species()
+        self._classes = self._info.get_classes()
 
         # counter for assigning each client a new id
         self._nextid = 0
@@ -45,7 +48,7 @@ class Game:
         """
 
         if not loc:
-            loc = self._players[uid]["room"]
+            loc = self._players[uid].room
 
         print("loc", loc)
         room = self._room.get_cur_room(loc)
@@ -54,7 +57,7 @@ class Game:
 
         print("room", room)
         print("cur_room", cur_room)
-        print("player", self._players[uid]["name"])
+        print("player", self._players[uid].name)
 
         players_here = self._info.get_players_here(uid, loc, self._players)
 
@@ -63,7 +66,7 @@ class Game:
             for pid, _ in self._players.items():
                 if pid != uid:
                     self._mud.send_message(pid, "{} is looking at around.".format(
-                        self._players[uid]["name"]))
+                        self._players[uid].name))
             return
 
         if params:
@@ -75,19 +78,24 @@ class Game:
                     self._mud.send_message(uid, "You can't see anything in that direction!")
                 return
 
-            if self._players[uid]["name"].lower() == params.lower():
+            if self._players[uid].name.lower() == params.lower():
                 self._mud.send_message(uid, "You can't look at yourself!")
                 return
-            can_see = [x for x in players_here if x.lower() == params.lower()]
-            if can_see:
-                self._mud.send_message(uid, "You see {}.".format(can_see[0]))
+
+            if [x for x in players_here if x.lower() == params.lower()]:
+                pid = self._info.get_pid_by_name(self._players, params)
+                self._mud.send_message(uid, "You see {}. They are a {} {}.".format(
+                    self._players[pid].name,
+                    self._players[pid].get_species(),
+                    self._players[pid].get_class()
+                ))
                 for pid, player in self._players.items():
-                    if player["name"].lower() == params.lower():
+                    if player.name.lower() == params.lower():
                         self._mud.send_message(pid, "{} is looking at you!".format(
-                            self._players[uid]["name"]))
+                            self._players[uid].name))
                     elif pid != uid:
                         self._mud.send_message(pid, "{} is looking at {}.".format(
-                            self._players[uid]["name"], params.capitalize()))
+                            self._players[uid].name, params.capitalize()))
             else:
                 self._mud.send_message(uid, "You don't see {} nearby.".format(params.capitalize()))
             return
@@ -144,20 +152,19 @@ class Game:
         """
         add a new players name to the dictionary and stick them in a room
         """
-        self._players[uid]["room"] = [1, 4, 2]
-        self._players[uid]["level"] = 1
+        self._players[uid].set_base_stats()
 
         # go through all the players in the game
         for pid, _ in self._players.items():
             # send each player a message to tell them about the new player
             if pid != uid:
                 self._mud.send_message(pid, "{} entered the game".format(
-                    self._players[uid]["name"]))
+                    self._players[uid].name))
 
         # send the new player a welcome message
         self._mud.send_message(uid, "Welcome to the game, {}. ".format(
-            self._players[uid]["name"]))
-        print(self._players)
+            self._players[uid].name))
+
         # send the new player the description of their current room
         self._process_look_command(uid)
 
@@ -167,13 +174,13 @@ class Game:
         """
         for pid, player in self._players.items():
             # if they're in the same room as the player
-            if player["room"] == self._players[uid]["room"] \
+            if player.room == self._players[uid].room \
                     and pid != uid:
                 # send them a message telling them what the player said
                 self._mud.send_message(
                     pid, (
                         "{} says: {}".format(
-                            self._players[uid]["name"],
+                            self._players[uid].name,
                             " ".join([command, params])
                         )
                     )
@@ -191,7 +198,7 @@ class Game:
         """
         list players currently in the game
         """
-        exits = [self._room.exits[x] for x in self._room.get_cur_exits(self._players[uid]["room"])]
+        exits = [self._room.exits[x] for x in self._room.get_cur_exits(self._players[uid].room)]
         if len(exits) == 0:
             self._mud.send_message(uid, "There are no exits.")
         elif len(exits) == 1:
@@ -203,7 +210,7 @@ class Game:
                                                                               exits[-1]))
         return
 
-    def _process_players_command(self, uid, command, params):
+    def _process_players_command(self, uid):
         """
         list players currently in the game
         """
@@ -225,7 +232,7 @@ class Game:
         exit on your own terms
         """
         self._mud.send_message(uid, "Goodbye, {}.".format(
-            self._players[uid]["name"]))
+            self._players[uid].name))
         self._mud.get_disconnect(uid)
 
     def _process_go_command(self, uid, command):
@@ -234,13 +241,13 @@ class Game:
         command = command[:1].lower()
 
         # get current room and list of exits
-        cur_exits = self._room.get_cur_exits(self._players[uid]["room"])
+        cur_exits = self._room.get_cur_exits(self._players[uid].room)
 
         if command not in cur_exits:
             self._mud.send_message(uid, "You can't go that way!")
             return
 
-        cur_player_room = self._players[uid]["room"]
+        cur_player_room = self._players[uid].room
         next_player_room = self._room.get_next_room(cur_player_room, command)
 
         next_room_num = self._room.get_cur_room(next_player_room)
@@ -251,22 +258,22 @@ class Game:
 
         # tell people you're leaving
         for pid, player in self._players.items():
-            if player["room"] == self._players[uid]["room"] \
+            if player.room == self._players[uid].room \
                     and pid != uid:
                 self._mud.send_message(
                     pid, "{} just left to the {}.".format(
-                        self._players[uid]["name"], self._room.exits[command]))
+                        self._players[uid].name, self._room.exits[command]))
 
         # move player to next room
-        self._players[uid]["room"] = next_player_room
+        self._players[uid].room = next_player_room
 
         # tell people you've arrived
         for pid, player in self._players.items():
-            if player["room"] == self._players[uid]["room"] \
+            if player.room == self._players[uid].room \
                     and pid != uid:
                 self._mud.send_message(
                     pid, "{} just arrived from the {}.".format(
-                        self._players[uid]["name"], self._room.exits[command]))
+                        self._players[uid].name, self._room.exits[command]))
 
         # send the player a message telling them where they are now
         self._process_look_command(uid)
@@ -283,10 +290,7 @@ class Game:
             # The dictionary key is the player's id number. We set their room
             # None initially until they have entered a name
             # Try adding more player stats - level, gold, inventory, etc
-            self._players[pid] = {
-                "name": None,
-                "room": None
-            }
+            self._players[pid] = Player()
 
             # send the new player a prompt for their name
             self._mud.send_message(pid, "What is your name?")
@@ -308,7 +312,7 @@ class Game:
                 # player
                 if pid != uid:
                     self._mud.send_message(pid, "{} quit the game".format(
-                        self._players[uid]["name"]))
+                        self._players[uid].name))
 
             # remove the player's entry in the player dictionary
             del self._players[uid]
@@ -326,9 +330,47 @@ class Game:
 
             # if the player hasn't given their name yet, use this first command
             # their name and move them to the starting room.
-            if self._players[uid]["name"] is None:
+            if self._players[uid].name is None:
 
-                self._players[uid]["name"] = command.capitalize()
+                self._players[uid].name = command.capitalize()
+
+                self._mud.send_message(uid, "")
+                self._mud.send_message(uid, "+==========+============+")
+                self._mud.send_message(uid, "| Num      | Species    |")
+                self._mud.send_message(uid, "+----------+------------+")
+                for num, species in self._species.items():
+                    self._mud.send_message(
+                        uid, (
+                            f"| {num:<9}"
+                            f"| {species['type']:11}|"
+                        )
+                    )
+                self._mud.send_message(uid, "+==========+============+")
+                self._mud.send_message(uid, "")
+                self._mud.send_message(uid, "What species are you?")
+
+            elif self._players[uid].species is None:
+
+                self._players[uid].species = int(command)
+
+                self._mud.send_message(uid, "")
+                self._mud.send_message(uid, "+==========+============+")
+                self._mud.send_message(uid, "| Num      | Class      |")
+                self._mud.send_message(uid, "+----------+------------+")
+                for num, classes in self._classes.items():
+                    self._mud.send_message(
+                        uid, (
+                            f"| {num:<9}"
+                            f"| {classes['type']:11}|"
+                        )
+                    )
+                self._mud.send_message(uid, "+==========+============+")
+                self._mud.send_message(uid, "")
+                self._mud.send_message(uid, "What class are you?")
+
+            elif self._players[uid].p_class is None:
+
+                self._players[uid].p_class = int(command)
                 self._process_new_player(uid)
 
             # 'help' command
@@ -356,7 +398,7 @@ class Game:
 
             # 'players' command
             elif command == "players" or command == "pl":
-                self._process_players_command(uid, command, params)
+                self._process_players_command(uid)
 
             # 'exits' command
             elif command == "exits" or command == "ex":

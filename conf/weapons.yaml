@@ -1,0 +1,378 @@
+0:
+  classes: 255
+  effect: ''
+  level: 0
+  long: a dagger
+  magic_type: 0
+  max_damage: 3
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: dagger
+  value: 15
+  weight: 10
+1:
+  classes: 255
+  effect: ''
+  level: 1
+  long: a quarterstaff
+  magic_type: 0
+  max_damage: 4
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: quarterstaff
+  value: 10
+  weight: 40
+2:
+  classes: 89
+  effect: ''
+  level: 1
+  long: a shortsword
+  magic_type: 0
+  max_damage: 6
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: shortsword
+  value: 30
+  weight: 20
+3:
+  classes: 53
+  effect: ''
+  level: 1
+  long: a mace
+  magic_type: 0
+  max_damage: 7
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: mace
+  value: 35
+  weight: 50
+4:
+  classes: 53
+  effect: ''
+  level: 1
+  long: a warhammer
+  magic_type: 0
+  max_damage: 8
+  min_damage: 2
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: warhammer
+  value: 40
+  weight: 70
+5:
+  classes: 89
+  effect: ''
+  level: 3
+  long: a longsword
+  magic_type: 0
+  max_damage: 10
+  min_damage: 2
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: longsword
+  value: 50
+  weight: 30
+6:
+  classes: 17
+  effect: ''
+  level: 3
+  long: a battleax
+  magic_type: 0
+  max_damage: 12
+  min_damage: 2
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: battleax
+  value: 60
+  weight: 50
+7:
+  classes: 53
+  effect: ''
+  level: 2
+  long: a morningstar
+  magic_type: 0
+  max_damage: 14
+  min_damage: 2
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: morningstar
+  value: 70
+  weight: 80
+8:
+  classes: 89
+  effect: ''
+  level: 3
+  long: a broadsword
+  magic_type: 0
+  max_damage: 16
+  min_damage: 2
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: broadsword
+  value: 80
+  weight: 40
+9:
+  classes: 53
+  effect: ''
+  level: 4
+  long: a flail
+  magic_type: 0
+  max_damage: 18
+  min_damage: 3
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: flail
+  value: 90
+  weight: 90
+10:
+  classes: 17
+  effect: ''
+  level: 6
+  long: a halberd
+  magic_type: 0
+  max_damage: 24
+  min_damage: 6
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: halberd
+  value: 120
+  weight: 120
+11:
+  classes: 17
+  effect: ''
+  level: 6
+  long: a greatsword
+  magic_type: 0
+  max_damage: 28
+  min_damage: 7
+  ranged_1: 0
+  ranged_2: 0
+  town: 1
+  type: greatsword
+  value: 150
+  weight: 70
+51:
+  classes: 17
+  effect: a blast of frost
+  level: 12
+  long: a rimeax
+  magic_type: 12
+  max_damage: 36
+  min_damage: 6
+  ranged_1: 0
+  ranged_2: 0
+  town: 2
+  type: rimeax
+  value: 900
+  weight: 50
+52:
+  classes: 53
+  effect: a blast of flame
+  level: 10
+  long: a pyrehammer
+  magic_type: 12
+  max_damage: 30
+  min_damage: 5
+  ranged_1: 0
+  ranged_2: 0
+  town: 2
+  type: pyrehammer
+  value: 750
+  weight: 70
+53:
+  classes: 17
+  effect: a bolt of lightning
+  level: 15
+  long: a levinblade
+  magic_type: 12
+  max_damage: 40
+  min_damage: 8
+  ranged_1: 0
+  ranged_2: 0
+  town: 2
+  type: levinblade
+  value: 1000
+  weight: 30
+62:
+  classes: 64
+  effect: ''
+  level: 1
+  long: a short bow
+  magic_type: 0
+  max_damage: 6
+  min_damage: 1
+  ranged_1: 3
+  ranged_2: 60
+  town: 1
+  type: short bow
+  value: 30
+  weight: 30
+63:
+  classes: 64
+  effect: ''
+  level: 2
+  long: a long bow
+  magic_type: 0
+  max_damage: 10
+  min_damage: 2
+  ranged_1: 5
+  ranged_2: 60
+  town: 1
+  type: long bow
+  value: 50
+  weight: 40
+64:
+  classes: 64
+  effect: ''
+  level: 4
+  long: a crossbow
+  magic_type: 0
+  max_damage: 20
+  min_damage: 4
+  ranged_1: 4
+  ranged_2: 60
+  town: 1
+  type: crossbow
+  value: 100
+  weight: 60
+68:
+  classes: 64
+  effect: ''
+  level: 6
+  long: a great bow
+  magic_type: 0
+  max_damage: 30
+  min_damage: 6
+  ranged_1: 5
+  ranged_2: 60
+  town: 2
+  type: great bow
+  value: 150
+  weight: 50
+76:
+  classes: 53
+  effect: ''
+  level: 1000
+  long: a mithril sword
+  magic_type: 0
+  max_damage: 40
+  min_damage: 8
+  ranged_1: 0
+  ranged_2: 0
+  town: 0
+  type: mithril sword
+  value: 0
+  weight: 30
+78:
+  classes: 89
+  effect: ''
+  level: 1000
+  long: a darksword
+  magic_type: 0
+  max_damage: 22
+  min_damage: 4
+  ranged_1: 0
+  ranged_2: 0
+  town: 0
+  type: darksword
+  value: 0
+  weight: 30
+91:
+  classes: 64
+  effect: ''
+  level: 0
+  long: a sling
+  magic_type: 0
+  max_damage: 4
+  min_damage: 1
+  ranged_1: 3
+  ranged_2: 89
+  town: 1
+  type: sling
+  value: 10
+  weight: 15
+94:
+  classes: 64
+  effect: ''
+  level: 2
+  long: a blowgun
+  magic_type: 0
+  max_damage: 2
+  min_damage: 1
+  ranged_1: 3
+  ranged_2: 92
+  town: 3
+  type: blowgun
+  value: 25
+  weight: 10
+96:
+  classes: 64
+  effect: a bolt of energy
+  level: 15
+  long: an elven bow
+  magic_type: 12
+  max_damage: 40
+  min_damage: 10
+  ranged_1: 5
+  ranged_2: 60
+  town: 3
+  type: elven bow
+  value: 1250
+  weight: 40
+101:
+  classes: 255
+  effect: ''
+  level: 0
+  long: a stick
+  magic_type: 0
+  max_damage: 2
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 0
+  type: stick
+  value: 0
+  weight: 10
+102:
+  classes: 255
+  effect: ''
+  level: 0
+  long: a wooden mallet
+  magic_type: 0
+  max_damage: 3
+  min_damage: 1
+  ranged_1: 0
+  ranged_2: 0
+  town: 0
+  type: wooden mallet
+  value: 0
+  weight: 20
+104:
+  classes: 17
+  effect: ''
+  level: 15
+  long: a dwarven battleax
+  magic_type: 0
+  max_damage: 50
+  min_damage: 10
+  ranged_1: 0
+  ranged_2: 0
+  town: 0
+  type: dwarven battleax
+  value: 0
+  weight: 100

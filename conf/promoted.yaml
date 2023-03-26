@@ -1,120 +1,144 @@
 9:
-  armor: 12
+  armor: 0
   cha: 0
   con: 5
   dex: 3
   extra_attack_each_level: 3
+  id: 256
   int: 0
+  long: a knight
   max_base_number_of_attacks: 4
+  max_mana_per_level: 0
   start_gold_max: 130
   start_gold_min: 95
   str: 5
-  type: Knight
+  type: knight
   vit: 0
-  weapon: 12
+  weapon: 0
   wis: 0
 10:
-  armor: 12
+  armor: 0
   cha: 0
   con: 0
   dex: 3
   extra_attack_each_level: 4
+  id: 512
   int: 5
+  long: an arch magus
   max_base_number_of_attacks: 3
+  max_mana_per_level: 0
   start_gold_max: 130
   start_gold_min: 95
   str: 0
-  type: Arch Magus
+  type: arch magus
   vit: -11
-  weapon: 12
+  weapon: 0
   wis: 5
 11:
-  armor: 12
+  armor: 0
   cha: 0
   con: 2
   dex: 3
   extra_attack_each_level: 4
+  id: 1024
   int: 3
+  long: a high priest
   max_base_number_of_attacks: 3
+  max_mana_per_level: 1
   start_gold_max: 130
   start_gold_min: 95
   str: 2
-  type: High Priest
+  type: high priest
   vit: -5
-  weapon: 12
+  weapon: 0
   wis: 3
 12:
-  armor: 12
+  armor: 0
   cha: 0
   con: 3
   dex: 5
   extra_attack_each_level: 3
+  id: 2048
   int: 1
+  long: a black guard
   max_base_number_of_attacks: 4
+  max_mana_per_level: 0
   start_gold_max: 130
   start_gold_min: 95
   str: 3
-  type: Black Guard
+  type: black guard
   vit: -5
-  weapon: 12
+  weapon: 0
   wis: 1
 13:
-  armor: 12
+  armor: 0
   cha: 0
   con: 4
   dex: 3
   extra_attack_each_level: 4
+  id: 4096
   int: 1
+  long: a beast master
   max_base_number_of_attacks: 4
+  max_mana_per_level: 0
   start_gold_max: 130
   start_gold_min: 95
   str: 4
-  type: Beast Master
+  type: beast master
   vit: 0
-  weapon: 12
+  weapon: 0
   wis: 1
 14:
-  armor: 12
+  armor: 0
   cha: 0
   con: 1
   dex: 3
   extra_attack_each_level: 4
+  id: 8192
   int: 4
+  long: an arch druid
   max_base_number_of_attacks: 3
+  max_mana_per_level: 1
   start_gold_max: 130
   start_gold_min: 95
   str: 1
-  type: Arch Druid
+  type: arch druid
   vit: -11
-  weapon: 12
+  weapon: 0
   wis: 4
 15:
-  armor: 12
+  armor: 0
   cha: 0
   con: 3
   dex: 3
   extra_attack_each_level: 3
+  id: 16384
   int: 2
+  long: a master bard
   max_base_number_of_attacks: 4
+  max_mana_per_level: 0
   start_gold_max: 130
   start_gold_min: 95
   str: 3
-  type: Master Archer
+  type: master bard
   vit: 0
-  weapon: 12
+  weapon: 0
   wis: 2
 16:
-  armor: 12
+  armor: 0
   cha: 0
   con: 0
   dex: 3
   extra_attack_each_level: 4
+  id: 32768
   int: 5
+  long: a necromancer
   max_base_number_of_attacks: 3
+  max_mana_per_level: 1
   start_gold_max: 130
   start_gold_min: 95
   str: 0
-  type: Necromancer
+  type: necromancer
   vit: -11
-  weapon: 12
+  weapon: 0
   wis: 5

@@ -67,11 +67,30 @@ class Player:
         self.armor = None
         self.cid = 0
 
+        # timers
+        self.regeneration_ticker = 0.0
+        self.hunger_ticker = 0.0
+        self.thirst_ticker = 0.0
+        self.mental_exhaustion_ticker = 0.0
+        self.rest_ticker = 0.0
+        self.combat_ticker = 0.0
+        self.paralysis_ticker = 0.0
+
+        # stat modifiers
         self._buy_modifier = [
             50,
             50, 50, 50, 50, 50, 50, 50, 40, 40, 40,
             30, 30, 30, 30, 20, 20, 20, 10, 10, 10,
             10, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ]
+
+        self._sustenanceModifier = [
+            10,
+            9, 9, 9, 8, 8, 8, 7, 7, 7, 6,
+            6, 6, 5, 5, 5, 4, 4, 4, 3, 3,
+            3, 2, 2, 2, 1, 1, 1, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         ]
@@ -113,6 +132,15 @@ class Player:
         self.max_enc = self.info.get_max_enc(self.str)
         self.inventory = []
         self.max_inv = 8
+
+        # timers
+        self.regeneration_ticker = time.time()
+        self.hunger_ticker = time.time()  # setHungerTicker(int
+        self.thirst_ticker = time.time()  # setThirstTicker(int
+        self.mental_exhaustion_ticker = time.time()  # setMentalExhaustionTicker(int
+        self.rest_ticker = time.time()  # setRestTicker(int
+        self.combat_ticker = time.time()  # setCombatTicker(int
+        self.paralysis_ticker = time.time()  # setParalysisTicker(int
 
         print(self.str, self.dex, self.con, self.int, self.wis, self.cha)
         print(self.vit, self.gold)

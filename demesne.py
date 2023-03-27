@@ -8,8 +8,12 @@ modified by: Jeff Brown - jeffbr@gmail.com
 """
 
 from random import randrange
+import signal
 import sys
+from threading import Condition
 import time
+
+from apscheduler.schedulers.background import BackgroundScheduler
 
 # import library objects
 from lib.area import Area
@@ -18,6 +22,9 @@ from lib.info import Info
 from lib.player import Player
 from lib.armor import Armor
 from lib.weapon import Weapon
+
+# like it's a job
+from jobs.sustenance import Sustenance
 
 # import the MUD server class
 from server.mud import Mud
@@ -1081,6 +1088,91 @@ class Game:
                 self._process_say_command(uid, command, params)
 
 
+def _stop(stop_signal, frame):  # pylint: disable=unused-argument
+    """
+    Raise KeyboardInterrupt to cleanly exit.
+
+    Args:
+        stop_signal (int): System signal.
+        frame (frame): Stack frame.
+    """
+    print("Stop signal received")
+    raise SystemExit(stop_signal)
+
+
+def _game_loop(mud, game):
+    # main game loop. We loop forever (i.e. until the program is terminated)
+    # 'update' must be called in the loop to keep the game running and give
+    # us up-to-date information
+    mud.update()
+
+    game.check_for_new_players()
+
+    game.check_for_disconnected_players()
+
+    game.check_for_new_commands()
+
+
+def _initialize_jobs(mud):
+    """ run some background tasks """
+    job_defaults = {
+        'coalesce': True
+    }
+    scheduler = BackgroundScheduler()
+    scheduler.configure(job_defaults=job_defaults, timezone='UTC')
+
+    # create an instance of the game
+    game = Game(mud)
+    scheduler.add_job(
+        _game_loop,
+        'interval',
+        args=[
+            mud,
+            game
+        ],
+        seconds=0.2,
+        id='game_loop',
+    )
+
+    # sustenance job
+    sustenance = Sustenance(game)
+    scheduler.add_job(
+        sustenance.get_sustenace,
+        'interval',
+        seconds=10,
+        id='sustenance_job',
+    )
+
+    signal.signal(signal.SIGTERM, _stop)
+    signal.signal(signal.SIGQUIT, _stop)
+
+    stopping = False
+
+    def time_to_stop():
+        return stopping
+
+    stop_condition = Condition()
+    try:
+        scheduler.start()
+        with stop_condition:
+            stop_condition.wait_for(time_to_stop)
+    except (KeyboardInterrupt, SystemExit) as e:
+        if isinstance(e, KeyboardInterrupt):
+            print("Keyboard interrupt, shutting down.")
+        elif e.args:
+            print("Stopping on signal %d", e.args[0])
+        else:
+            print("Unknown signal received, stopping.")
+
+        scheduler.shutdown()
+
+        with stop_condition:
+            stopping = True
+            stop_condition.notify()
+
+        return False
+
+
 def main():
     """
     function main
@@ -1091,25 +1183,8 @@ def main():
     # start the server
     mud = Mud()
 
-    # create an instance of the game
-    game = Game(mud)
-
-    # main game loop. We loop forever (i.e. until the program is terminated)
-    while True:
-
-        # pause for 1/5 of a second on each loop, so that we don't constantly
-        # use 100% CPU time
-        time.sleep(0.2)
-
-        # 'update' must be called in the loop to keep the game running and give
-        # us up-to-date information
-        mud.update()
-
-        game.check_for_new_players()
-
-        game.check_for_disconnected_players()
-
-        game.check_for_new_commands()
+    # schedule the game jobs
+    _initialize_jobs(mud)
 
 
 if __name__ == '__main__':

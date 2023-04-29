@@ -70,6 +70,7 @@ class Info:
         physical condition..
 
         """
+        print(f"init {__name__}")
         self._room = Room()
         self._rooms = self._room.rooms
         self._data = data
@@ -129,6 +130,8 @@ class Info:
             "thrown weapon container"
         ]
         self._shops = ["armor shop", "weapon shop", "magic shop", "equipment shop"]
+        self._taverns = ["tavern", "inn"]
+        self._temples = ["temple"]
 
     @staticmethod
     def get_current_players(players):
@@ -245,7 +248,7 @@ class Info:
             msg += self._cha_msgs[0]
 
         # str
-        if _player.str < self._str_msg[1]:
+        if _player.get_str() < self._str_msg[1]:
             msg += self._str_msgs[2].format(_player.get_species(), _player.get_class())
         elif self._str_msg[0] > _player.str >= self._str_msg[1]:
             msg += self._str_msgs[1].format(_player.get_species(), _player.get_class())
@@ -261,7 +264,7 @@ class Info:
             msg += self._wis_msgs[2]
 
         # dex
-        if _player.dex < self._dex_msg[1]:
+        if _player.get_dex() < self._dex_msg[1]:
             msg += self._dex_msgs[1]
         elif _player.dex >= self._dex_msg[0]:
             msg += self._dex_msgs[0]
@@ -324,11 +327,21 @@ class Info:
 
     def room_is_shop(self, _player):
         """ is this room a shop """
-
         cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        shop_types = self.get_shop_types()
+        shops = list(set(cur_room["flags"]).intersection(set(self._shops)))
+        return shops[0] if shops else None
 
-        return list(set(cur_room["flags"]).intersection(set(shop_types)))
+    def room_is_tavern(self, _player):
+        """ is this room a shop """
+        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        taverns = list(set(cur_room["flags"]).intersection(set(self._taverns)))
+        return taverns[0] if taverns else None
+
+    def room_is_temple(self, _player):
+        """ is this room a shop """
+        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        temples = list(set(cur_room["flags"]).intersection(set(self._temples)))
+        return temples[0] if temples else None
 
     def get_room_type(self, _player):
         """ is this room a shop """

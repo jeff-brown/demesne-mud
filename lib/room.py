@@ -61,6 +61,8 @@ class Room:
         self.rooms.append(self._d3)
         self.rooms.append(self._d9)
 
+        print(f"init {__name__}")
+
     def get_cur_room(self, location):
         """ get the current room """
         z, x, y = location

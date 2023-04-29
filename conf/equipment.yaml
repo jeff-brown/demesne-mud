@@ -2,8 +2,11 @@
   charges: 0
   classes: 255
   effect: message
+  effect_ticker: 0
+  effect_ticker_max: 24
   equip_sub_type: light
   equip_type: supply
+  is_activated: false
   level: 0
   long: a torch
   max_value_range: 450
@@ -22,8 +25,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: supply
+  is_activated: false
   level: 0
   long: a coil of rope
   max_value_range: 0
@@ -42,8 +48,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: food
   equip_type: supply
+  is_activated: false
   level: 0
   long: a ration of food
   max_value_range: 3600
@@ -62,8 +71,11 @@
   charges: 3
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: water
   equip_type: supply
+  is_activated: false
   level: 0
   long: a waterskin
   max_value_range: 1800
@@ -82,8 +94,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: eternal light
   equip_type: minor magic item
+  is_activated: false
   level: 0
   long: a glowstone
   max_value_range: 0
@@ -102,8 +117,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: recall
   equip_type: minor magic item
+  is_activated: false
   level: 5
   long: a heartstone
   max_value_range: 0
@@ -122,8 +140,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: heal
   equip_type: potion
+  is_activated: false
   level: 0
   long: a rue potion
   max_value_range: 16
@@ -142,8 +163,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: heal
   equip_type: potion
+  is_activated: false
   level: 0
   long: an amaranth potion
   max_value_range: 64
@@ -162,8 +186,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: heal
   equip_type: potion
+  is_activated: false
   level: 0
   long: an anemone potion
   max_value_range: 128
@@ -182,8 +209,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: cure poison
   equip_type: potion
+  is_activated: false
   level: 0
   long: a verbena potion
   max_value_range: 0
@@ -202,8 +232,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: minor mana boost
   equip_type: potion
+  is_activated: false
   level: 0
   long: a yarrow potion
   max_value_range: 0
@@ -222,8 +255,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: strength boost
   equip_type: potion
+  is_activated: false
   level: 0
   long: a rowan potion
   max_value_range: 600
@@ -242,8 +278,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: dexterity boost
   equip_type: potion
+  is_activated: false
   level: 0
   long: a hyssop potion
   max_value_range: 600
@@ -262,8 +301,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: invisibility
-  equip_type: major magic item
+  equip_type: potion
+  is_activated: false
   level: 0
   long: a vervain potion
   max_value_range: 600
@@ -282,8 +324,11 @@
   charges: 15
   classes: 2
   effect: a blast of frost
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: wand
   equip_type: minor magic item
+  is_activated: false
   level: 3
   long: a horn of frost
   max_value_range: 24
@@ -302,8 +347,11 @@
   charges: 20
   classes: 2
   effect: a bolt of lightning
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: wand
   equip_type: minor magic item
+  is_activated: false
   level: 5
   long: a wand of lightning
   max_value_range: 48
@@ -322,8 +370,11 @@
   charges: 25
   classes: 2
   effect: a blast of flame
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: wand
   equip_type: minor magic item
+  is_activated: false
   level: 8
   long: a rod of flame
   max_value_range: 72
@@ -342,8 +393,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: an iron key
   max_value_range: 0
@@ -362,8 +416,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a copper key
   max_value_range: 0
@@ -382,8 +439,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a brass key
   max_value_range: 0
@@ -402,8 +462,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a bronze key
   max_value_range: 0
@@ -422,8 +485,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a silver key
   max_value_range: 0
@@ -442,8 +508,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: an electrum key
   max_value_range: 0
@@ -462,8 +531,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a gold key
   max_value_range: 0
@@ -482,8 +554,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a platinum key
   max_value_range: 0
@@ -502,8 +577,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a pearl key
   max_value_range: 0
@@ -522,8 +600,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: an onyx key
   max_value_range: 0
@@ -542,8 +623,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a jade key
   max_value_range: 0
@@ -562,8 +646,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a ruby key
   max_value_range: 0
@@ -582,8 +669,11 @@
   charges: 8
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: runestaff
   equip_type: major magic item
+  is_activated: false
   level: 0
   long: a runestaff
   max_value_range: 0
@@ -602,8 +692,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: supply weapon
+  is_activated: false
   level: 1
   long: a dart
   max_value_range: 4
@@ -622,8 +715,11 @@
   charges: 0
   classes: 25
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: supply weapon
+  is_activated: false
   level: 3
   long: a knife
   max_value_range: 6
@@ -642,8 +738,11 @@
   charges: 0
   classes: 25
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: supply weapon
+  is_activated: false
   level: 2
   long: a spear
   max_value_range: 8
@@ -662,8 +761,11 @@
   charges: 0
   classes: 17
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: supply weapon
+  is_activated: false
   level: 5
   long: an axe
   max_value_range: 12
@@ -682,8 +784,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: misc2
   equip_type: ranged weapon ammo
+  is_activated: false
   level: 0
   long: an arrow
   max_value_range: 7
@@ -702,8 +807,11 @@
   charges: 20
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: ammo
   equip_type: ammo container
+  is_activated: false
   level: 0
   long: a quiver
   max_value_range: 0
@@ -722,8 +830,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: soulstone
   equip_type: major magic item
+  is_activated: false
   level: 0
   long: a soulstone
   max_value_range: 0
@@ -742,8 +853,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: major mana boost
   equip_type: minor magic item
+  is_activated: false
   level: 0
   long: a manastone
   max_value_range: 0
@@ -762,8 +876,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: heal
-  equip_type: major magic item
+  equip_type: potion
+  is_activated: false
   level: 0
   long: a zarynthium potion
   max_value_range: 256
@@ -782,8 +899,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a dragon ring
   max_value_range: 0
@@ -802,8 +922,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a gome ring
   max_value_range: 0
@@ -822,8 +945,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a strato ring
   max_value_range: 0
@@ -842,8 +968,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a pink rose
   max_value_range: 0
@@ -862,8 +991,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a white rose
   max_value_range: 0
@@ -882,8 +1014,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: reserved
   equip_type: major magic item
+  is_activated: false
   level: 1000
   long: a wynharp
   max_value_range: 128
@@ -902,8 +1037,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a red rose
   max_value_range: 0
@@ -922,8 +1060,11 @@
   charges: 1
   classes: 2
   effect: a dark mist
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: wand
   equip_type: minor magic item
+  is_activated: false
   level: 1000
   long: a black rose
   max_value_range: 2
@@ -942,8 +1083,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: an opal key
   max_value_range: 0
@@ -962,8 +1106,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a tigereye key
   max_value_range: 0
@@ -982,8 +1129,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a quartz key
   max_value_range: 0
@@ -1002,8 +1152,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: a topaz key
   max_value_range: 0
@@ -1022,8 +1175,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: rod of power
   equip_type: major magic item
+  is_activated: false
   level: 0
   long: a rod of power
   max_value_range: 0
@@ -1042,8 +1198,11 @@
   charges: 0
   classes: 255
   effect: a flame storm
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: flame crystal
   equip_type: major magic item
+  is_activated: false
   level: 30
   long: a flame crystal
   max_value_range: 4
@@ -1062,8 +1221,11 @@
   charges: 10
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: ammo
   equip_type: thrown weapon container
+  is_activated: false
   level: 0
   long: a case of darts
   max_value_range: 0
@@ -1082,8 +1244,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: misc2
   equip_type: ranged weapon ammo
+  is_activated: false
   level: 0
   long: a stone
   max_value_range: 4
@@ -1102,8 +1267,11 @@
   charges: 20
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: ammo
   equip_type: ammo container
+  is_activated: false
   level: 0
   long: a pouch of stones
   max_value_range: 0
@@ -1122,8 +1290,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: misc2
   equip_type: supply
+  is_activated: false
   level: 0
   long: a blowdart
   max_value_range: 2
@@ -1142,8 +1313,11 @@
   charges: 10
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: ammo
   equip_type: supply
+  is_activated: false
   level: 0
   long: a tube of blowdarts
   max_value_range: 0
@@ -1162,8 +1336,11 @@
   charges: 0
   classes: 255
   effect: a frost storm
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: flame crystal
   equip_type: major magic item
+  is_activated: false
   level: 25
   long: an ice crystal
   max_value_range: 3
@@ -1182,8 +1359,11 @@
   charges: 0
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: none
   equip_type: key
+  is_activated: false
   level: 0
   long: an ornate stone key
   max_value_range: 0
@@ -1202,8 +1382,11 @@
   charges: 15
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: water
   equip_type: supply
+  is_activated: false
   level: 0
   long: a small barrel
   max_value_range: 1800
@@ -1222,8 +1405,11 @@
   charges: 5
   classes: 255
   effect: ''
+  effect_ticker: 0
+  effect_ticker_max: 2400
   equip_sub_type: food
   equip_type: supply
+  is_activated: false
   level: 0
   long: some preserved rations
   max_value_range: 2400

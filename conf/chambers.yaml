@@ -326,7 +326,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - ''
   key: -1
   lair: []
   lairs: []
@@ -346,7 +347,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -367,7 +369,8 @@
   dark: false
   items: []
   doors: []
-  flags: []
+  flags:
+  - ''
   key: -1
   lair: []
   lairs: []
@@ -390,7 +393,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -400,8 +404,7 @@
     as if someone or something had used natural forces to create a very unnatural
     labyrinth. You have entered the lair of the minotaur.
   mobs:
-  - 15
-  - 16
+  - 9
   npcs: []
   num: 1
   short: You are in a large cavern.
@@ -416,7 +419,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -441,7 +445,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -466,7 +471,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -491,7 +497,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -512,9 +519,10 @@
 21:
   armed: false
   dark: true
-  items: 1
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 1
   lair: []
   lairs: []
@@ -533,9 +541,10 @@
 22:
   armed: false
   dark: true
-  items: 0
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 0
   lair: []
   lairs: []
@@ -556,7 +565,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -575,9 +585,10 @@
 24:
   armed: false
   dark: true
-  items: 2
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 2
   lair: []
   lairs: []
@@ -598,7 +609,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -618,7 +630,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -639,7 +652,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -664,7 +678,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -689,7 +704,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -710,7 +726,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -733,7 +750,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -758,7 +776,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -777,9 +796,10 @@
 33:
   armed: false
   dark: true
-  items: 3
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -800,7 +820,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -823,7 +844,8 @@
   dark: false
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -845,7 +867,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -865,7 +888,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -886,7 +910,8 @@
   dark: false
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -909,7 +934,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -935,7 +961,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -960,7 +987,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -985,7 +1013,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: true
   lairs: []
@@ -1010,7 +1039,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -1031,9 +1061,10 @@
 44:
   armed: false
   dark: true
-  items: 1
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 1
   lair: []
   lairs: []
@@ -1052,9 +1083,10 @@
 45:
   armed: false
   dark: true
-  items: 0
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 0
   lair: []
   lairs: []
@@ -1075,7 +1107,8 @@
   dark: true
   items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: -1
   lair: []
   lairs: []
@@ -1094,9 +1127,10 @@
 47:
   armed: false
   dark: true
-  items: 2
+  items: []
   doors: []
-  flags: []
+  flags:
+  - dark
   key: 2
   lair: []
   lairs: []

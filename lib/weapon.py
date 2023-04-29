@@ -9,6 +9,7 @@ class Weapon:
 
     def __init__(self, vnum):
         """ read in the config files """
+        print(f"init {__name__}")
         self._weapons = data.weapons
 
         for key in data.weapons[vnum]:

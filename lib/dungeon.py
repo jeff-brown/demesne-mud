@@ -53,3 +53,5 @@ class Dungeon:
         self.grid.append(_d2)
         self.grid.append(_d3)
         self.grid.append(_d9)
+
+        print(f"init {__name__}")

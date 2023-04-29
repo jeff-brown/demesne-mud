@@ -18,6 +18,9 @@ class Data:
         self.chambers = self._get_chambers()
         self.areas = self._get_areas()
         self.npcs = self._get_npcs()
+        self.mobs = self._get_mobs()
+
+        print(f"init {__name__}")
 
     @staticmethod
     def _get_species(conf="conf/species.yaml"):
@@ -40,6 +43,17 @@ class Data:
                 print(exc)
 
         return _npcs
+
+    @staticmethod
+    def _get_mobs(conf="conf/mobs.yaml"):
+        """ read species from conf """
+        with open(conf, "rb") as stream:
+            try:
+                _mobs = yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+
+        return _mobs
 
     @staticmethod
     def _get_areas(conf="conf/areas.yaml"):

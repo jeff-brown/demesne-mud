@@ -2,7 +2,7 @@
 from lib import data
 
 
-class Npc:
+class Mob:
     """
     This class contains all the basic informational commands
     """
@@ -13,5 +13,5 @@ class Npc:
 
         print(f"init {__name__}")
 
-        for key in data.npcs[vnum]:
-            setattr(self, key, data.npcs[vnum][key])
+        for key in data.mobs[vnum]:
+            setattr(self, key, data.mobs[vnum][key])

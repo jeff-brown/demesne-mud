@@ -10,6 +10,7 @@ class Area:
 
     def __init__(self):
         """ read in the config files """
+        print(f"init {__name__}")
         self.grid = []
 
         self.exits = {

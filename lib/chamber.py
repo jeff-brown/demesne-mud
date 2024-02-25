@@ -7,6 +7,7 @@ from lib.equipment import Equipment
 
 class Chamber:
     """
+    @DynamicAttrs
     This class contains all the basic informational commands
     """
 
@@ -40,6 +41,17 @@ class Chamber:
             print('is town')
             return True
         print('is not town')
+        return False
+
+    def is_safe(self):
+        """
+        is this room safe
+        """
+        print(self.flags)
+        if 'safe' in self.flags:
+            print('is safe')
+            return True
+        print('is not safe')
         return False
 
     def is_illuminated(self, uid, pids_here, players, items):

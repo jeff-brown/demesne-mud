@@ -4,6 +4,9 @@ from lib.room import Room
 from lib.weapon import Weapon
 from lib.armor import Armor
 from lib.equipment import Equipment
+from lib.fib import lucas
+
+import random
 
 
 class Info:
@@ -11,7 +14,7 @@ class Info:
     This class contains all the basic informational commands
     """
 
-    def __init__(self):
+    def __init__(self, game):
         """ read in the config files
 
         cha_msg_1_limit=30
@@ -71,6 +74,8 @@ class Info:
 
         """
         print(f"init {__name__}")
+        self._game = game
+        self._max_level = 25
         self._room = Room()
         self._rooms = self._room.rooms
         self._data = data
@@ -132,6 +137,8 @@ class Info:
         self._shops = ["armor shop", "weapon shop", "magic shop", "equipment shop"]
         self._taverns = ["tavern", "inn"]
         self._temples = ["temple"]
+        self._arenas = ["arena"]
+        self._guilds = ["guild hall"]
 
     @staticmethod
     def get_current_players(players):
@@ -146,7 +153,7 @@ class Info:
 
     def get_shop_types(self):
         """
-        get formatted list of players
+        get formatted list of shops
         """
         return self._shops
 
@@ -166,6 +173,43 @@ class Info:
                     _players_here.append(player.name)
 
         return _players_here
+
+    @staticmethod
+    def get_target(params, mobs_here, mobs):
+        """
+        get a list of mobs here
+                if room.mobs and params:
+            for mob in room.mobs:
+                if params.lower() in self.mobs[mob].name:
+                    mob_here = self.mobs[mob]
+        """
+        if mobs_here and params:
+            for mob in mobs_here:
+                if params.lower() in mobs[mob].name:
+                    return mobs[mob]
+
+        return None
+
+    @staticmethod
+    def _remove_mob(mob, mobs_here, mobs):
+        """
+        clean up and remove mob from game
+        """
+        for m in mobs:
+            print(id(mob))
+            print(id(mobs[m]))
+            if id(mob) == id(mobs[m]):
+                mobs_here.remove(m)
+                mobs.pop(m)
+                break
+
+    @staticmethod
+    def _calculate_mob_gold_drop(mob):
+        """
+        calculate mob gold
+        """
+        gold_drop = random.randint(mob.gold, mob.gold * 2)
+        return gold_drop if gold_drop > 0 else None
 
     @staticmethod
     def get_pids_here(uid, location, players):
@@ -331,11 +375,29 @@ class Info:
         shops = list(set(cur_room["flags"]).intersection(set(self._shops)))
         return shops[0] if shops else None
 
+    def room_is_safe(self, _player):
+        """ is this room a safe zone """
+        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        shops = list(set(cur_room["flags"]).intersection(set(self._shops)))
+        return shops[0] if shops else None
+
     def room_is_tavern(self, _player):
         """ is this room a shop """
         cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
         taverns = list(set(cur_room["flags"]).intersection(set(self._taverns)))
         return taverns[0] if taverns else None
+
+    def room_is_arena(self, _player):
+        """ Is this room an arena """
+        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        arenas = list(set(cur_room["flags"]).intersection(set(self._arenas)))
+        return arenas[0] if arenas else None
+
+    def room_is_guild(self, _player):
+        """ Is this room an arena """
+        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        guilds = list(set(cur_room["flags"]).intersection(set(self._guilds)))
+        return guilds[0] if guilds else None
 
     def room_is_temple(self, _player):
         """ is this room a shop """
@@ -351,5 +413,74 @@ class Info:
 
         return list(set(cur_room["flags"]).intersection(set(shop_types)))
 
+    def get_current_room(self, _player):
+        """ get the current room """
+        return self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
 
+    def check_and_handle_kill(self, attacker, target, mobs_here, mobs):
+        """
+        check if target is dead and handle it
+        """
+        print(target)
+        print(mobs)
+        if target.vit <= 0:
+            print("target ded")
 
+            self._remove_mob(target, mobs_here, mobs)
+            gold = self._calculate_mob_gold_drop(target)
+            pid = self.get_pid_by_name(self._game.players, attacker.name)
+            message_to_player = self._data.messages['MONDEF'].format(target.name)
+            message_to_room = self._data.messages['MONDEF'].format(target.name)
+            self._game.handle_messages(pid, message_to_player=message_to_player)
+            self._game.handle_messages(pid, message_to_room=message_to_room)
+            if gold:
+                message_to_player = self._data.messages['GTLTRS'].format(gold, target.name)
+                self._game.handle_messages(pid, message_to_player)
+                attacker.gold += gold
+            attacker.reset_attacks()
+            attacker.set_combat_ticker(0)
+            attacker.set_rest_ticker(15)
+
+    @staticmethod
+    def base_round(x, base=10):
+        return base * round(float(x) / base)
+
+    def get_exp_gain(self, player):
+        """ use a modified lucas number generator to get the exp gain """
+        print(player.level, player.exp_base)
+        return self.base_round(lucas(player.level + 1, player.exp_base)[player.level], 5)
+
+    @staticmethod
+    def get_exp_per_point_of_damage(player_level, mob_level):
+        """
+        Fuck if I know how exp is calculated.  It would be easier to just generate a random number!
+        This is my best guess, which involves the players level and mobs level.
+        """
+        mob_variance = round(random.uniform(.8, 1.2), 2)
+        level_difference = mob_level - player_level
+        exp_gain_variance = 1.25
+
+        if level_difference == -1:
+            exp_base = 2.0
+        elif level_difference == 0:
+            exp_base = 3.5
+        elif level_difference >= 2:
+            exp_base = 9.5
+        elif level_difference >= 1:
+            exp_base = 6.5
+        else:
+            exp_base = 2.0
+
+        return exp_base * mob_variance * exp_gain_variance * player_level
+
+    def get_mob_by_terrain(self, terrain):
+        """
+        Get mobs by terrain
+        """
+        mobs = []
+        for mib, mob in self._data.mobs.items():
+            if mob['terrain'] == terrain:
+                mobs.append(mib)
+
+        print(mobs)
+        return mobs

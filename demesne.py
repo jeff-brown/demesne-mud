@@ -25,12 +25,17 @@ from lib.weapon import Weapon
 from lib.equipment import Equipment
 from lib.mob import Mob
 from lib.combat import Combat
+from lib.gong import Gong
+from lib.training import Training
 
 # like it's a job
 from jobs.sustenance import Sustenance
 from jobs.regenerate import Regenerate
 from jobs.slow_status import SlowStatus
 from jobs.item_effect import ItemEffect
+from jobs.rest import Rest
+from jobs.mob_activity import MobActivity
+from jobs.repopulate_lairs import RepopulateLairs
 
 # enums
 from enums.status import Status
@@ -53,9 +58,11 @@ class Game:
 
         # private members
         self._area = Area()
-        self._info = Info()
+        self._info = Info(self)
         self._data = Data()
-        self._combat = Combat()
+        self._combat = Combat(self)
+        self._gong = Gong(self)
+        self._training = Training(self)
 
         self.grid = self._area.grid
         self._mud = mud
@@ -65,6 +72,7 @@ class Game:
         self._weapons = self._data.weapons
         self._armor = self._data.armor
         self._equipment = self._data.equipment
+        self._messages = self._data.messages
 
         # counter for assigning each client a new id
         self._nextid = 0
@@ -189,7 +197,7 @@ class Game:
                     self.players[uid].name, npc_here.long))
 
             elif mob_here:
-                self.handle_messages(uid, mob_here.description)
+                self.handle_messages(uid, mob_here.get_look_description())
                 self.handle_messages(uid, message_to_room="{} is looking at a {}.".format(
                     self.players[uid].name, mob_here.name))
 
@@ -217,6 +225,7 @@ class Game:
         print(len(room.mobs))
         print(room.mobs)
         mobs_in_room = []
+        print(self.mobs)
         for mob in room.mobs:
             mobs_in_room.append(self.mobs[mob].name)
 
@@ -500,6 +509,12 @@ class Game:
         """
         buy something
         """
+        if self._info.room_is_guild(self.players[uid]):
+            if "training" in params:
+                print(f"exp_gain: {self._info.get_exp_gain(self.players[uid])}")
+                self._training.handle_training(self.players[uid])
+            return
+
         if self._info.room_is_tavern(self.players[uid]):
             self._handle_tavern(uid, params)
             return
@@ -1145,11 +1160,44 @@ class Game:
             self.players[uid].name))
         self._mud.get_disconnect(uid)
 
+    def _process_ring_command(self, uid):
+        """
+        exit on your own terms
+        """
+        self._gong.ring(uid)
+
     def _process_attack_command(self, uid, command, params):
         """
         exit on your own terms
         """
-        self._combat.player_melee_attack(self.players[uid], self.mobs[2], self.items)
+        room = self._area.get_cur_room(self.players[uid].room)
+        location = self.players[uid].room
+        print(location)
+        print(room.mobs)
+        if room.is_safe():
+            self.handle_messages(uid, self._messages['NOFTHR'])
+            print("room is safe, no attacking here")
+            return
+
+        if self.players[uid].resting:
+            self.handle_messages(uid, self._messages['ATTEXH'])
+            print("player is resting")
+            return
+
+        target = self._info.get_target(params, room.mobs, self.mobs)
+        if not target:
+            self.handle_messages(uid, self._messages['ARNNHR'].format(params))
+            print(f"sorry {params} isn't here")
+            return
+
+        message_to_player, message_to_room, message_to_target = (
+            self._combat.player_melee_attack(self.players[uid], target, self.items))
+
+        self.handle_messages(uid, message_to_player=message_to_player)
+        self.handle_messages(uid, message_to_room=message_to_room)
+        print(room.mobs)
+        self._info.check_and_handle_kill(self.players[uid], target, room.mobs, self.mobs)
+        print(room.mobs)
         print("attack!")
 
     def _process_go_command(self, uid, command):
@@ -1159,6 +1207,10 @@ class Game:
 
         # get current room and list of exits
         cur_exits = self._area.get_cur_exits(self.players[uid].room)
+
+        if self.players[uid].resting:
+            self.handle_messages(uid, self._data.messages['CNTMOV'])
+            return
 
         if command not in cur_exits:
             self.handle_messages(uid, "You can't go that way!")
@@ -1195,7 +1247,7 @@ class Game:
             # The dictionary key is the player's id number. We set their room
             # None initially until they have entered a name
             # Try adding more player stats - level, gold, inventory, etc
-            self.players[pid] = Player()
+            self.players[pid] = Player(self)
 
             # send the new player a prompt for their name
             self.handle_messages(pid, "What is your name?")
@@ -1401,14 +1453,22 @@ class Game:
                 if not params:
                     self._process_go_command(uid, command)
                 else:
-                    self._process_sell_command(uid, params)
+                    self._process_sell_command(uid, command, params)
 
-                # 'sell' if params otherwise 'go'
+            # 'drop' if params otherwise 'go'
             elif command == "d":
                 if not params:
                     self._process_go_command(uid, command)
                 else:
                     self._process_drop_command(uid, params)
+
+            elif command == "ring" or command == "ri":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                elif params == "gong" or params == "g":
+                    self._process_ring_command(uid)
+                else:
+                    self._process_say_command(uid, command, params)
 
             # 'quit' command
             elif command == "quit":
@@ -1451,10 +1511,12 @@ def _initialize_lairs(game):
     for z, level in enumerate(game.grid):
         for x, row in enumerate(level):
             for y, cnum in enumerate(row):
-                if game.grid[z][x][y].mobs:
-                    for index, mob in enumerate(game.grid[z][x][y].mobs):
-                        game.mobs[game.next_mob] = Mob(mob)
-                        game.grid[z][x][y].mobs[index] = game.next_mob
+                if game.grid[z][x][y].lair:
+                    for index, mob in enumerate(game.grid[z][x][y].mob_types):
+                        game.mobs[game.next_mob] = Mob(mob, game)
+                        game.mobs[game.next_mob].room = [z, x, y]
+                        game.mobs[game.next_mob].mid = game.next_mob
+                        game.grid[z][x][y].mobs.append(game.next_mob)
                         game.next_mob += 1
                     print(f"({z}, {x}, {y})", game.grid[z][x][y].mobs)
 
@@ -1470,10 +1532,15 @@ def _initialize_jobs(mud):
     scheduler.configure(job_defaults=job_defaults, timezone='UTC')
 
     game = Game(mud)
+    _initialize_lairs(game)
     sustenance = Sustenance(game)
     regenerate = Regenerate(game)
     slow_status = SlowStatus(game)
     item_effect = ItemEffect(game)
+    mob_activity = MobActivity(game)
+    repopulate_lairs = RepopulateLairs(game)
+
+    rest = Rest(game)
 
     scheduler.add_job(
         _game_loop,
@@ -1504,9 +1571,28 @@ def _initialize_jobs(mud):
         sustenance.execute,
         'interval',
         seconds=15,
-        id='sustenace',
+        id='sustenance',
+    )
+    scheduler.add_job(
+        mob_activity.execute,
+        'interval',
+        seconds=3,
+        id='mob_activity',
+    )
+    scheduler.add_job(
+        rest.execute,
+        'interval',
+        seconds=1,
+        id='rest',
+    )
+    scheduler.add_job(
+        repopulate_lairs.execute,
+        'interval',
+        seconds=10,
+        id='repopulate_lairs',
     )
 
+    print("jobs started, ready for player one")
     signal.signal(signal.SIGTERM, _stop)
     signal.signal(signal.SIGQUIT, _stop)
 

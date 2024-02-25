@@ -4,6 +4,7 @@ from lib import data
 
 class Npc:
     """
+    @DynamicAttrs
     This class contains all the basic informational commands
     """
 

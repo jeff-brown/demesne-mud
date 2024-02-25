@@ -3,7 +3,7 @@
   classes: 255
   effect: message
   effect_ticker: 0
-  effect_ticker_max: 24
+  effect_ticker_max: 240
   equip_sub_type: light
   equip_type: supply
   is_activated: false

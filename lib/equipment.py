@@ -1,10 +1,10 @@
 """ armor class """
 from lib import data
-from lib.container import ConfigSection
 
 
 class Equipment:
     """
+    @DynamicAttrs
     This class contains all the basic informational commands
     """
 
@@ -20,6 +20,3 @@ class Equipment:
     def can_use(self, _player):
         """ check if a player can use an item """
         return bool(int(bin(_player.cid & self.classes), 2))
-
-
-

@@ -1,10 +1,10 @@
 """ player class """
-from enum import Enum
+import random
 from random import randint
 import time
 
+from lib import data
 from lib.info import Info
-from lib.data import Data
 
 from enums.status import Status
 
@@ -14,12 +14,12 @@ class Player:
     This class contains all the basic informational commands
     """
 
-    def __init__(self):
+    def __init__(self, game):
         """ read in the config files """
-        self.info = Info()
-        self._species = Data().species
-        self._classes = Data().classes
-        self._stat_ranges = Data().stat_ranges
+        self._species = data.species
+        self._classes = data.classes
+        self._info = Info(game)
+        self._stat_ranges = data.stat_ranges
 
         print(f"init {__name__}")
 
@@ -28,12 +28,15 @@ class Player:
         self.species = None
         self.p_class = None
         self.is_playing = False
+        self.resting = False
 
         # game settings
         self.room = [1, 4, 2]  # north plaza
-        self.level = 2
+        self.level = 1
+        self.exp_base = 0
         self.experience = 0
         self.gold = 0
+        self.combat_skill = 70  # 70, yep 70
 
         # stats
         self.str = 0
@@ -73,8 +76,9 @@ class Player:
         self.man_max = 0
 
         # attacks
-        self.att = 0
-        self.ext = 0
+        self.max_base_attacks = 0
+        self.extra_attack_each_level = 0
+        self.attacks = 0
 
         # things that happen to you
         self.inventory = None
@@ -99,10 +103,30 @@ class Player:
         self.hunger_ticker = 0.0
         self.thirst_ticker = 0.0
         self.mental_exhaustion_ticker = 0.0
-        self.rest_ticker = 0.0
-        self.combat_ticker = 0.0
+        self.rest_ticker = 0
+        self.combat_ticker = 0
         self.paralysis_ticker = 0.0
         self.stat_ticker_max = 30
+
+        self._stat_increase_chance = 25
+
+        self._attack_number_bonus = [
+            0,                             # 0
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # 1 - 10
+            0, 0, 0, 0, 1, 1, 1, 1, 1, 1,  # 11 - 20
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 2,  # 21 - 30
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,  # 31 - 40
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2   # 41 - 50
+        ]
+
+        self._max_encumbrance = [
+            0,
+            50, 100, 150, 200, 250, 300, 350, 400, 450, 500,
+            550, 600, 650, 700, 750, 800, 850, 900, 950, 1000,
+            1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500,
+            1550, 1600, 1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000,
+            2050, 2100, 2150, 2200, 2250, 2300, 2350, 2400, 2450, 2500
+        ]
 
         # stat modifiers
         self._buy_modifier = [
@@ -151,6 +175,23 @@ class Player:
             8, 9, 9, 9, 9, 10, 10, 10, 10, 11
         ]
 
+        self._hp_bonus = [
+            0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 1, 1, 1, 2, 2, 2, 2, 2, 3,
+            3, 3, 3, 3, 4, 4, 4, 4, 4, 5,
+            5, 5, 5, 6, 6, 6, 6, 7, 7, 7,
+            7, 8, 8, 8, 8, 9, 9, 9, 9, 10
+        ]
+
+    def get_attack_number_bonus(self):
+        """ look up the proper bonus based on agi"""
+        return self._attack_number_bonus[self.get_dex()]
+
+    def get_max_enc(self, _str):
+        """ return max encumbrance based on strength"""
+        return self._max_encumbrance[_str]
+
     def set_base_stats(self):
         """ set base stats based on class/species """
         species = self._species[self.species]
@@ -158,50 +199,81 @@ class Player:
 
         self.str = self.str_max = species['str'] + p_class['str'] \
             + randint(self._stat_ranges['min_str'],
-                        self._stat_ranges['max_str'])
+                      self._stat_ranges['max_str'])
         self.dex = self.dex_max = species['dex'] + p_class['dex'] \
             + randint(self._stat_ranges['min_dex'],
-                        self._stat_ranges['max_dex'])
+                      self._stat_ranges['max_dex'])
         self.con = self.con_max = species['con'] + p_class['con'] \
             + randint(self._stat_ranges['min_con'],
-                        self._stat_ranges['max_con'])
+                      self._stat_ranges['max_con'])
         self.int = self.int_max = species['int'] + p_class['int'] \
             + randint(self._stat_ranges['min_int'],
-                        self._stat_ranges['max_int'])
+                      self._stat_ranges['max_int'])
         self.wis = self.wis_max = species['wis'] + p_class['wis'] \
             + randint(self._stat_ranges['min_wis'],
-                        self._stat_ranges['max_wis'])
+                      self._stat_ranges['max_wis'])
         self.cha = self.cha_max = species['cha'] + p_class['cha'] \
             + randint(self._stat_ranges['min_cha'],
-                        self._stat_ranges['max_cha'])
+                      self._stat_ranges['max_cha'])
         self.vit = self.vit_max = species['vit'] + p_class['vit'] \
             + randint(self._stat_ranges['min_vit'],
-                        self._stat_ranges['max_vit'])
+                      self._stat_ranges['max_vit']) \
+            + self._hp_bonus[self.con]
         self.man = self.man_max = p_class['max_mana_per_level'] * self.level
 
-        self.gold = randint(p_class['start_gold_min'],
-                              p_class['start_gold_max'])
+        self.gold = (randint(p_class['start_gold_min'],
+                             p_class['start_gold_max'])) + 1000
 
-        self.att = p_class['max_base_number_of_attacks']
-        self.ext = p_class['extra_attack_each_level']
+        self.max_base_attacks = p_class['max_base_number_of_attacks']
+        self.extra_attack_each_level = p_class['extra_attack_each_level']
+        self.attacks = self.get_max_attacks()
         self.cid = p_class['id']
-        self.max_enc = self.info.get_max_enc(self.get_str())
+        self.max_enc = self.get_max_enc(self.get_str())
         self.inventory = []
         self.max_inv = 8
+        self.exp_base = p_class['base_exp']
 
         # timers
         self.regeneration_ticker = time.time()
         self.hunger_ticker = time.time()  # setHungerTicker(int
         self.thirst_ticker = time.time()  # setThirstTicker(int
         self.mental_exhaustion_ticker = time.time()  # setMentalExhaustionTicker(int
-        self.rest_ticker = time.time()  # setRestTicker(int
-        self.combat_ticker = time.time()  # setCombatTicker(int
         self.paralysis_ticker = time.time()  # setParalysisTicker(int
 
         self.is_playing = True
 
         print(self.str, self.dex, self.con, self.int, self.wis, self.cha)
         print(self.vit, self.gold)
+
+    def increase_int(self, amt=1):
+        """ increase int by amt """
+        self.int += amt
+        self.int_max += amt
+
+    def increase_wis(self, amt=1):
+        """ increase int by amt """
+        self.wis += amt
+        self.wis_max += amt
+
+    def increase_str(self, amt=1):
+        """ increase int by amt """
+        self.str += amt
+        self.str_max += amt
+
+    def increase_con(self, amt=1):
+        """ increase int by amt """
+        self.con += amt
+        self.con_max += amt
+
+    def increase_dex(self, amt=1):
+        """ increase int by amt """
+        self.dex += amt
+        self.dex_max += amt
+
+    def increase_cha(self, amt=1):
+        """ increase int by amt """
+        self.cha += amt
+        self.cha_max += amt
 
     def get_buy_modifier(self):
         """ return buy modifier based on current cha """
@@ -261,7 +333,8 @@ class Player:
         self.hunger_ticker = time.time()
         self.thirst_ticker = time.time()
         self.vit = self.vit_max
-        self.rest_ticker = time.time()
+        self.set_rest_ticker(15)
+        self.reset_attacks()
         self.status = Status.Healthy
         self.room = [1, 4, 1]  # 1st town temple
 
@@ -272,9 +345,10 @@ class Player:
             for inv in self.inventory:
                 items.remove(inv)
                 self.inventory.pop(inv)
-
+            print(self.experience, self.gold)
             self.experience = int(self.experience * 0.8)
             self.gold = 0
+            print(self.experience, self.gold)
 
     def has_light(self, location, items):
         """
@@ -283,8 +357,141 @@ class Player:
         print("self.room", self.room)
         print("location", location)
 
+    def is_resting(self):
+        """
+        is player resting
+        """
+        return self.resting
 
+    def decrease_rest_ticker(self):
+        """
+        if resting, decrease ticker
+        """
+        if self.rest_ticker > 0:
+            self.rest_ticker -= 1
+            self.resting = True
+        else:
+            self.resting = False
 
+    def decrease_attacks(self):
+        """
+        subtract one from max attacks
+        """
+        if self.attacks > 0:
+            self.attacks -= 1
 
+        if self.attacks <= 0:
+            self.resting = True
 
+    def get_max_attacks(self):
+        """
+              int levelBonus = _entity.getLevel() / PlayerFacade.getStartingStats().getPlayerClassDatabase().getPlayerClassData(
+            _entity.getPlayerClass()).getAttacksPerLevel();
+      int baseAttack = STARTING_ATTACKS + levelBonus;
 
+      int maxBaseAttacks = PlayerFacade.getStartingStats().getPlayerClassDatabase().getPlayerClassData(
+            _entity.getPlayerClass()).getMaxBaseAttacks();
+      if (baseAttack > maxBaseAttacks) {
+         baseAttack = maxBaseAttacks;
+      }
+      return baseAttack + _entity.getStats().getAgility().getAttackNumberBonus();
+        """
+        level_bonus = int(self.level / self.extra_attack_each_level)
+        base_attack = 1 + level_bonus
+
+        max_base_attacks = self.max_base_attacks
+        if base_attack > max_base_attacks:
+            base_attack = max_base_attacks
+
+        return base_attack + self.get_attack_number_bonus()
+
+    def reset_attacks(self):
+        """
+        reset attack counter back to max attacks
+        """
+        self.attacks = self.get_max_attacks()
+
+    def decrease_combat_ticker(self):
+        """
+        if in combat, decrease combat ticker
+        """
+        if self.combat_ticker > 0:
+            self.combat_ticker -= 1
+
+    def set_rest_ticker(self, value):
+        """
+        set rest ticker
+        """
+        self.rest_ticker = value
+
+    def set_combat_ticker(self, value):
+        """
+        set combat ticket
+        """
+        self.combat_ticker = value
+
+    def give_exp(self, target, vitality_before):
+        """
+        do it
+        """
+        # don't give exp for negative hp
+        if target.vit < 0:
+            target.vit = 0
+
+        # determine damage delta
+        total_damage = vitality_before - target.vit
+
+        # don't allow negative damage
+        if total_damage < 0:
+            total_damage = 0
+
+        # multiply damage done by unit of experience
+        exp_gain = int(total_damage * self._info.get_exp_per_point_of_damage(self.level, target.level))
+
+        # always give at least one xp
+        if exp_gain <= 0:
+            exp_gain = 1
+
+        self.experience += exp_gain
+
+    def increase_vitality(self):
+        """
+        increase vitality
+        """
+        species = self._species[self.species]
+        p_class = self._classes[self.p_class]
+
+        vitality = (species['vit']
+                    + p_class['vit']
+                    + randint(self._stat_ranges['min_vit'], self._stat_ranges['max_vit'])
+                    + self._hp_bonus[self.con]
+                    + self.vit_max
+                    )
+
+        self.vit = self.vit_max = vitality
+
+    def handle_pleased_by_gods(self):
+        """
+        increase a random stat by one
+        """
+        roll = random.randint(0, 5)
+        if roll == 0:
+            self.increase_int()
+        elif roll == 1:
+            self.increase_wis()
+        elif roll == 2:
+            self.increase_str()
+        elif roll == 3:
+            self.increase_con()
+        elif roll == 4:
+            self.increase_dex()
+        elif roll == 5:
+            self.increase_cha()
+
+    def increase_stat(self):
+        """
+        increase stat
+        """
+        roll = randint(1, 100)
+        if roll <= self._stat_increase_chance:
+            self.handle_pleased_by_gods()

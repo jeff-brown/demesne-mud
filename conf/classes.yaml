@@ -16,6 +16,7 @@
   vit: 0
   weapon: 0
   wis: 0
+  base_exp: 1025
 2:
   armor: 0
   cha: 4
@@ -34,6 +35,7 @@
   vit: -11
   weapon: 0
   wis: 4
+  base_exp: 1200
 3:
   armor: 0
   cha: 2
@@ -52,6 +54,7 @@
   vit: -5
   weapon: 0
   wis: 3
+  base_exp: 1125
 4:
   armor: 0
   cha: 0
@@ -70,6 +73,7 @@
   vit: -5
   weapon: 0
   wis: 2
+  base_exp: 1100
 5:
   armor: 0
   cha: 1
@@ -88,6 +92,7 @@
   vit: 0
   weapon: 0
   wis: 0
+  base_exp: 1100
 6:
   armor: 0
   cha: 4
@@ -106,6 +111,7 @@
   vit: -11
   weapon: 0
   wis: 4
+  base_exp: 1125
 7:
   armor: 0
   cha: 2
@@ -124,6 +130,7 @@
   vit: 0
   weapon: 0
   wis: 2
+  base_exp: 1025
 8:
   armor: 0
   cha: 4
@@ -142,3 +149,4 @@
   vit: -11
   weapon: 0
   wis: 4
+  base_exp: 1225

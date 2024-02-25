@@ -19,6 +19,7 @@ class Data:
         self.areas = self._get_areas()
         self.npcs = self._get_npcs()
         self.mobs = self._get_mobs()
+        self.messages = self._get_messages()
 
         print(f"init {__name__}")
 
@@ -43,6 +44,21 @@ class Data:
                 print(exc)
 
         return _npcs
+
+    @staticmethod
+    def _get_messages(conf="conf/messages.txt"):
+        """ read species from conf """
+        _messages = {}
+
+        with open(conf, "r") as stream:
+            try:
+                messages = stream.read()
+            except yaml.YAMLError as exc:
+                print(exc)
+
+        for m in messages.split("\n"):
+            _messages[m.split('=')[0]] = m.split('=')[1]
+        return _messages
 
     @staticmethod
     def _get_mobs(conf="conf/mobs.yaml"):

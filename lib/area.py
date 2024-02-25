@@ -5,6 +5,7 @@ from lib.chamber import Chamber
 
 class Area:
     """
+    @DynamicAttrs
     This class contains all of the functions to allow the game to operate
     """
 

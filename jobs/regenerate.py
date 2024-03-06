@@ -18,6 +18,9 @@ class Regenerate:
         """
 
         for pid, player in self._game.players.items():
+            if not player:
+                return
+
             if not player.is_playing:
                 return
 

@@ -89,10 +89,12 @@ class Combat:
             self._melee_result = MeleeResult.Miss
             return
 
-    def _determine_melee_damage(self, attacker, target, items):
+    def _determine_melee_damage(self, attacker, target, attacker_items, target_items):
         self._melee_damage = 0
-        attacker_weapon = items[attacker.weapon]
-        target_armor = items[target.armor]
+        print("attacker: ", attacker_items)
+        print("target: ", target_items)
+        attacker_weapon = attacker_items[attacker.weapon]
+        target_armor = target_items[target.armor]
 
         if self._melee_result == MeleeResult.Hit:
             base_damage = random.randint(attacker_weapon.min_damage, attacker_weapon.max_damage)
@@ -108,14 +110,14 @@ class Combat:
 
             self._melee_damage = final_damage
 
-    def _calculate_melee_result(self, attacker, target, items):
+    def _calculate_melee_result(self, attacker, target, attacker_items):
         """
         compile melee result message
         """
         message_to_player = None
         message_to_room = None
         message_to_victim = None
-        weapon = items[attacker.weapon]
+        weapon = attacker_items[attacker.weapon]
 
         if self._melee_result == MeleeResult.Miss:
             message_to_player = self._messages['ATTFUM']
@@ -166,7 +168,7 @@ class Combat:
         self._game.handle_messages(uid, message_to_player=message_to_player)
         self._game.handle_messages(uid, message_to_room=message_to_room)
 
-    def player_melee_attack(self, player, target, items):
+    def player_melee_attack(self, player, target, player_items, target_items):
         """ check to see if an attack hits and
 
             // Reset combat ticker only if the room contains mob.
@@ -190,7 +192,7 @@ class Combat:
         """
         vitality_before = target.vit
         self._determine_melee_hit(player, target)
-        self._determine_melee_damage(player, target, items)
+        self._determine_melee_damage(player, target, player_items, target_items)
         target.take_damage(self._melee_damage)
         player.give_exp(target, vitality_before)
         print(f"{player.name} has {player.attacks}")
@@ -199,9 +201,9 @@ class Combat:
             player.set_rest_ticker(12 + (random.randint(0, 2) - 1))
             player.resting = True
 
-        return self._calculate_melee_result(player, target, items)
+        return self._calculate_melee_result(player, target, player_items)
 
-    def mob_melee_attack(self, mob, target, items):
+    def mob_melee_attack(self, mob, target, mob_items, target_items):
         """ check to see if an attack hits and
 
             // Reset combat ticker only if the room contains mob.
@@ -225,9 +227,9 @@ class Combat:
         """
         for x in range(0, mob.num_attacks):
             self._determine_melee_hit(mob, target)
-            self._determine_melee_damage(mob, target, items)
+            self._determine_melee_damage(mob, target, mob_items, target_items)
             print(self._melee_result, self._melee_damage)
-            self._calculate_mob_melee_result(mob, target, items)
+            self._calculate_mob_melee_result(mob, target, mob_items)
             if target.take_damage(self._melee_damage):
                 pid = self._info.get_pid_by_name(self._game.players, target.name)
                 message_to_player = self._messages['YOUDED4']

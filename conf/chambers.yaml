@@ -412,7 +412,7 @@
     as if someone or something had used natural forces to create a very unnatural
     labyrinth. You have entered the lair of the minotaur.
   mob_types:
-  - 0
+  - 100
   npcs: []
   num: 1
   short: You are in a large cavern.

@@ -46,7 +46,7 @@ class Data:
         return _npcs
 
     @staticmethod
-    def _get_messages(conf="conf/messages.txt"):
+    def _get_messages(conf="conf/messages.properties"):
         """ read species from conf """
         _messages = {}
 

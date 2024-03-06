@@ -1,0 +1,52 @@
+  - tentacles
+  - thorny branches
+  - battleax
+  - gnashing teeth
+  - black sceptre
+  - bone hammer
+  - burning claws
+  - choking vines
+  - claws
+  - clenched fists
+  - curved horns
+  - dull teeth
+  - enchanted axe
+  - hooves
+  - flaming staff
+  - flaming sword
+  - frost rod
+  - gaping maw
+  - gaping mouth
+  - glowing sabre
+  - glowing sword
+  - gnashing teeth
+  - great axe
+  - great hammer
+  - great spear
+  - hooked beak
+  - huge bardiche
+  - huge club
+  - huge spear
+  - huge sword
+  - jeweled claymore
+  - lashing ivy
+  - mandibles
+  - maw
+  - rapier
+  - sabre
+  - scimitar
+  - sharp teeth
+  - shining sword
+  - skillfully slashed
+  - pincers
+  - spiked club
+  - stone axe
+  - stone sceptre
+  - tail
+  - talons
+  - tendrils
+  - thorny vines
+  - tiny teeth
+  - toothy maw
+  - tusks
+  - warhammer

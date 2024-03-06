@@ -43,13 +43,13 @@ class Mob:
         self.combat_ticker = 0
         self.paralysis_ticker = 0.0
 
-        self._game.items[self._game._next_item] = Weapon(random.choice(self.weapon_types))
-        self.weapon = self._game._next_item
-        self._game._next_item += 1
+        self._game.mob_items[self._game.next_mob_item] = Weapon(random.choice(self.weapon_types))
+        self.weapon = self._game.next_mob_item
+        self._game.next_mob_item += 1
 
-        self._game.items[self._game._next_item] = Armor(random.choice(self.armor_types))
-        self.armor = self._game._next_item
-        self._game._next_item += 1
+        self._game.mob_items[self._game.next_mob_item] = Armor(random.choice(self.armor_types))
+        self.armor = self._game.next_mob_item
+        self._game.next_mob_item += 1
 
         self._melee_hit_bonus = [
             -1,
@@ -79,7 +79,7 @@ MMSG5=\u0020The {0} seems to be in good physical health.
 MMSG4=\u0020It looks as if the {0} is lightly wounded.
         """
         _vit_msg = [100, 75, 50, 25, 0]
-        weapon = self._game.items[self.weapon]
+        weapon = self._game.mob_items[self.weapon]
         msg = self.description
         if weapon.classes > 0:
             msg = f"{msg.format(weapon.long)}"
@@ -106,6 +106,8 @@ MMSG4=\u0020It looks as if the {0} is lightly wounded.
         """
         players_here = {}
         for pid, player in self._game.players.items():
+            if not player:
+                continue
             if player.room == self.room:
                 players_here[pid] = player
 
@@ -153,7 +155,7 @@ MMSG4=\u0020It looks as if the {0} is lightly wounded.
         players_here = self._get_players_by_room()
         if players_here:
             target = random.choice(list(players_here.values()))
-            self._combat.mob_melee_attack(self, target, self._game.items)
+            self._combat.mob_melee_attack(self, target, self._game.mob_items, self._game.items)
 
         self.reset_activity_ticker()
 

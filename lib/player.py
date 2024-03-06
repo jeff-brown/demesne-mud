@@ -4,7 +4,6 @@ from random import randint
 import time
 
 from lib import data
-from lib.info import Info
 
 from enums.status import Status
 
@@ -14,11 +13,10 @@ class Player:
     This class contains all the basic informational commands
     """
 
-    def __init__(self, game):
+    def __init__(self):
         """ read in the config files """
         self._species = data.species
         self._classes = data.classes
-        self._info = Info(game)
         self._stat_ranges = data.stat_ranges
 
         print(f"init {__name__}")
@@ -34,7 +32,7 @@ class Player:
         self.room = [1, 4, 2]  # north plaza
         self.level = 1
         self.exp_base = 0
-        self.experience = 0
+        self.experience = 100000000
         self.gold = 0
         self.combat_skill = 70  # 70, yep 70
 
@@ -343,8 +341,8 @@ class Player:
             self.inventory.remove(soulstone)
         else:
             for inv in self.inventory:
-                items.remove(inv)
-                self.inventory.pop(inv)
+                items.pop(inv)
+                self.inventory.remove(inv)
             print(self.experience, self.gold)
             self.experience = int(self.experience * 0.8)
             self.gold = 0
@@ -430,6 +428,29 @@ class Player:
         """
         self.combat_ticker = value
 
+    @staticmethod
+    def get_exp_per_point_of_damage(player_level, mob_level):
+        """
+        Fuck if I know how exp is calculated.  It would be easier to just generate a random number!
+        This is my best guess, which involves the players level and mobs level.
+        """
+        mob_variance = round(random.uniform(.8, 1.2), 2)
+        level_difference = mob_level - player_level
+        exp_gain_variance = 1.25
+
+        if level_difference == -1:
+            exp_base = 2.0
+        elif level_difference == 0:
+            exp_base = 3.5
+        elif level_difference >= 2:
+            exp_base = 9.5
+        elif level_difference >= 1:
+            exp_base = 6.5
+        else:
+            exp_base = 2.0
+
+        return exp_base * mob_variance * exp_gain_variance * player_level
+
     def give_exp(self, target, vitality_before):
         """
         do it
@@ -446,7 +467,7 @@ class Player:
             total_damage = 0
 
         # multiply damage done by unit of experience
-        exp_gain = int(total_damage * self._info.get_exp_per_point_of_damage(self.level, target.level))
+        exp_gain = int(total_damage * self.get_exp_per_point_of_damage(self.level, target.level))
 
         # always give at least one xp
         if exp_gain <= 0:

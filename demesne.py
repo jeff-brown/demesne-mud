@@ -8,6 +8,7 @@ modified by: Jeff Brown - jeffbr@gmail.com
 """
 
 from random import randint
+import pickle
 import signal
 import sys
 from threading import Condition
@@ -49,12 +50,19 @@ class Game:
     This class contains all the functions to allow the game to operate
     """
 
-    def __init__(self, mud):
+    def __init__(self, mud, players, items):
         # public members
         self.players = {}
+        self.state = players
         self.mobs = {}
         self.next_mob = 0
-        self.items = {}
+        self.mob_items = {}
+        self.next_mob_item = 0
+        self.items = items
+        if items:
+            self._next_item = max([x for x in items.keys()]) + 1
+        else:
+            self._next_item = 0
 
         # private members
         self._area = Area()
@@ -76,7 +84,6 @@ class Game:
 
         # counter for assigning each client a new id
         self._nextid = 0
-        self._next_item = 0
         self._next_monster = 0
 
     def handle_messages(
@@ -145,7 +152,7 @@ class Game:
         players_here = self._info.get_players_here(uid, location, self.players)
         pids_here = self._info.get_pids_here(uid, location, self.players)
         if not room.is_illuminated(uid, pids_here, self.players, self.items):
-            self.handle_messages(uid, "It's too dark to see")
+            self.handle_messages(uid, self._data.messages['TOODRK'])
             return
 
         if room.npcs and params:
@@ -165,7 +172,7 @@ class Game:
 
         if command and not params:
             self.handle_messages(uid, room.long)
-            self.handle_messages(uid, message_to_room="{} is looking at around.".format(
+            self.handle_messages(uid, message_to_room=self._data.messages['LOKOTH'].format(
                 self.players[uid].name))
             return
 
@@ -175,48 +182,49 @@ class Game:
                     print(self._area.get_next_room(location, params[0]))
                     self._process_look_command(uid, location=self._area.get_next_room(location, params[0]))
                 else:
-                    self.handle_messages(uid, "You can't see anything in that direction!")
+                    self.handle_messages(uid, self._data.messages['NOEXIT'])
                 return
 
             if self.players[uid].name.lower() == params.lower():
-                self.handle_messages(uid, "You can't look at yourself!")
+                self.handle_messages(uid, self._data.messages['NOLSLF'])
                 return
 
             if [x for x in players_here if x.lower() == params.lower()]:
                 pid = self._info.get_pid_by_name(self.players, params)
                 msg = self._info.get_inspect_message(self.players[pid], self.items)
                 self.handle_messages(uid, msg)
-                self.handle_messages(uid, tid=pid, message_to_target="{} is looking at you!".format(
+                self.handle_messages(uid, tid=pid, message_to_target=self._data.messages['INSPCT'].format(
                             self.players[uid].name))
-                self.handle_messages(uid, tid=pid, message_to_room="{} is looking at {}.".format(
+                self.handle_messages(uid, tid=pid, message_to_room=self._data.messages['INSOTH1'].format(
                             self.players[uid].name, params.capitalize()))
 
             elif npc_here:
                 self.handle_messages(uid, npc_here.description)
-                self.handle_messages(uid, message_to_room="{} is looking at {}.".format(
+                self.handle_messages(uid, message_to_room=self._data.messages['INSOTH1'].format(
                     self.players[uid].name, npc_here.long))
 
             elif mob_here:
                 self.handle_messages(uid, mob_here.get_look_description())
-                self.handle_messages(uid, message_to_room="{} is looking at a {}.".format(
+                self.handle_messages(uid, message_to_room=self._data.messages['INMOTH'].format(
                     self.players[uid].name, mob_here.name))
 
             else:
-                self.handle_messages(uid, "You don't see {} nearby.".format(params.capitalize()))
+                self.handle_messages(uid, self._data.messages['ARNNHR'].format(params.capitalize()))
             return
 
         # send player a message containing the list of players in the room
-        self.handle_messages(uid, room.short)
+        msg = self._data.messages['YELLO'] + room.short + self._data.messages['WHITE']
+        self.handle_messages(uid, msg)
 
         # list npcs if there are any
         if len(room.npcs) == 1:
-            self.handle_messages(uid, "There is {} here.".format(room.npcs[0].long))
+            self.handle_messages(uid, self._data.messages['SOMTNG'].format(room.npcs[0].long))
         elif len(room.npcs) == 2:
-            self.handle_messages(uid, "There is {} and {} here.".format(room.npcs[0].long, room.npcs[1].long))
+            self.handle_messages(uid, self._data.messages['SOMTN2'].format(room.npcs[0].long, room.npcs[1].long))
         elif len(room.npcs) > 2:
             self.handle_messages(
                 uid,
-                "There is {} and {} here.".format(
+                self._data.messages['SOMTN2'].format(
                     ", ".join([x.long for x in room.npcs[:-1]]), room.npcs[-1])
             )
 
@@ -230,27 +238,27 @@ class Game:
             mobs_in_room.append(self.mobs[mob].name)
 
         if len(mobs_in_room) == 1:
-            self.handle_messages(uid, "There is a {} here.".format(mobs_in_room[0]))
+            self.handle_messages(uid, self._data.messages['SOMMNG'].format(mobs_in_room[0]))
         elif len(mobs_in_room) == 2:
             self.handle_messages(
-                uid, "There is a {} and a {} here.".format(
+                uid, self._data.messages['SOMMN2'].format(
                     mobs_in_room[0], mobs_in_room[1]))
         elif len(room.mobs) > 2:
             self.handle_messages(
                 uid,
-                "There is a {} and a {} here.".format(
+                self._data.messages['SOMMN2'].format(
                     ", ".join([x for x in mobs_in_room[:-1]]), mobs_in_room[-1])
             )
 
         # list players if there are any
         if len(players_here) == 0 and not room.npcs and not room.mobs:
-            self.handle_messages(uid, "There is nobody here.")
+            self.handle_messages(uid, self._data.messages['BYSELF'])
         elif len(players_here) == 1:
-            self.handle_messages(uid, "{} is here with you.".format(players_here[0]))
+            self.handle_messages(uid, self._data.messages['ONEOTH'].format(players_here[0]))
         elif len(players_here) == 2:
-            self.handle_messages(uid, "{} and {} are here with you.".format(players_here[0], players_here[1]))
+            self.handle_messages(uid, self._data.messages['SOMMN3'].format(players_here[0], players_here[1]))
         elif len(players_here) > 2:
-            self.handle_messages(uid, "{} and {} are here with you.".format(", ".join(players_here[:-1]), players_here[-1]))
+            self.handle_messages(uid, self._data.messages['SOMMN3'].format(", ".join(players_here[:-1]), players_here[-1]))
 
         # list items that are on the floor
         items_on_floor = []
@@ -258,17 +266,22 @@ class Game:
             items_on_floor.append(self.items[item].long)
 
         if len(items_on_floor) == 0:
-            self.handle_messages(uid, "There is nothing on the floor.")
+            self.handle_messages(uid, self._data.messages['NOTING'])
         elif len(items_on_floor) == 1:
-            self.handle_messages(uid, "There is {} on the floor.".format(items_on_floor[0]))
+            msg = f"{self._data.messages['SOMTN3']} {items_on_floor[0]} {self._data.messages['ONFLOR']}"
+            self.handle_messages(uid, msg)
         elif len(items_on_floor) == 2:
-            self.handle_messages(uid, "There is {} and {} on the floor.".format(items_on_floor[0], items_on_floor[1]))
-        elif len(items_on_floor) > 2:
-            self.handle_messages(
-                uid,
-                "There is {} and {} on the floor.".format(
-                    ", ".join(items_on_floor[:-1]), items_on_floor[-1])
+            msg = (
+                f"{self._data.messages['SOMTN3']} {items_on_floor[0]} and {items_on_floor[1]} "
+                f"{self._data.messages['ONFLOR']}"
             )
+            self.handle_messages(uid, msg)
+        elif len(items_on_floor) > 2:
+            msg = (
+                f"{self._data.messages['SOMTN3']} {', '.join(items_on_floor[:-1])} and {items_on_floor[-1]} "
+                f"{self._data.messages['ONFLOR']}"
+            )
+            self.handle_messages(uid, msg)
 
     def _process_help_command(self, uid, command, params):
         """
@@ -352,11 +365,10 @@ class Game:
         print(vars(self.players[uid]))
 
         # go through all the players in the game
-        self.handle_messages(uid, global_message="{} entered the game".format(self.players[uid].name))
+        self.handle_messages(uid, global_message=self._data.messages['XARENT'].format(self.players[uid].name))
 
         # send the new player a welcome message
-        self.handle_messages(uid, "Welcome to the game, {}. ".format(
-            self.players[uid].name))
+        self.handle_messages(uid, self._data.messages['WELCO1'].format(self.players[uid].name))
 
         # send the new player the description of their current room
         self._process_look_command(uid)
@@ -367,13 +379,13 @@ class Game:
         """
         if self._info.get_players_here(uid, self.players[uid].room, self.players):
             self.handle_messages(uid, message_to_room=(
-                    "{} says: {}".format(self.players[uid].name, " ".join([command, params]))
+                    self._data.messages['MSGFRM'].format(self.players[uid].name, " ".join([command, params]))
                 )
             )
-            self.handle_messages(uid, "--- Message Sent ---")
+            self.handle_messages(uid, self._data.messages['MSGSNT'])
             return
 
-        self.handle_messages(uid, "Sorry, that is not an appropriate command.")
+        self.handle_messages(uid, self._data.messages['BYSELF2'])
 
     def _process_stats_command(self, uid):
         """
@@ -410,14 +422,13 @@ class Game:
         """
         exits = [self._area.exits[x] for x in self._area.get_cur_exits(self.players[uid].room)]
         if len(exits) == 0:
-            self.handle_messages(uid, "There are no exits.")
+            self.handle_messages(uid, self._data.messages['NOEXT1'])
         elif len(exits) == 1:
-            self.handle_messages(uid, "There is an exit to the {}.".format(exits[0]))
+            self.handle_messages(uid, self._data.messages['ONEEXT'].format(exits[0]))
         elif len(exits) == 2:
-            self.handle_messages(uid, "There are exits to the {} and {}.".format(exits[0], exits[1]))
+            self.handle_messages(uid, self._data.messages['SOMEXT'].format(exits[0], exits[1]))
         else:
-            self.handle_messages(uid, "There are exits to the {} and {}.".format(", ".join(exits[:-1]),
-                                                                              exits[-1]))
+            self.handle_messages(uid, self._data.messages['SOMEXT'].format(", ".join(exits[:-1]), exits[-1]))
         return
 
     def _process_reroll_command(self, uid):
@@ -431,48 +442,36 @@ class Game:
         """
         let a player buy a mean or drink in a tavern
         """
-        _meal_cost = 2
-        _drink_cost = 1
+        meal_cost = 2
+        drink_cost = 1
 
         if not [x for x in ['meal', 'drink'] if x == params]:
-            self.handle_messages(uid, "Sorry, that item is not available here.")
+            self.handle_messages(uid, self._data.messages['NOSITM'])
             return
 
         if params == "meal":
-            if _meal_cost > self.players[uid].gold:
-                self.handle_messages(uid, "You can't afford a meal.")
+            if meal_cost > self.players[uid].gold:
+                self.handle_messages(uid, self._data.messages['CNTAFD'].format(params))
                 return
 
-            self.handle_messages(uid, f"The barmaid brings you a meal for {_meal_cost} crowns.")
-            self.handle_messages(
-                uid,
-                message_to_room=(
-                    f"The barmaid brings a hot meal over to {self.players[uid].name} "
-                    "in exchange for a handful of coins."
-                )
-            )
+            self.handle_messages(uid, self._data.messages['YOUGTM'].format(meal_cost))
+            self.handle_messages(uid, message_to_room=self._data.messages['OTHGTM'].format(self.players[uid].name))
             self.players[uid].hunger_ticker = time.time()
             self.players[uid].status = Status.Healthy
-            self.players[uid].gold -= _meal_cost
+            self.players[uid].gold -= meal_cost
 
             return
 
         if params == "drink":
-            if _drink_cost > self.players[uid].gold:
-                self.handle_messages(uid, "You can't afford a drink.")
+            if drink_cost > self.players[uid].gold:
+                self.handle_messages(uid, self._data.messages['CNTAFD'].format(params))
                 return
 
-            self.handle_messages(uid, f"The barmaid brings you a drink for {_drink_cost} gold.")
-            self.handle_messages(
-                uid,
-                message_to_room=(
-                    f"The barmaid brings a cold drink over to {self.players[uid].name} "
-                    "in exchange for a handful of coins."
-                )
-            )
+            self.handle_messages(uid, self._data.messages['YOUGTD'].format(meal_cost))
+            self.handle_messages(uid, message_to_room=self._data.messages['OTHGTD'].format(self.players[uid].name))
             self.players[uid].thirst_ticker = time.time()
             self.players[uid].status = Status.Healthy
-            self.players[uid].gold -= _meal_cost
+            self.players[uid].gold -= meal_cost
 
             return
 
@@ -481,7 +480,7 @@ class Game:
         do the temple stuff
         """
         if not [x for x in ['healing'] if x == params]:
-            self.handle_messages(uid, "The priests don't offer that service.")
+            self.handle_messages(uid, self._data.messages['DNTOFF'])
             return
 
         if params == "healing":
@@ -489,19 +488,13 @@ class Game:
             cost_to_heal = int((damage_to_heal / 10) + 1)
 
             if cost_to_heal > self.players[uid].gold:
-                self.handle_messages(uid, "You can't afford healing.")
+                self.handle_messages(uid, self._data.messages['CNTAFD'].format(params))
                 return
 
-            self.handle_messages(uid, f"The priests heal all your wounds for {cost_to_heal} gold.")
+            self.handle_messages(uid, self._data.messages['YOUGTH'].format(cost_to_heal))
             self.handle_messages(
                 uid,
-                message_to_room=(
-                    f"The temple priests take {self.players[uid].name} into another chamber briefly, "
-                    f"after which they return. You notice that all of {self.players[uid].name}'s "
-                    f"wounds have been healed..."
-                )
-            )
-
+                message_to_room=self._data.messages['OTHGTH'].format(self.players[uid].name, self.players[uid].name))
             self.players[uid].gold -= cost_to_heal
             self.players[uid].vit = self.players[uid].vit_max
 
@@ -536,22 +529,22 @@ class Game:
                 avail_items.append(item)
 
         if not avail_items:
-            self.handle_messages(uid, "The shopkeeper doesn't seem to have that.")
+            self.handle_messages(uid, self._data.messages['NSOHER'])
             return
 
         if len(avail_items) > 1:
-            self.handle_messages(uid, "Sorry, you'll need to be more specific.")
+            self.handle_messages(uid, self._data.messages['BMRSPC'])
             return
 
         # found it
         avail_item = avail_items[0]
 
         if not avail_item.can_use(self.players[uid]):
-            self.handle_messages(uid, "Sorry, you can't use that.")
+            self.handle_messages(uid, self._data.messages['CNTUSE'].format(avail_item.long))
             return
 
         if self.players[uid].level < avail_item.level:
-            self.handle_messages(uid, "You're not a high enough level to use that!")
+            self.handle_messages(uid,  self._data.messages['TOOINX'])
             return
 
         variance = randint(0, 21) - 10
@@ -566,15 +559,15 @@ class Game:
             mod_cost = 1
 
         if mod_cost > self.players[uid].gold:
-            self.handle_messages(uid, "Sorry, you don't have enough gold purchase {}.".format(avail_item.long))
+            self.handle_messages(uid, self._data.messages['CNTAFD'].format(avail_item.long))
             return
 
         if len(self.players[uid].inventory) + 1 > self.players[uid].max_inv:
-            self.handle_messages(uid, "Sorry, you don't have enough room in your inventory for {}.".format(avail_item.long))
+            self.handle_messages(uid, self._data.messages['INVFUL'])
             return
 
         if self._info.get_enc(self.players[uid], self.items) + avail_item.weight > self.players[uid].max_enc:
-            self.handle_messages(uid, "Sorry, you're not strong enough to carry {}'.".format(avail_item.long))
+            self.handle_messages(uid, self._data.messages['TOOHVY'])
             return
 
         # add it to inventory!
@@ -584,11 +577,10 @@ class Game:
         self._next_item += 1
 
         # go through all the players in the game
-        self.handle_messages(uid, message_to_room="{} purchased {}.".format(
+        self.handle_messages(uid, message_to_room=self._data.messages['BUYOTH'].format(
             self.players[uid].name, avail_item.long))
 
-        self.handle_messages(uid, "You purchased {} for {} gold.".format(
-            avail_item.long, mod_cost))
+        self.handle_messages(uid, self._data.messages['YOUGOT'].format(avail_item.long, mod_cost))
 
         print(self.players[uid].inventory)
         print(self.items)
@@ -610,22 +602,25 @@ class Game:
                 break
 
         if not item_to_get:
-            self.handle_messages(uid, "Sorry, but you don't see that nearby.")
+            self.handle_messages(uid, self._data.messages['NSIHER'])
             return
 
         if len(self.players[uid].inventory) >= 8:
-            self.handle_messages(uid, "Sorry, but there is no more room in your inventory.")
+            self.handle_messages(uid, self._data.messages['INVFUL'])
+            return
+
+        if self._info.get_enc(self.players[uid], self.items) + item_to_get.weight > self.players[uid].max_enc:
+            self.handle_messages(uid, self._data.messages['TOOHVY'])
             return
 
         self.players[uid].inventory.append(index_of_item)
         room.items.remove(index_of_item)
 
         # go through all the players in the game
-        self.handle_messages(uid, message_to_room="{} just picked up {}.".format(
+        self.handle_messages(uid, message_to_room=self._data.messages['GETOTH'].format(
             self.players[uid].name, item_to_get.long))
 
-        self.handle_messages(uid, "You picked up {}.".format(
-            item_to_get.long))
+        self.handle_messages(uid, self._data.messages['YOUTAK'].format(item_to_get.long))
 
     def _handle_give_gold(self, uid, player_to, amt_from):
         """
@@ -635,39 +630,40 @@ class Game:
         print(pid)
 
         if pid == uid:
-            self.handle_messages(uid, "Sorry, you can't give gold to yourself.")
+            self.handle_messages(uid, self._data.messages['NOGSLF'])
             return
 
         players_here = self._info.get_players_here(uid, self.players[uid].room, self.players)
         if not [x for x in players_here if x.lower() == player_to.lower()]:
-            self.handle_messages(uid, "Sorry, you don't see them nearby.")
+            self.handle_messages(uid, self._data.messages['ARNNHR'].format(player_to))
             return
 
         if pid is None:
-            self.handle_messages(uid, "You don't see {} nearby.".format(player_to.capitalize()))
+            self.handle_messages(uid, self._data.messages['ARNNHR'].format(player_to.capitalize()))
             return
 
         if amt_from <= 0:
-            self.handle_messages(uid, "You need to give at least 1 gold.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if amt_from > self.players[uid].gold:
-            self.handle_messages(uid, "You don't seem to have enough.")
+            self.handle_messages(uid, self._data.messages['DNTHVG'])
             return
 
-        if self.players[pid].enc + int(amt_from * 0.2) > self.players[pid].max_enc:
+        print(self.players[pid].enc, int(amt_from * 0.2), self.players[pid].max_enc)
+        if self._info.get_enc(self.players[pid], self.items) + int(amt_from * 0.2) > self.players[pid].max_enc:
             self.handle_messages(
-                uid, "Sorry, {} can''t carry that much more gold.".format(self.players[pid].name))
+                uid, self._data.messages['CNTGGP'].format(self.players[pid].name))
             return
 
         self.players[uid].gold -= amt_from
         self.players[pid].gold += amt_from
 
-        self.handle_messages(uid, "You gave {} gold coins to {}.".format(amt_from, self.players[pid].name))
+        self.handle_messages(uid, self._data.messages['YOUGVG'].format(amt_from, self.players[pid].name))
         self.handle_messages(
-            uid, tid=pid, message_to_target="{} gave you {} gold coins.".format(self.players[uid].name, amt_from))
+            uid, tid=pid, message_to_target=self._data.messages['YOUGTG'].format(self.players[uid].name, amt_from))
         self.handle_messages(
-            uid, tid=pid, message_to_room="{} gave some gold coins to {}.".format(self.players[uid].name, self.players[pid].name))
+            uid, tid=pid, message_to_room=self._data.messages['JSTGVG'].format(self.players[uid].name, self.players[pid].name))
 
     def _process_light_command(self, uid, command, params):
         """
@@ -676,7 +672,7 @@ class Game:
         item_to_light = None
 
         if not params:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         for index, item in enumerate(self.players[uid].inventory):
@@ -685,22 +681,25 @@ class Game:
                 break
 
         if not item_to_light:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if not item_to_light.equip_sub_type == 'light':
-            self.handle_messages(uid, "Sorry, you can't light that.")
+            self.handle_messages(uid, self._data.messages['NOTLIT'])
             return
 
         if item_to_light.is_activated:
-            self.handle_messages(uid, f"Sorry, {item_to_light.type} is already lit.")
+            self.handle_messages(uid, self._data.messages['ALRLIT'])
             return
 
         item_to_light.is_activated = True
         item_to_light.effect_ticker = time.time()
 
-        self.handle_messages(uid, f"Your {item_to_light.type} now provides you with light.")
-        self.handle_messages(uid, message_to_room=f"{self.players[uid].name} just lit {item_to_light.long}.")
+        self.handle_messages(uid, self._data.messages['YOULIT'].format(item_to_light.type))
+        self.handle_messages(
+            uid,
+            message_to_room=self._data.messages['OTHLIT'].format(self.players[uid].name, item_to_light.type)
+        )
 
         self._process_look_command(uid)
 
@@ -717,28 +716,32 @@ class Game:
                 break
 
         if not item_to_give:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         pid = self._info.get_pid_by_name(self.players, player_to)
         print(pid)
 
         if pid == uid:
-            self.handle_messages(uid, "Sorry, you can't give items to yourself.")
+            self.handle_messages(uid, self._data.messages['NOGSLF'])
             return
 
         players_here = self._info.get_players_here(uid, self.players[uid].room, self.players)
 
         if not [x for x in players_here if x.lower() == player_to.lower()]:
-            self.handle_messages(uid, "Sorry, you don't see them nearby.")
+            self.handle_messages(uid, self._data.messages['ARNNHR'].format(player_to))
             return
 
         if len(self.players[pid].inventory) >= 8:
-            self.handle_messages(uid, "Sorry, {} can't carry anything else.".format(player_to.capitalize()))
+            self.handle_messages(uid, self._data.messages['CNTGIV'].format(self.players[pid].name))
+            self.handle_messages(uid, tid=pid, message_to_target=self._data.messages['TRDGIV'].format(self.players[pid].name, item_to_give.type))
+            self.handle_messages(uid, tid=pid, message_to_room=self._data.messages['DNTGIV'].format(self.players[uid].name, self.players[pid].name))
             return
 
-        if self.players[pid].enc + item_to_give.weight >= self.players[pid].max_enc:
-            self.handle_messages(uid, "Sorry, {} can't carry any more weight.".format(player_to.capitalize()))
+        if self._info.get_enc(self.players[pid], self.items) + item_to_give.weight >= self.players[pid].max_enc:
+            self.handle_messages(uid, self._data.messages['CNTHDL'].format(self.players[pid].name))
+            self.handle_messages(uid, tid=pid, message_to_target=self._data.messages['UCNHDL'].format(self.players[pid].name, item_to_give.type))
+            self.handle_messages(uid, tid=pid, message_to_room=self._data.messages['DNTGIV'].format(self.players[uid].name, self.players[pid].name))
             return
 
         self.players[pid].inventory.append(index_of_item)
@@ -749,13 +752,13 @@ class Game:
 
         print(uid, pid)
 
-        message_to_room = "{} gave {} to {}.".format(self.players[uid].name, item_to_give.long, player_to.capitalize())
+        message_to_room = self._data.messages['JSTGAV'].format(self.players[uid].name, player_to.capitalize())
         self.handle_messages(uid, tid=pid, message_to_room=message_to_room)
 
-        message_to_target = "{} just gave you {}".format(self.players[uid].name, item_to_give.long)
+        message_to_target = self._data.messages['YOUGET'].format(self.players[uid].name, item_to_give.long)
         self.handle_messages(uid, tid=pid, message_to_target=message_to_target)
 
-        message_to_player = "You just gave {} to {}.".format(item_to_give.long, player_to.capitalize())
+        message_to_player = self._data.messages['YOUGAV'].format(item_to_give.type, player_to.capitalize())
         self.handle_messages(uid, message_to_player=message_to_player)
 
     def _process_give_command(self, uid, command, params):
@@ -768,7 +771,7 @@ class Game:
         """
 
         if len(params.split()) == 1:
-            self.handle_messages(uid, "What do you want to give to {}.".format(params))
+            self._process_say_command(uid, command, params)
             return
         elif len(params.split()) == 2:
             player_to, item_from = params.split()
@@ -778,7 +781,7 @@ class Game:
             if gold == 'gold' and amt_from.isnumeric():
                 self._handle_give_gold(uid, player_to, int(amt_from))
                 return
-            self.handle_messages(uid, "Sorry, but you don't seem to have one.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
         else:
             self._process_say_command(uid, command, params)
@@ -800,15 +803,15 @@ class Game:
                 break
 
         if not item_to_drop:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if room.is_town():
-            self.handle_messages(uid, "Sorry, littering is not permitted here.")
+            self.handle_messages(uid, self._data.messages['NODHER'])
             return
 
         if len(room.items) >= 8:
-            self.handle_messages(uid, "Sorry, but there is no more room here to drop items.")
+            self.handle_messages(uid, self._data.messages['NDPITM'])
             return
 
         room.items.append(index_of_item)
@@ -817,11 +820,9 @@ class Game:
         print(self._area.grid[z][x][y].items)
 
         # go through all the players in the game
-        self.handle_messages(uid, message_to_room="{} just dropped {}.".format(
-            self.players[uid].name, item_to_drop.long))
+        self.handle_messages(uid, message_to_room=self._data.messages['DRPOTH'].format(self.players[uid].name, item_to_drop.long))
 
-        self.handle_messages(uid, "You dropped your {}.".format(
-            item_to_drop.type))
+        self.handle_messages(uid, self._data.messages['DRPITM'].format(item_to_drop.type))
 
     def _handle_drink_potion(self, uid, item_to_drink, index_of_item):
         """
@@ -1191,7 +1192,7 @@ class Game:
             return
 
         message_to_player, message_to_room, message_to_target = (
-            self._combat.player_melee_attack(self.players[uid], target, self.items))
+            self._combat.player_melee_attack(self.players[uid], target, self.items, self.mob_items))
 
         self.handle_messages(uid, message_to_player=message_to_player)
         self.handle_messages(uid, message_to_room=message_to_room)
@@ -1247,17 +1248,17 @@ class Game:
             # The dictionary key is the player's id number. We set their room
             # None initially until they have entered a name
             # Try adding more player stats - level, gold, inventory, etc
-            self.players[pid] = Player(self)
+            self.players[pid] = None
 
             # send the new player a prompt for their name
-            self.handle_messages(pid, "What is your name?")
+            self._mud.send_message(pid, "What is your name?")
 
     def check_for_disconnected_players(self):
         """
         check to see if anyone disconnected since last update
         """
         for uid in self._mud.get_disconnected_players():
-
+            print("disconnected ", uid)
             # if for any reason the player isn't in the player map, skip them
             # move on to the next one
             if uid not in self.players:
@@ -1283,9 +1284,23 @@ class Game:
 
             # if the player hasn't given their name yet, use this first command
             # their name and move them to the starting room.
-            if self.players[uid].name is None:
+            if self.players[uid] is None:
+                if command.capitalize() in self.state:
+                    if self.state[command.capitalize()] in self.players.values():
+                        print(f"panic player {command.capitalize()} is already playing")
+                        self._mud.get_disconnect(uid)
+                        del self.players[uid]
+                        continue
+                    self.players[uid] = self.state[command.capitalize()]
+                    self.handle_messages(uid, f"Welcome back {self.players[uid].name}.")
+                    self._process_look_command(uid)
+                    print("state ", self.state)
+                    print("players ", self.players)
+                    continue
 
+                self.players[uid] = Player()
                 self.players[uid].name = command.capitalize()
+                self.state[self.players[uid].name] = self.players[uid]
 
                 self.handle_messages(uid, "")
                 self.handle_messages(uid, "+==========+============+")
@@ -1478,6 +1493,16 @@ class Game:
             else:
                 self._process_say_command(uid, command, params)
 
+    def save_state(self):
+        """
+        pickle stuff to disk
+        """
+        with open('/tmp/players.pkl', "wb") as file:
+            pickle.dump(self.state, file)
+
+        with open('/tmp/items.pkl', 'wb') as file:
+            pickle.dump(self.items, file)
+
 
 def _stop(stop_signal, frame):  # pylint: disable=unused-argument
     """
@@ -1503,6 +1528,8 @@ def _game_loop(mud, game):
 
     game.check_for_new_commands()
 
+    game.save_state()
+
 
 def _initialize_lairs(game):
     """
@@ -1523,7 +1550,7 @@ def _initialize_lairs(game):
     print([y.name for x, y in game.mobs.items()])
 
 
-def _initialize_jobs(mud):
+def _initialize_jobs(mud, players, items):
     """ run some background tasks """
     job_defaults = {
         'coalesce': True
@@ -1531,7 +1558,7 @@ def _initialize_jobs(mud):
     scheduler = BackgroundScheduler()
     scheduler.configure(job_defaults=job_defaults, timezone='UTC')
 
-    game = Game(mud)
+    game = Game(mud, players, items)
     _initialize_lairs(game)
     sustenance = Sustenance(game)
     regenerate = Regenerate(game)
@@ -1623,18 +1650,40 @@ def _initialize_jobs(mud):
         return False
 
 
+def _load_state():
+    """
+    read state from disk
+    """
+    players = {}
+    items = {}
+    try:
+        with open("/tmp/players.pkl", "rb") as file:
+            players = pickle.load(file)
+    except Exception as ex:
+        print(ex)
+
+    try:
+        with open('/tmp/items.pkl', 'rb') as file:
+            items = pickle.load(file)
+    except Exception as ex:
+        print(ex)
+
+    return players, items
+
+
 def main():
     """
     function main
     args: none
     returns: none
     """
+    players, items = _load_state()
 
     # start the server
     mud = Mud()
 
     # schedule the game jobs
-    _initialize_jobs(mud)
+    _initialize_jobs(mud, players, items)
 
 
 if __name__ == '__main__':

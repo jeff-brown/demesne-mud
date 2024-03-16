@@ -27,6 +27,7 @@ from lib.equipment import Equipment
 from lib.mob import Mob
 from lib.combat import Combat
 from lib.gong import Gong
+from lib.bank import Bank
 from lib.training import Training
 
 # like it's a job
@@ -71,6 +72,7 @@ class Game:
         self._combat = Combat(self)
         self._gong = Gong(self)
         self._training = Training(self)
+        self._bank = Bank(self)
 
         self.grid = self._area.grid
         self._mud = mud
@@ -807,6 +809,7 @@ class Game:
             return
 
         if room.is_town():
+
             self.handle_messages(uid, self._data.messages['NODHER'])
             return
 
@@ -843,7 +846,7 @@ class Game:
 
         elif item_to_drink.equip_sub_type == 'strength boost':
             if self.players[uid].str_boo > 0:
-                self.handle_messages(uid, "Nothing happens!")
+                self.handle_messages(uid, self._data.messages['NTHHPS'])
                 return
 
             boost = randint(10, item_to_drink.min_value_range)
@@ -856,7 +859,7 @@ class Game:
 
         elif item_to_drink.equip_sub_type == 'dexterity boost':
             if self.players[uid].dex_boo > 0:
-                self.handle_messages(uid, "Nothing happens!")
+                self.handle_messages(uid, self._data.messages['NTHHPS'])
                 return
 
             boost = randint(10, item_to_drink.min_value_range)
@@ -872,8 +875,8 @@ class Game:
 
         self.items.pop(index_of_item)
         self.players[uid].inventory.remove(index_of_item)
-        self.handle_messages(uid, f"You feel somehow different after drinking {item_to_drink.long}.")
-        self.handle_messages(uid, message_to_room=f"{self.players[uid].name} just took a drink of something.")
+        self.handle_messages(uid, self._data.messages['YOUDPT'].format(item_to_drink.long))
+        self.handle_messages(uid, message_to_room=self._data.messages['OTHDRK'].format(self.players[uid].name))
 
         return
 
@@ -889,11 +892,11 @@ class Game:
                 index_of_item = item
 
         if not item_to_drink:
-            self.handle_messages(uid, "Sorry, you don't seem to have any.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if not isinstance(item_to_drink, Equipment):
-            self.handle_messages(uid, "Sorry, you can't drink that.")
+            self.handle_messages(uid, self._data.messages['NODRNK'])
             return
 
         if item_to_drink.equip_type == 'potion':
@@ -901,15 +904,15 @@ class Game:
             return
 
         if item_to_drink.equip_sub_type != 'water':
-            self.handle_messages(uid, "Sorry, you can't drink that.")
+            self.handle_messages(uid, self._data.messages['NODRNK'])
             return
 
-        self.handle_messages(uid, "The water quenches your thirst.")
+        self.handle_messages(uid, self._data.messages['YOUDRK'])
         self.handle_messages(
             uid,
-            message_to_room=f"{self.players[uid].name} just took a drink from {item_to_drink.long}.")
+            message_to_room=self._data.messages['OTHDRK'].format(self.players[uid].name))
 
-        # it's food, eat it
+        # it's water, drink it
         self.players[uid].thirst_ticker = time.time()
         self.players[uid].status = Status.Healthy
         self.items.pop(index_of_item)
@@ -927,21 +930,21 @@ class Game:
                 index_of_item= item
 
         if not item_to_eat:
-            self.handle_messages(uid, "Sorry, you don't seem to have any.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if not isinstance(item_to_eat, Equipment):
-            self.handle_messages(uid, "Sorry, you can't eat that.")
+            self.handle_messages(uid, self._data.messages['NOTEAT'])
             return
 
         if item_to_eat.equip_sub_type != 'food':
-            self.handle_messages(uid, "Sorry, you can't eat that.")
+            self.handle_messages(uid, self._data.messages['NOTEAT'])
             return
 
-        self.handle_messages(uid, "You feel much better after eating a meal.")
+        self.handle_messages(uid, self._data.messages['YOUATE'])
         self.handle_messages(
             uid,
-            message_to_room=f"{self.players[uid].name} just ate {item_to_eat.long}.")
+            message_to_room= self._data.messages['OTHATE'].format(self.players[uid].name, item_to_eat.long))
 
         # it's food, eat it
         self.players[uid].hunger_ticker = time.time()
@@ -968,7 +971,7 @@ class Game:
                 index_of_item = item
 
         if not item_for_sale:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         shop_is_interested = False
@@ -978,16 +981,16 @@ class Game:
                 break
 
         if not shop_is_interested:
-            self.handle_messages(uid, "Sorry, the shopkeeper doesn't want that.")
+            self.handle_messages(uid, self._data.messages['NOSHER'])
             return
 
         proceeds = -(-item_for_sale.value // 2)   # round up!
 
         # go through all the players in the game
-        self.handle_messages(uid, "{} sold {}.".format(
+        self.handle_messages(uid, message_to_room=self._data.messages['SLDOTH'].format(
             self.players[uid].name, item_for_sale.long))
 
-        self.handle_messages(uid, "You sold {} for {} gold.".format(
+        self.handle_messages(uid, self._data.messages['SLDITM'].format(
             item_for_sale.long, proceeds))
 
         print(self.players[uid].inventory)
@@ -1023,15 +1026,15 @@ class Game:
                 index_of_item = item
 
         if not item_to_equip:
-            self.handle_messages(uid, "Sorry, you don't seem to have that.")
+            self.handle_messages(uid, self._data.messages['DNTHAV'])
             return
 
         if not item_to_equip.can_use(self.players[uid]):
-            self.handle_messages(uid, "Sorry, you can't equip that.")
+            self.handle_messages(uid, self._data.messages['NOEQTH'])
             return
 
         if self.players[uid].level < item_to_equip.level:
-            self.handle_messages(uid, "You're not a high enough level to equip that.")
+            self.handle_messages(uid, self._data.messages['TOOINX'])
             return
 
         print(type(item_to_equip))
@@ -1067,14 +1070,15 @@ class Game:
             equipped = True
 
         if not equipped:
+            self.handle_messages(uid, self._data.messages['NOEQTH'])
             return
 
         # go through all the players in the game
-        self.handle_messages(uid, message_to_room="{} just equipped {}.".format(
+        self.handle_messages(uid, message_to_room=self._data.messages['OTHEQU'].format(
             self.players[uid].name, item_to_equip.long))
 
-        self.handle_messages(uid, "You just equipped {} and removed {}.".format(
-            item_to_equip.long, self.items[old_item].long))
+        self.handle_messages(uid, self._data.messages['YOUEQU'].format(
+            item_to_equip.type, self.items[old_item].type))
 
     def _process_experience_command(self, uid):
         """
@@ -1092,48 +1096,47 @@ class Game:
         for item in self.players[uid].inventory:
             inventory.append(self.items[item].long)
 
-        if not inventory:
-            self.handle_messages(uid, f"You are carrying {self.players[uid].gold} gold coins.")
-            return
+        msg = self._data.messages['INVDSP'].format(self.players[uid].gold)
 
-        msg = f"You are carrying {self.players[uid].gold} gold coins "
-
-        if len(inventory) == 1:
-            msg += "and {}.".format(inventory[0])
+        if len(inventory) == 0:
+            msg += "."
+        elif len(inventory) == 1:
+            msg += " and {}.".format(inventory[0])
         elif len(inventory) == 2:
-            msg += "{} and {}.".format(inventory[0], inventory[1])
+            msg += " {} and {}.".format(inventory[0], inventory[1])
         else:
-            msg += "{} and {}.".format(", ".join(inventory[:-1]), inventory[-1])
+            msg += " {} and {}.".format(", ".join(inventory[:-1]), inventory[-1])
 
         self.handle_messages(uid, msg)
 
-    def _process_list_items_command(self, uid):
+    def _process_list_items_command(self, uid, command, params):
         """
         list items in shops you can buy
         """
         room_is_shop = self._info.room_is_shop(self.players[uid])
 
         if not room_is_shop:
+            self._process_say_command(uid, command, params)
             return
 
         items = self._info.get_item_list(room_is_shop)
 
         self.handle_messages(uid, "")
         self.handle_messages(uid, "+======================+======+==+")
-        self.handle_messages(uid, "| Item                 |   Price |")
+        self.handle_messages(uid, "| [1;36mItem[1;37m                 |   [1;36mPrice[1;37m |")
         self.handle_messages(uid, "+----------------------+---------+")
 
         for item in sorted(items, key=lambda x: x.value):
             self.handle_messages(
                 uid, (
-                    f"| {item.type:21}"
-                    f"| {item.value:7} |"
+                    f"| [1;36m{item.type:21}[1;37m"
+                    f"| [1;36m{item.value:7}[1;37m |"
                 )
             )
 
         self.handle_messages(uid, "+======================+=========+")
 
-        self.handle_messages(uid, message_to_room="{} is browsing the wares.".format(
+        self.handle_messages(uid, message_to_room=self._data.messages['SGNOTH'].format(
             self.players[uid].name))
 
     def _process_players_command(self, uid):
@@ -1166,6 +1169,37 @@ class Game:
         exit on your own terms
         """
         self._gong.ring(uid)
+
+    def _process_balance_command(self, uid):
+        """
+        check your bank balance
+        """
+        self._bank.balance(uid)
+
+    def _process_deposit_command(self, uid, params):
+        """
+        check your bank balance
+        """
+        self._bank.deposit(uid, params)
+
+    def _process_withdraw_command(self, uid, params):
+        """
+        check your bank balance
+        """
+        self._bank.withdraw(uid, params)
+
+    def _process_donate_command(self, uid, params):
+        """
+        donate to the gods
+        """
+        self._temple.donate(uid, params)
+
+    def _process_act_command(self, uid, params):
+        """
+        send a custom action
+        """
+        self.handle_messages(uid, self._data.messages['ACTMSG2'])
+        self.handle_messages(uid, message_to_room=f"{self.players[uid].name} {params}")
 
     def _process_attack_command(self, uid, command, params):
         """
@@ -1202,36 +1236,85 @@ class Game:
         print("attack!")
 
     def _process_go_command(self, uid, command):
-        """ move around """
+        """ move around
+
+        ENT0=
+ENT10=[1;33m{0} has just arrived from above.[1;37m
+ENT11=[1;36m{0} has just appeared in a blinding flash of light![1;37m
+ENT1=[1;33m{0} has just arrived from the south.[1;37m
+ENT12=[1;36m{0} has just appeared in a puff of thick black smoke![1;37m
+ENT13=[1;33m{0} has just tumbled into the room from {1}{2}![1;37m
+ENT2=[1;33m{0} has just arrived from the southwest.[1;37m
+ENT3=[1;33m{0} has just arrived from the west.[1;37m
+ENT4=[1;33m{0} has just arrived from the northwest.[1;37m
+ENT5=[1;33m{0} has just arrived from the north.[1;37m
+ENT6=[1;33m{0} has just arrived from the northeast.[1;37m
+ENT7=[1;33m{0} has just arrived from the east.[1;37m
+ENT8=[1;33m{0} has just arrived from the southeast.[1;37m
+ENT9=[1;33m{0} has just arrived from below.[1;37m
+EXT0=
+EXT10=[1;33m{0} has just gone downward.[1;37m
+EXT11=[1;36m{0} has just vanished in a blinding flash of light![1;37m
+EXT1=[1;33m{0} has just gone to the north.[1;37m
+EXT12=[1;36m{0} has just vanished in a puff of thick black smoke![1;37m
+EXT13=[1;33m{0} has just tumbled {1}, out of the room![1;37m
+EXT2=[1;33m{0} has just gone to the northeast.[1;37m
+EXT3=[1;33m{0} has just gone to the east.[1;37m
+EXT4=[1;33m{0} has just gone to the southeast.[1;37m
+EXT5=[1;33m{0} has just gone to the south.[1;37m
+EXT6=[1;33m{0} has just gone to the southwest.[1;37m
+EXT7=[1;33m{0} has just gone to the west.[1;37m
+EXT8=[1;33m{0} has just gone to the northwest.[1;37m
+EXT9=[1;33m{0} has just gone upward.[1;37m
+
+        """
 
         command = command[:1].lower()
 
         # get current room and list of exits
         cur_exits = self._area.get_cur_exits(self.players[uid].room)
+        print("cur_exits", cur_exits)
 
         if self.players[uid].resting:
             self.handle_messages(uid, self._data.messages['CNTMOV'])
             return
 
         if command not in cur_exits:
-            self.handle_messages(uid, "You can't go that way!")
+            self.handle_messages(uid, self._data.messages['NOEXIT'])
             return
 
         cur_player_room = self.players[uid].room
+        print("cur_player_room", cur_player_room)
         next_player_room = self._area.get_next_room(cur_player_room, command)
+        print("next_player_room", next_player_room)
 
         print(cur_player_room)
 
         # tell people you're leaving
-        self.handle_messages(uid, message_to_room="{} just left to the {}.".format(
-            self.players[uid].name, self._area.exits[command]))
+        cur_exit = self._area.exits[command]
+        if cur_exit == "up":
+            self.handle_messages(uid, message_to_room=self._data.messages['EXITUP'].format(
+                self.players[uid].name))
+        elif cur_exit == "down":
+            self.handle_messages(uid, message_to_room=self._data.messages['EXITDN'].format(
+                self.players[uid].name))
+        else:
+            self.handle_messages(uid, message_to_room=self._data.messages['EXIT'].format(
+                self.players[uid].name, cur_exit))
 
         # move player to next room
         self.players[uid].room = next_player_room
 
         # tell people you've arrived
-        self.handle_messages(uid, message_to_room="{} just arrived from the {}.".format(
-            self.players[uid].name, self._area.exits[command]))
+        if cur_exit == "up":
+            self.handle_messages(uid, message_to_room=self._data.messages['ENTERDN'].format(
+                self.players[uid].name))
+        elif cur_exit == "down":
+            self.handle_messages(uid, message_to_room=self._data.messages['ENTERUP'].format(
+                self.players[uid].name))
+        else:
+            self.handle_messages(uid, message_to_room=self._data.messages['ENTER'].format(
+                self.players[uid].name, cur_exit))
 
         # send the player a message telling them where they are now
         self._process_look_command(uid)
@@ -1401,7 +1484,7 @@ class Game:
                 if not params:
                     self._process_say_command(uid, command, params)
                 elif params == "items" or params == "i":
-                    self._process_list_items_command(uid)
+                    self._process_list_items_command(uid, command, params)
                 else:
                     self._process_say_command(uid, command, params)
 
@@ -1484,6 +1567,33 @@ class Game:
                     self._process_ring_command(uid)
                 else:
                     self._process_say_command(uid, command, params)
+
+            elif command == "balance" or command == "ba":
+                self._process_balance_command(uid)
+
+            elif command == "deposit" or command == "de":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                else:
+                    self._process_deposit_command(uid, params)
+
+            elif command == "withdraw" or command == "wi":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                else:
+                    self._process_withdraw_command(uid, params)
+
+            elif command == "donate" or command == "do":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                else:
+                    self._process_donate_command(uid, params)
+
+            elif command == "act":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                else:
+                    self._process_act_command(uid, params)
 
             # 'quit' command
             elif command == "quit":

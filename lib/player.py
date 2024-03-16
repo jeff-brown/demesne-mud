@@ -35,6 +35,7 @@ class Player:
         self.experience = 100000000
         self.gold = 0
         self.combat_skill = 70  # 70, yep 70
+        self.vault_balance = 0
 
         # stats
         self.str = 0

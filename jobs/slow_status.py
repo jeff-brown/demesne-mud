@@ -2,6 +2,7 @@
 import time
 
 from enums.status import Status
+from lib import data
 
 
 class SlowStatus:
@@ -22,14 +23,14 @@ class SlowStatus:
                 return
 
             if player.status is Status.Hungry:
-                self._game.handle_messages(pid, message_to_player="You're hungry.")
-                self._game.handle_messages(pid, message_to_room=f"You hear {player.name}'s stomach growling.")
+                self._game.handle_messages(pid, message_to_player=data.messages['YOUHNG'])
+                self._game.handle_messages(pid, message_to_room=data.messages['OTHHNG'].format(player.name))
             elif player.status is Status.Thirsty:
-                self._game.handle_messages(pid, message_to_player="You're thirsty.")
-                self._game.handle_messages(pid, message_to_room=f"{player.name} is looking rather parched.")
+                self._game.handle_messages(pid, message_to_player=data.messages['YOUTHR'])
+                self._game.handle_messages(pid, message_to_room=data.messages['OTHTHR'].format(player.name))
             elif player.status is Status.Poisoned:
-                self._game.handle_messages(pid, message_to_player="You're poisoned.")
-                self._game.handle_messages(pid, message_to_room=f"{player.name} is looking a little under the weather.")
+                self._game.handle_messages(pid, message_to_player=data.messages['POISON'])
+                self._game.handle_messages(pid, message_to_room=data.messages['OTHPSN'].format(player.name))
 
 
 

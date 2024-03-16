@@ -2,6 +2,7 @@
 import time
 
 from lib.equipment import Equipment
+from lib import data
 
 from enums.status import Status
 
@@ -28,12 +29,12 @@ class ItemEffect:
             if player.str_boo > 0:
                 if int(time.time() - player.str_ticker) > player.stat_ticker_max:
                     player.str_boo = 0
-                    self._game.handle_messages(pid, "An odd tingling sensation washes over you briefly!")
+                    self._game.handle_messages(pid, data.messages['STA1'])
 
             if player.dex_boo > 0:
                 if int(time.time() - player.dex_ticker) > player.stat_ticker_max:
                     player.dex_boo = 0
-                    self._game.handle_messages(pid, "An odd tingling sensation washes over you briefly!")
+                    self._game.handle_messages(pid, data.messages['STA1'])
 
             for item_num in player.inventory:
                 if not isinstance(self._game.items[item_num], Equipment):
@@ -46,11 +47,11 @@ class ItemEffect:
 
                 for expired_item in expired_items:
                     if self._game.items[expired_item].equip_sub_type == 'light':
-                        self._game.handle_messages(pid, f"Your {self._game.items[expired_item].type} burned out.")
+                        self._game.handle_messages(pid, data.messages['BRNOUT'].format(self._game.items[expired_item].type))
                         self._game.handle_messages(
                             pid,
                             message_to_room=(
-                                f"{player.name}'s {self._game.items[expired_item].type} just burned out."
+                                data.messages['OTHOUT'].format(player.name, self._game.items[expired_item].type)
                             )
                         )
 

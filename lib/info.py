@@ -76,8 +76,6 @@ class Info:
         print(f"init {__name__}")
         self._game = game
         self._max_level = 25
-        self._room = Room()
-        self._rooms = self._room.rooms
         self._data = data
         self._max_encumbrance = [
             0,
@@ -139,6 +137,8 @@ class Info:
         self._temples = ["temple"]
         self._arenas = ["arena"]
         self._guilds = ["guild hall"]
+        self._safe = ["safe"]
+        self._banks = ["vault"]
 
     @staticmethod
     def get_current_players(players):
@@ -371,51 +371,68 @@ class Info:
 
     def room_is_shop(self, _player):
         """ is this room a shop """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        shops = list(set(cur_room["flags"]).intersection(set(self._shops)))
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        shops = list(set(cur_chamber.flags).intersection(set(self._shops)))
         return shops[0] if shops else None
 
     def room_is_safe(self, _player):
         """ is this room a safe zone """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        shops = list(set(cur_room["flags"]).intersection(set(self._shops)))
-        return shops[0] if shops else None
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        safe = list(set(cur_chamber.flags).intersection(set(self._safe)))
+        return safe[0] if safe else None
 
     def room_is_tavern(self, _player):
         """ is this room a shop """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        taverns = list(set(cur_room["flags"]).intersection(set(self._taverns)))
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        taverns = list(set(cur_chamber.flags).intersection(set(self._taverns)))
         return taverns[0] if taverns else None
+
+    def room_is_bank(self, _player):
+        """ is this room a shop """
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        print(cur_chamber.flags, self._banks)
+        banks = list(set(cur_chamber.flags).intersection(set(self._banks)))
+        return banks[0] if banks else None
 
     def room_is_arena(self, _player):
         """ Is this room an arena """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        arenas = list(set(cur_room["flags"]).intersection(set(self._arenas)))
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        arenas = list(set(cur_chamber.flags).intersection(set(self._arenas)))
         return arenas[0] if arenas else None
 
     def room_is_guild(self, _player):
         """ Is this room an arena """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        guilds = list(set(cur_room["flags"]).intersection(set(self._guilds)))
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        guilds = list(set(cur_chamber.flags).intersection(set(self._guilds)))
         return guilds[0] if guilds else None
 
     def room_is_temple(self, _player):
         """ is this room a shop """
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
-        temples = list(set(cur_room["flags"]).intersection(set(self._temples)))
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        temples = list(set(cur_chamber.flags).intersection(set(self._temples)))
         return temples[0] if temples else None
 
     def get_room_type(self, _player):
         """ is this room a shop """
 
-        cur_room = self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
         shop_types = self.get_shop_types()
 
-        return list(set(cur_room["flags"]).intersection(set(shop_types)))
+        return list(set(cur_chamber.flags).intersection(set(shop_types)))
 
     def get_current_room(self, _player):
         """ get the current room """
-        return self._rooms[_player.room[0]][self._room.get_cur_room(_player.room)]
+        z, y, x = _player.room
+        cur_chamber = self._game.grid[z][y][x]
+        return cur_chamber
 
     def check_and_handle_kill(self, attacker, target, mobs_here, mobs):
         """

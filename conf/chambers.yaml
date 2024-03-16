@@ -66,7 +66,7 @@
   num: -1
   short: You're in the guild hall.
   spawn_timer: false
-  stairs: false
+  stairs: true
   terrain: town
   town: 1
   trap: -1
@@ -1150,6 +1150,28 @@
   short: You are in a cave.
   spawn_timer: false
   stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+48:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+    - safe
+    - vault
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing at the entrance to the town vaults. The room is bare, and fashioned from solid natural stone. On the south wall there is a huge iron door, and an open window covered with iron bars. A richly dressed man in the window looks at you expectantly. A wide stone staircase leads upward.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in the town vaults.
+  spawn_timer: false
+  stairs: true
   terrain: town
   town: 1
   trap: -1

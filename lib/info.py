@@ -1,6 +1,6 @@
 """ info class """
 from lib import data
-from lib.room import Room
+from lib.spell import Spell
 from lib.weapon import Weapon
 from lib.armor import Armor
 from lib.equipment import Equipment
@@ -339,6 +339,19 @@ class Info:
             msg += self._vit_msgs[4]
 
         return msg
+
+    @staticmethod
+    def get_spell_list(self, player):
+        """
+        get list of items based on the shop type
+        """
+        spells = []
+        print(player.p_class)
+        for vnum, spell in data.spells.items():
+            if spell['p_class'] == player.p_class:
+                spells.append(Spell(vnum))
+
+        return spells
 
     def get_item_list(self, shop, town=1):
         """

@@ -81,12 +81,13 @@ class Player:
 
         # things that happen to you
         self.inventory = None
-        self.spells = None
+        self.spellbook = None
         self.status = Status.Healthy
         self.fatigue = time.time()
         self.max_enc = 0
         self.enc = 0
         self.max_inv = 8
+        self.max_spells = 8
         self.max_hunger = 6000
         self.max_thirst = 3000
         self.max_stat = 30
@@ -229,7 +230,9 @@ class Player:
         self.cid = p_class['id']
         self.max_enc = self.get_max_enc(self.get_str())
         self.inventory = []
+        self.spellbook = []
         self.max_inv = 8
+        self.max_spells = 8
         self.exp_base = p_class['base_exp']
 
         # timers

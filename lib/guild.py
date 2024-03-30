@@ -3,9 +3,10 @@ import random
 
 from lib import data
 from lib.info import Info
+from lib.spell import Spell
 
 
-class Training:
+class Guild:
     """
     @DynamicAttrs
     This class contains all the basic training commands
@@ -19,6 +20,18 @@ class Training:
         self._messages = data.messages
         self.training_cost_modifier = 5
         self.stat_increase_chance = 25
+        self._spell_casters = [8, 2, 3, 6]
+
+    @staticmethod
+    def _get_spell_vnum_by_name(name):
+        """
+        lookup spell vnum by name
+        """
+        for vnum, spell in data.spells.items():
+            if spell["name"] == name:
+                return vnum
+
+        return None
 
     def handle_training(self, player):
         """
@@ -48,3 +61,25 @@ class Training:
         self._game.handle_messages(pid, message_to_room=self._messages['GOTTRN'].format(player.name))
 
         return
+
+    def handle_buy(self, player, spell_name):
+        """
+        buy spells
+        """
+        vnum = self._get_spell_vnum_by_name(spell_name)
+        pid = self._info.get_pid_by_name(self._game.players, player.name)
+
+        if player.p_class not in self._spell_casters:
+            self._game.handle_messages(pid, self._messages['WARNSP'])
+            return
+
+        if vnum is None:
+            self._game.handle_messages(pid, self._messages['NOSSPL'])
+            return
+
+        spell = Spell(vnum)
+        if spell.p_class != player.p_class:
+            self._game.handle_messages(pid, self._messages['OUTRLM'])
+            return
+
+

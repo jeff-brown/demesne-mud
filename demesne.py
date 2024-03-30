@@ -28,7 +28,8 @@ from lib.mob import Mob
 from lib.combat import Combat
 from lib.gong import Gong
 from lib.bank import Bank
-from lib.training import Training
+from lib.guild import Guild
+from lib.temple import Temple
 
 # like it's a job
 from jobs.sustenance import Sustenance
@@ -71,8 +72,9 @@ class Game:
         self._data = Data()
         self._combat = Combat(self)
         self._gong = Gong(self)
-        self._training = Training(self)
+        self._guild = Guild(self)
         self._bank = Bank(self)
+        self._temple = Temple(self)
 
         self.grid = self._area.grid
         self._mud = mud
@@ -507,7 +509,9 @@ class Game:
         if self._info.room_is_guild(self.players[uid]):
             if "training" in params:
                 print(f"exp_gain: {self._info.get_exp_gain(self.players[uid])}")
-                self._training.handle_training(self.players[uid])
+                self._guild.handle_training(self.players[uid])
+            else:
+                self._guild.handle_buy(self.players[uid], params)
             return
 
         if self._info.room_is_tavern(self.players[uid]):
@@ -1109,6 +1113,43 @@ class Game:
 
         self.handle_messages(uid, msg)
 
+    def _process_list_spells_command(self, uid, command, params):
+        """
+        list items in shops you can buy
+        """
+        room_is_guild = self._info.room_is_guild(self.players[uid])
+
+        if not room_is_guild:
+            self._process_say_command(uid, command, params)
+            return
+
+        spells = self._info.get_spell_list(room_is_guild, self.players[uid])
+        p_class = self.players[uid].get_class()
+
+        if not spells:
+            self.handle_messages(uid, "You ain't a spellcaster, bub.")
+            return
+
+        self.handle_messages(uid, "")
+        self.handle_messages(uid, "+================================+")
+        self.handle_messages(uid, f"| [1;36m{p_class.capitalize() + ' Spells':^31}[1;37m|")
+        self.handle_messages(uid, "+======================+=========+")
+        self.handle_messages(uid, "| [1;36mItem[1;37m                 |   [1;36mPrice[1;37m |")
+        self.handle_messages(uid, "+----------------------+---------+")
+
+        for spell in sorted(spells, key=lambda x: x.cost):
+            self.handle_messages(
+                uid, (
+                    f"| [1;36m{spell.name:21}[1;37m"
+                    f"| [1;36m{spell.cost:7}[1;37m |"
+                )
+            )
+
+        self.handle_messages(uid, "+======================+=========+")
+
+        self.handle_messages(uid, message_to_room=self._data.messages['SGNOTH'].format(
+            self.players[uid].name))
+
     def _process_list_items_command(self, uid, command, params):
         """
         list items in shops you can buy
@@ -1485,6 +1526,9 @@ EXT9=[1;33m{0} has just gone upward.[1;37m
                     self._process_say_command(uid, command, params)
                 elif params == "items" or params == "i":
                     self._process_list_items_command(uid, command, params)
+
+                elif params == "spells" or params == "s":
+                    self._process_list_spells_command(uid, command, params)
                 else:
                     self._process_say_command(uid, command, params)
 

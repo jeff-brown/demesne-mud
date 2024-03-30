@@ -20,6 +20,7 @@ class Data:
         self.npcs = self._get_npcs()
         self.mobs = self._get_mobs()
         self.messages = self._get_messages()
+        self.spells = self._get_spells()
 
         print(f"init {__name__}")
 
@@ -103,6 +104,17 @@ class Data:
                 print(exc)
 
         return _classes
+
+    @staticmethod
+    def _get_spells(conf="conf/spells.yaml"):
+        """ read spells from conf"""
+        with open(conf, "rb") as stream:
+            try:
+                _spells = yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+
+        return _spells
 
     @staticmethod
     def _get_equipment(conf="conf/equipment.yaml"):

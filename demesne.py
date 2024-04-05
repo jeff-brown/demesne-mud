@@ -1127,7 +1127,7 @@ class Game:
         p_class = self.players[uid].get_class()
 
         if not spells:
-            self.handle_messages(uid, "You ain't a spellcaster, bub.")
+            self.handle_messages(uid, self.handle_messages(uid, self._messages["WARNSP"].format(self.players[uid].get_class() + "s")))
             return
 
         self.handle_messages(uid, "")
@@ -1234,6 +1234,12 @@ class Game:
         donate to the gods
         """
         self._temple.donate(uid, params)
+
+    def _process_spells_command(self, uid):
+        """
+        look at spellbook
+        """
+        self._info.show_spellbook(self.players[uid])
 
     def _process_act_command(self, uid, params):
         """
@@ -1632,6 +1638,12 @@ EXT9=[1;33m{0} has just gone upward.[1;37m
                     self._process_say_command(uid, command, params)
                 else:
                     self._process_donate_command(uid, params)
+
+            elif command == "spells" or command == "sp":
+                if not params:
+                    self._process_spells_command(uid)
+                else:
+                    self._process_say_command(uid, command, params)
 
             elif command == "act":
                 if not params:

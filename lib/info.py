@@ -514,3 +514,30 @@ class Info:
 
         print(mobs)
         return mobs
+
+    def show_spellbook(self, player):
+        """
+        show spells for spellcasters
+        """
+        pid = self.get_pid_by_name(self._game.players, player.name)
+        if player.p_class not in self._spell_casters:
+            self._game.handle_messages(pid, self._data.messages['WARNSP'].format(player.get_class() + "s"))
+            return
+
+        if len(player.spellbook) < 1:
+            self._game.handle_messages(pid, self._data.messages['SPELLS'].format("none"))
+        elif len(player.spellbook) == 1:
+            self._game.handle_messages(pid, self._data.messages['SPELLS'].format(player.spellbook[0].name))
+        elif len(player.spellbook) == 2:
+            self._game.handle_messages(pid, self._data.messages['SPELL2'].format(player.spellbook[0].name, player.spellbook[1].name))
+        elif len(player.spellbook) > 2:
+            self._game.handle_messages(
+                pid,
+                self._data.messages['SPELL2'].format(
+                    ", ".join([x.name for x in player.spellbook[:-1]]), player.spellbook[-1].name)
+            )
+
+        self._game.handle_messages(pid, message_to_room=self._data.messages['LOOKSP'].format(player.name))
+
+
+

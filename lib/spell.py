@@ -15,3 +15,9 @@ class Spell:
 
         for key in data.spells[vnum]:
             setattr(self, key, data.spells[vnum][key])
+
+    def get_level(self):
+        """
+        spell level is based on mana
+        """
+        return (self.mana * 2) - 1

@@ -18,6 +18,7 @@ class Player:
         self._species = data.species
         self._classes = data.classes
         self._stat_ranges = data.stat_ranges
+        self._spell_casters = [8, 2, 3, 6]
 
         print(f"init {__name__}")
 
@@ -387,16 +388,7 @@ class Player:
 
     def get_max_attacks(self):
         """
-              int levelBonus = _entity.getLevel() / PlayerFacade.getStartingStats().getPlayerClassDatabase().getPlayerClassData(
-            _entity.getPlayerClass()).getAttacksPerLevel();
-      int baseAttack = STARTING_ATTACKS + levelBonus;
-
-      int maxBaseAttacks = PlayerFacade.getStartingStats().getPlayerClassDatabase().getPlayerClassData(
-            _entity.getPlayerClass()).getMaxBaseAttacks();
-      if (baseAttack > maxBaseAttacks) {
-         baseAttack = maxBaseAttacks;
-      }
-      return baseAttack + _entity.getStats().getAgility().getAttackNumberBonus();
+        figure out max attacks
         """
         level_bonus = int(self.level / self.extra_attack_each_level)
         base_attack = 1 + level_bonus

@@ -17,7 +17,8 @@
   long: You stand in a large cavern cluttered with stalagmites and stalactites that divide the room into many smaller chambers and passages and limit vision in any direction to a few feet. The maze-like form of this cavern is somewhat unnerving, as if someone or something had used natural forces to create a very unnatural labyrinth. You have entered the lair of the minotaur.
   lair: True
   dark: True
-  mobs:
+  mobs: []
+  mob_types:
     - 15
     - 16
   num: 1
@@ -30,7 +31,8 @@
   long: You are now in a fairly large, but somewhat filthy cavern which smells of urine and excrement. Tattered rags, broken bones, as well as ruined weapons litter the floor. You get a great sense of foreboding as you realize the carnage that must have taken place here.
   lair: True
   dark: True
-  mobs:
+  mobs: []
+  mob_types:
     - 17
     - 18
   num: 1
@@ -41,7 +43,8 @@
   long: The ceiling of this cavern is shrouded in darkness above your head. The whole room is roughly circular with the exit to the south. Though the walls and floor give away the fact that many battles have been fought here, and several of them recently, you see no sign of the slain or the equipment they may have carried.
   lair: True
   dark: True
-  mobs:
+  mobs: []
+  mob_types:
     - 13
     - 14
   num: 1
@@ -54,7 +57,8 @@
   long: You gape in awe at the piles of skulls in the center of this huge stone room. The walls of this room are draped with the furs and skins of many different types of animals, among which you recognize the furs of several cave bears, formidable opponents themselves.
   lair: True
   dark: True
-  mobs:
+  mobs: []
+  mob_types:
     - 13
     - 14
   num: 2

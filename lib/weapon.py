@@ -1,16 +1,29 @@
-""" weapon class """
-import yaml
+""" Weapon class """
+from lib import data
 
 
-class Weapon():
+class Weapon:
     """
-    This class contains all of the functions to allow the game to operate
+    @DynamicAttrs
+    This class contains all the basic informational commands
     """
 
-    def __init__(self):
+    def __init__(self, vnum):
         """ read in the config files """
-        with open("conf/weapons.yaml", "rb") as stream:
-            try:
-                self.weapons = yaml.safe_load(stream)
-            except yaml.YAMLError as exc:
-                print(exc)
+        print(f"init {__name__}")
+        self._weapons = data.weapons
+
+        for key in data.weapons[vnum]:
+            setattr(self, key, data.weapons[vnum][key])
+
+    def can_use(self, _player):
+        """ check if a player can use an item """
+        return bool(int(bin(_player.cid & self.classes), 2))
+
+    def get_by_type(self, _type):
+        """ ger armor vnum by type """
+        for vnum, weapon in self._weapons:
+            if weapon['type'] == _type.lower():
+                return vnum
+
+

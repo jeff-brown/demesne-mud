@@ -1,16 +1,18 @@
-""" npc class """
-import yaml
+""" armor class """
+from lib import data
 
 
-class Npc():
+class Npc:
     """
-    This class contains all of the functions to allow the game to operate
+    @DynamicAttrs
+    This class contains all the basic informational commands
     """
 
-    def __init__(self):
+    def __init__(self, vnum):
         """ read in the config files """
-        with open("conf/npcs.yaml", "rb") as stream:
-            try:
-                self.npcs = yaml.safe_load(stream)
-            except yaml.YAMLError as exc:
-                print(exc)
+        print(vnum)
+
+        print(f"init {__name__}")
+
+        for key in data.npcs[vnum]:
+            setattr(self, key, data.npcs[vnum][key])

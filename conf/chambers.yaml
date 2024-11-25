@@ -1,0 +1,1178 @@
+0:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - ''
+  key: -1
+  lair: []
+  mobs: []
+  long: Go away.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You can't be here.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+1:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - docks
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing on the docks. The water from the lake laps quietly against
+    the docks making the peaceful scene on the lake all that more serene. An ornately
+    carved marble archway exits through the town wall to the south into the guild
+    hall.
+  mob_types: []
+  npcs: [12]
+  num: -1
+  short: You're on the docks.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+2:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - guild hall
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You have entered the town guild hall, where one may seek the training necessary
+    to refine your combat and spell skills. This building is also a center of learning
+    where the ancient art of sorcery is taught to those with the intelligence and
+    skill to wield it effectively. Sages, wizards, and masters-at-arms rush about
+    on errands or to and from training sessions. Ornately carved marble archways exit
+    to the north and south, and a wide stone staircase leads downward.
+  mob_types: []
+  npcs: [5]
+  num: -1
+  short: You're in the guild hall.
+  spawn_timer: false
+  stairs: true
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+3:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing at the north end of a large open plaza surrounded by shade
+    trees as well as assorted flowering shrubs and hedges whose scent wafts through
+    the warm, dry air. To the west stands an ornate temple adorned with ornate stone
+    and brass architecture. A quaint little shop lies to the northwest, and a dimly
+    lit, smokey little tavern to the northeast. To the east lay the huge wrought iron
+    gates of the arena. To north is the town guild hall. The other half of the plaza
+    lies to the south.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You're in the north plaza.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+4:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing at the south end of a large open plaza surrounded by shade
+    trees as well as assorted flowering shrubs and hedges who's scent wafts through
+    the warm, dry air. To the west stands the town's armor shop. The weapon shop lies
+    to the east. There is a magic shop to the south. To the north lies the other half
+    of the plaza and to the southwest lies the town's outer gate.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You're in the south plaza.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+5:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - magic shop
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You're standing in a warm, dimly lit shop where various magical items are
+    bought and sold by a shrewd mage in crimson robes with an air of power and complete
+    confidence about him. He doesn't look like someone whose spells you'd like to
+    be on the wrong end of. The sweet scent of incense drifts in from a workroom in
+    the rear of the shop. The exit is to the north.
+  mob_types: []
+  npcs: [6]
+  num: -1
+  short: You're in the magic shop.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+6:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - armor shop
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are now inside the armor shop, where you may acquire different sorts of
+    armor and protective gear to guard yourself against the blows of your opponents
+    in the arena, or from the various non-human foes to be found in the dungeons beneath
+    the town. The shop keeper sits on a high behind a worn counter along the south
+    wall, eyeing you warily. The exit is to the east.
+  mob_types: []
+  npcs: [1]
+  num: -1
+  short: You're in the armor shop.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+7:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - weapon shop
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are now inside the weapon shop, where you may purchase various weapons
+    to use for sparring in the arena or for personal defense from the denizens of
+    the dungeons. The shop keeper sits on a high stool behind a tall counter along
+    the south wall. The exit is to the west.
+  mob_types: []
+  npcs: [4]
+  num: -1
+  short: You're in the weapons shop.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+8:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - arena
+  key: -1
+  lair: []
+  mobs: []
+  long: You now stand inside the gates of the villages most noteworthy and notorious
+    point of interest, the arena. The charred and stained stone walls and scattered
+    bits of bone, armor, and weaponry lying among the debris on the packed earthen
+    floor. A huge brass gong hangs at the center of the arena suspended on a framework
+    made of the bones of some of the less fortunate of the arena's combatants. The
+    exit through the arena gates is to the west.
+  mob_types: [0]
+  npcs: []
+  num: -1
+  short: You're in the arena.
+  spawn_timer: false
+  stairs: true
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+9:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - temple
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are now in the main entry hall of a great temple. Huge black marble columns
+    veined with platinum stretch to the ceiling some 100' overhead. The patterns in
+    the tile floor are so ornate and complex as to be nearly impossible to follow
+    or comprehend. Many black silk tapestries depicting various scenes of a religious
+    or magical nature block your view into the many other areas of the temple. Blue
+    robed priests and acolytes move here and there going about their daily duties.
+    The exit is to the east
+  mob_types: []
+  npcs: [8]
+  num: -1
+  short: You're in the temple.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+10:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - equipment shop
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are now inside the equipment shop, where one may purchase supplies and
+    provisions essential to survival in the dungeons or the wilderness. The shop keeper
+    sits on a tall stool behind a counter along the north wall, eyeing you warily.
+    The exit is to the southeast.
+  mob_types: []
+  npcs: [0]
+  num: -1
+  short: You're in the general store.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+11:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - tavern
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in the village tavern. The smoke from the many oil lamps decrease
+    visibility to your immediate surroundings, and the wavering light they cast about
+    the room leaves many shadows and unlit corners. There are several tables about
+    the room, where the tavern's patrons eat, drink, and generally enjoy themselves.
+    The bar stands along the north wall and a door to the kitchen lies to the northeast.
+    A large, full length mirror adorns the west wall. The only visible exits lie up
+    a steep wooden ladder near the rear of the room, and out into the north plaza
+    to the southwest.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You're in the tavern.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+12:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - safe
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing on a simple cobblestone path.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You're on a path.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+13:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - ''
+  key: -1
+  lair: []
+  mobs: []
+  long: You can't be here.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: Go away.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+14:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+15:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - ''
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing inside the entrance to the dungeon. This rounded stone and
+    earth room bears the marks of digging tools and a number of assorted claw and
+    hoof marks in the walls and floor. The only obvious exits is back up the stone
+    stairway you just descended.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are inside the dungeon entrance.
+  spawn_timer: false
+  stairs: true
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+16:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You stand in a large cavern cluttered with stalagmites and stalactites that
+    divide the room into many smaller chambers and passages and limit vision in any
+    direction to a few feet. The maze-like form of this cavern is somewhat unnerving,
+    as if someone or something had used natural forces to create a very unnatural
+    labyrinth. You have entered the lair of the minotaur.
+  mob_types:
+  - 100
+  npcs: []
+  num: 1
+  short: You are in a large cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+17:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You are now in a fairly large, but somewhat filthy cavern which smells of
+    urine and excrement. Tattered rags, broken bones, as well as ruined weapons litter
+    the floor. You get a great sense of foreboding as you realize the carnage that
+    must have taken place here.
+  mob_types:
+  - 17
+  - 18
+  npcs: []
+  num: 1
+  short: You are in a filthy cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+18:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: The ceiling of this cavern is shrouded in darkness above your head. The whole
+    room is roughly circular with the exit to the south. Though the walls and floor
+    give away the fact that many battles have been fought here, and several of them
+    recently, you see no sign of the slain or the equipment they may have carried.
+  mob_types:
+  - 13
+  - 14
+  npcs: []
+  num: 1
+  short: You are in a huge cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+19:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You gape in awe at the piles of skulls in the center of this huge stone room.
+    The walls of this room are draped with the furs and skins of many different types
+    of animals, among which you recognize the furs of several cave bears, formidable
+    opponents themselves.
+  mob_types:
+  - 13
+  - 14
+  npcs: []
+  num: 2
+  short: You are in an enormous cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+20:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You stand in a circular shaft with a stairwell that descends around the outer
+    wall into the darkness below. The air in this chamber is somewhat cooler then
+    the room you just left. From far below comes a faint shuffling sound that is barely
+    audible and of which you can make nothing.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are at the top of a circular stairwell.
+  spawn_timer: false
+  stairs: true
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+21:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: dungeon
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+22:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 0
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+23:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: 0
+  triggers: []
+24:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 2
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: dungeon
+  town: 1
+  trap: -1
+  triggers: []
+25:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You can't be here.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: Go away.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+26:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+27:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You are now at the foot of a long winding stairway that leads up into the
+    darkness. The room reeks of some odor you can't identify. The furnishings of this
+    room, such as they are, are completely out of order. Rags and bits of straw lie
+    strewn about the room with an occasional bone or piece of wood.
+  mob_types:
+  - 19
+  - 20
+  npcs: []
+  num: 1
+  short: You're at the bottom of a circular stairwell.
+  spawn_timer: 0
+  stairs: true
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+28:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: The cave in which you now stand reminds you of a stable that's not been cleaned
+    in years. It is filthy and smells quite foul. Something about this room seems
+    familiar, but you can't put your finger on it. Several bloodstains and other signs
+    of mayhem put you ill at ease.
+  mob_types:
+  - 17
+  - 18
+  npcs: []
+  num: 1
+  short: You are in a smelly cave.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+29:
+  armed: true
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: 1
+  triggers: []
+30:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: This cave smells strongly of animals. It has the look and feel of the den
+    of some wild beast. The rotting carcass of some animal far too mutilated and charred
+    to identify says something of the occupant of this cavern.
+  mob_types:
+  - 21
+  npcs: []
+  num: 1
+  short: You are in a large cave.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+31:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: A horrific scene lies before you in the form of a pile of mangled bones and
+    skulls of various creatures, human and otherwise. An enormous palet of furs and
+    skins lies on one side of the room, and by the size of it, it's likely the sleeping
+    place of a giant. You start to think better of having ventured this deep into
+    the ground.
+  mob_types:
+  - 14
+  npcs: []
+  num: 1
+  short: You are in a dead end cave.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+32:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: 2
+  triggers: []
+33:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+34:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: The ceiling of this enormous cavern is shrouded in darkness high above your
+    head. A huge tapestry covers the northern wall from the floor to some forty feet
+    above your head.
+  mob_types:
+  - 23
+  npcs: []
+  num: 2
+  short: You are in an enormous cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+35:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You stand in a circular shaft with a stairwell that decends around the outer
+    wall into the darkness below. The air in this chamber is somewhat cooler than
+    that outside.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You're at the top of a stairwell.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+36:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You can't be here.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: Go away.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+37:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+38:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing inside the entrance to the dungeon. This rounded stone and
+    earth room bears the marks of digging tools and a number of assorted claw and
+    hoof marks in the walls and floor. The only obvious exits is back up the stone
+    stairway you just descended.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are inside the dungeon entrance.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+39:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You stand in a large cavern cluttered with stalagmites and stalactites that
+    divide the room into many smaller chambers and passages and limit vision in any
+    direction to a few feet. The maze-like form of this cavern is somewhat unnerving,
+    as if someone or something had used natural forces to create a very unnatural
+    labyrinth. You have entered the lair of the minotaur.
+  mob_types:
+  - 15
+  - 16
+  npcs: []
+  num: 1
+  short: You are in a large cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+40:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You are now in a fairly large, but somewhat filthy cavern which smells of
+    urine and excrement. Tattered rags, broken bones, as well as ruined weapons litter
+    the floor. You get a great sense of foreboding as you realize the carnage that
+    must have taken place here.
+  mob_types:
+  - 17
+  - 18
+  npcs: []
+  num: 1
+  short: You are in a filthy cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+41:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: The ceiling of this cavern is shrouded in darkness above your head. The whole
+    room is roughly circular with the exit to the south. Though the walls and floor
+    give away the fact that many battles have been fought here, and several of them
+    recently, you see no sign of the slain or the equipment they may have carried.
+  mob_types:
+  - 13
+  - 14
+  npcs: []
+  num: 1
+  short: You are in a huge cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+42:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: true
+  mobs: []
+  long: You gape in awe at the piles of skulls in the center of this huge stone room.
+    The walls of this room are draped with the furs and skins of many different types
+    of animals, among which you recognize the furs of several cave bears, formidable
+    opponents themselves.
+  mob_types:
+  - 13
+  - 14
+  npcs: []
+  num: 2
+  short: You are in an enormous cavern.
+  spawn_timer: 0
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+43:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You stand in a circular shaft with a stairwell that descends around the outer
+    wall into the darkness below. The air in this chamber is somewhat cooler then
+    the room you just left. From far below comes a faint shuffling sound that is barely
+    audible and of which you can make nothing.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are at the top of a circular stairwell.
+  spawn_timer: false
+  stairs: true
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+44:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+45:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 0
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+46:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: -1
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: 0
+  triggers: []
+47:
+  armed: false
+  dark: true
+  items: []
+  doors: []
+  flags:
+  - dark
+  key: 2
+  lair: []
+  mobs: []
+  long: You are in a damp, poorly lit cave. Glowing lichens and fungi provide an eerie
+    greenish light.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in a cave.
+  spawn_timer: false
+  stairs: false
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []
+48:
+  armed: false
+  dark: false
+  items: []
+  doors: []
+  flags:
+    - safe
+    - vault
+  key: -1
+  lair: []
+  mobs: []
+  long: You are standing at the entrance to the town vaults. The room is bare, and fashioned from solid natural stone. On the south wall there is a huge iron door, and an open window covered with iron bars. A richly dressed man in the window looks at you expectantly. A wide stone staircase leads upward.
+  mob_types: []
+  npcs: []
+  num: -1
+  short: You are in the town vaults.
+  spawn_timer: false
+  stairs: true
+  terrain: town
+  town: 1
+  trap: -1
+  triggers: []

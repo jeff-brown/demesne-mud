@@ -1,0 +1,61 @@
+0:
+  locked_message: The locked oak door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the oak door.
+  type: '1'
+  unlocked_message: Your {0} unlocks the oak door and allows you to pass through.
+  value: '0'
+1:
+  locked_message: The locked iron door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the iron door.
+  type: '2'
+  unlocked_message: Your {0} unlocks the iron door and allows you to pass through.
+  value: '35'
+2:
+  locked_message: The locked bronze door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the bronze door.
+  type: '3'
+  unlocked_message: Your {0} unlocks the bronze door and allows you to pass through.
+  value: '25'
+3:
+  locked_message: The locked stone door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the stone door.
+  type: '4'
+  unlocked_message: Your {0} unlocks the stone door and allows you to pass through.
+  value: '15'
+4:
+  locked_message: The locked brass door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the brass door.
+  type: '5'
+  unlocked_message: Your {0} unlocks the brass door and allows you to pass through.
+  value: '20'
+5:
+  locked_message: The walls of this pit are too steep to climb unaided.
+  rogue_message: Your rogue abilities allow you to climb out of the pit.
+  type: '6'
+  unlocked_message: You climb out of the pit using your {0}.
+  value: '0'
+6:
+  locked_message: The wide chasm prevents your exit in that direction.
+  rogue_message: ''
+  type: '7'
+  unlocked_message: ''
+  value: '0'
+7:
+  locked_message: A mystical force prevents your exit in that direction.
+  rogue_message: ''
+  type: '8'
+  unlocked_message: ''
+  value: '0'
+8:
+  locked_message: You have progressed beyond the need to go there.
+  rogue_message: ''
+  type: '9'
+  unlocked_message: ''
+  value: '0'
+9:
+  locked_message: The locked ironwood door prevents your exit in that direction.
+  rogue_message: Your rogue abilities allowed you to pick the lock on the ironwood
+    door!
+  type: '10'
+  unlocked_message: Your {0} unlocks the ironwood door and allows you to pass!
+  value: '60'

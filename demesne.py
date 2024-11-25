@@ -30,6 +30,7 @@ from lib.gong import Gong
 from lib.bank import Bank
 from lib.guild import Guild
 from lib.temple import Temple
+from lib.magic import Magic
 
 # like it's a job
 from jobs.sustenance import Sustenance
@@ -75,6 +76,7 @@ class Game:
         self._guild = Guild(self)
         self._bank = Bank(self)
         self._temple = Temple(self)
+        self._magic = Magic(self)
 
         self.grid = self._area.grid
         self._mud = mud
@@ -1241,6 +1243,22 @@ class Game:
         """
         self._info.show_spellbook(self.players[uid])
 
+    def _process_cast_command(self, uid, params):
+        """
+        cast a spell
+        """
+        components = params.split(" ")
+        spell = None
+        target = None
+
+        if len(components) == 1:
+            spell = components[0]
+        else:
+            spell = components[0]
+            target = components[1]
+
+        self._magic.cast(self.players[uid], spell, target)
+
     def _process_act_command(self, uid, params):
         """
         send a custom action
@@ -1644,6 +1662,12 @@ EXT9=[1;33m{0} has just gone upward.[1;37m
                     self._process_spells_command(uid)
                 else:
                     self._process_say_command(uid, command, params)
+
+            elif command == "cast" or command == "c":
+                if not params:
+                    self._process_say_command(uid, command, params)
+                else:
+                    self._process_cast_command(uid, params)
 
             elif command == "act":
                 if not params:

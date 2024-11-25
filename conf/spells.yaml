@@ -15,8 +15,8 @@
   min_spell_effect: 4
   name: motu
   poison_effect: 0
-  target: specified_target
-  type: healing
+  target: 4
+  type: 3
 1:
   armor_increase: 0
   based_on_level: 0
@@ -34,8 +34,8 @@
   min_spell_effect: 2
   name: komiza
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 2:
   armor_increase: 0
   based_on_level: 0
@@ -53,8 +53,8 @@
   min_spell_effect: 4
   name: pakaza
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 3:
   armor_increase: 0
   based_on_level: 0
@@ -72,8 +72,8 @@
   min_spell_effect: 2
   name: fadi
   poison_effect: 0
-  target: specified_target
-  type: regeneration
+  target: 4
+  type: 6
 4:
   armor_increase: 0
   based_on_level: 0
@@ -91,8 +91,8 @@
   min_spell_effect: 8
   name: kamotu
   poison_effect: 0
-  target: specified_target
-  type: healing
+  target: 4
+  type: 3
 5:
   armor_increase: 0
   based_on_level: 0
@@ -110,8 +110,8 @@
   min_spell_effect: 2
   name: tami
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 6:
   armor_increase: 0
   based_on_level: 0
@@ -129,8 +129,8 @@
   min_spell_effect: 4
   name: toduza
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 7:
   armor_increase: 0
   based_on_level: 0
@@ -148,8 +148,8 @@
   min_spell_effect: 1
   name: muda
   poison_effect: 0
-  target: summon
-  type: summoning
+  target: 5
+  type: 9
 8:
   armor_increase: 0
   based_on_level: 0
@@ -167,8 +167,8 @@
   min_spell_effect: 4
   name: toraza
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 9:
   armor_increase: 0
   based_on_level: 0
@@ -186,8 +186,8 @@
   min_spell_effect: 2000
   name: kotari
   poison_effect: 0
-  target: specified_target
-  type: increase_sustenance
+  target: 4
+  type: 4
 10:
   armor_increase: 0
   based_on_level: 0
@@ -205,8 +205,8 @@
   min_spell_effect: 0
   name: dobudani
   poison_effect: 0
-  target: specified_target
-  type: remove_condition
+  target: 4
+  type: 7
 11:
   armor_increase: 4
   based_on_level: 0
@@ -224,8 +224,8 @@
   min_spell_effect: 0
   name: yari
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 12:
   armor_increase: 0
   based_on_level: 0
@@ -243,8 +243,8 @@
   min_spell_effect: 8
   name: komizuma
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 13:
   armor_increase: 0
   based_on_level: 0
@@ -262,8 +262,8 @@
   min_spell_effect: 5
   name: modoki
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 14:
   armor_increase: 0
   based_on_level: 0
@@ -281,8 +281,8 @@
   min_spell_effect: 30
   name: gimotu
   poison_effect: 0
-  target: specified_target
-  type: healing
+  target: 4
+  type: 3
 15:
   armor_increase: 0
   based_on_level: 0
@@ -300,8 +300,8 @@
   min_spell_effect: 8
   name: katami
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 16:
   armor_increase: 0
   based_on_level: 0
@@ -319,8 +319,8 @@
   min_spell_effect: 8
   name: motumaru
   poison_effect: 0
-  target: room_player
-  type: healing
+  target: 3
+  type: 3
 17:
   armor_increase: 0
   based_on_level: 0
@@ -338,8 +338,8 @@
   min_spell_effect: 2
   name: kamuda
   poison_effect: 0
-  target: summon
-  type: summoning
+  target: 5
+  type: 9
 18:
   armor_increase: 0
   based_on_level: 0
@@ -357,8 +357,8 @@
   min_spell_effect: 16
   name: toduzuma
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 19:
   armor_increase: 0
   based_on_level: 0
@@ -376,8 +376,8 @@
   min_spell_effect: 8
   name: sivama
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 20:
   armor_increase: 0
   based_on_level: 0
@@ -395,8 +395,8 @@
   min_spell_effect: 0
   name: novadidan
   poison_effect: 0
-  target: specified_target
-  type: charm
+  target: 4
+  type: 2
 21:
   armor_increase: 0
   based_on_level: 0
@@ -414,8 +414,8 @@
   min_spell_effect: 16
   name: gitami
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 22:
   armor_increase: 0
   based_on_level: 1
@@ -433,8 +433,8 @@
   min_spell_effect: 6
   name: kusamotu
   poison_effect: 0
-  target: specified_target
-  type: healing
+  target: 4
+  type: 3
 23:
   armor_increase: 0
   based_on_level: 1
@@ -452,8 +452,8 @@
   min_spell_effect: 1
   name: komizadaku
   poison_effect: 0
-  target: room_area_effect
-  type: attack
+  target: 2
+  type: 1
 24:
   armor_increase: 0
   based_on_level: 0
@@ -471,8 +471,8 @@
   min_spell_effect: 16
   name: komidaku
   poison_effect: 0
-  target: room_player
-  type: attack
+  target: 3
+  type: 1
 25:
   armor_increase: 0
   based_on_level: 0
@@ -490,8 +490,8 @@
   min_spell_effect: 10
   name: pakazuma
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 26:
   armor_increase: 0
   based_on_level: 0
@@ -509,8 +509,8 @@
   min_spell_effect: 0
   name: novadi
   poison_effect: 0
-  target: specified_target
-  type: invisibility
+  target: 4
+  type: 5
 27:
   armor_increase: 0
   based_on_level: 1
@@ -528,8 +528,8 @@
   min_spell_effect: 2
   name: todukar
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 28:
   armor_increase: 0
   based_on_level: 0
@@ -547,8 +547,8 @@
   min_spell_effect: 20
   name: kusatami
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 29:
   armor_increase: 0
   based_on_level: 0
@@ -566,8 +566,8 @@
   min_spell_effect: 12
   name: modokidan
   poison_effect: 0
-  target: room_area_effect
-  type: attack
+  target: 2
+  type: 1
 30:
   armor_increase: 0
   based_on_level: 0
@@ -585,8 +585,8 @@
   min_spell_effect: 4
   name: gimuda
   poison_effect: 0
-  target: summon
-  type: summoning
+  target: 5
+  type: 9
 31:
   armor_increase: 0
   based_on_level: 0
@@ -604,8 +604,8 @@
   min_spell_effect: 32
   name: sivadaku
   poison_effect: 0
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 32:
   armor_increase: 0
   based_on_level: 0
@@ -623,8 +623,8 @@
   min_spell_effect: 6
   name: kusamuda
   poison_effect: 0
-  target: summon
-  type: summoning
+  target: 5
+  type: 9
 33:
   armor_increase: 0
   based_on_level: 0
@@ -642,8 +642,8 @@
   min_spell_effect: 32
   name: todudaku
   poison_effect: 0
-  target: room_player
-  type: attack
+  target: 3
+  type: 1
 34:
   armor_increase: 0
   based_on_level: 1
@@ -661,8 +661,8 @@
   min_spell_effect: 1
   name: komasidaku
   poison_effect: 0
-  target: room_player
-  type: attack
+  target: 3
+  type: 1
 35:
   armor_increase: 0
   based_on_level: 0
@@ -680,8 +680,8 @@
   min_spell_effect: 5
   name: igatok
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 36:
   armor_increase: 0
   based_on_level: 0
@@ -699,8 +699,8 @@
   min_spell_effect: 0
   name: dobudanimaru
   poison_effect: 0
-  target: room_player
-  type: healing
+  target: 3
+  type: 3
 37:
   armor_increase: 0
   based_on_level: 0
@@ -718,8 +718,8 @@
   min_spell_effect: 5
   name: rotok
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 38:
   armor_increase: 0
   based_on_level: 0
@@ -737,8 +737,8 @@
   min_spell_effect: 5
   name: tsutok
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 39:
   armor_increase: 0
   based_on_level: 0
@@ -756,8 +756,8 @@
   min_spell_effect: 2
   name: igadani
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 40:
   armor_increase: 0
   based_on_level: 0
@@ -775,8 +775,8 @@
   min_spell_effect: 2000
   name: kotarimaru
   poison_effect: 0
-  target: room_player
-  type: increase_sustenance
+  target: 3
+  type: 4
 41:
   armor_increase: 0
   based_on_level: 0
@@ -794,8 +794,8 @@
   min_spell_effect: 2
   name: rodani
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 42:
   armor_increase: 0
   based_on_level: 0
@@ -813,8 +813,8 @@
   min_spell_effect: 2
   name: tsudani
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 43:
   armor_increase: 0
   based_on_level: 0
@@ -832,8 +832,8 @@
   min_spell_effect: 16
   name: torazuma
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 44:
   armor_increase: 0
   based_on_level: 0
@@ -851,8 +851,8 @@
   min_spell_effect: 0
   name: takumi
   poison_effect: 0
-  target: specified_target
-  type: remove_condition
+  target: 4
+  type: 7
 45:
   armor_increase: 0
   based_on_level: 0
@@ -870,8 +870,8 @@
   min_spell_effect: 16
   name: kamotumaru
   poison_effect: 0
-  target: room_player
-  type: healing
+  target: 3
+  type: 3
 46:
   armor_increase: 2
   based_on_level: 0
@@ -889,8 +889,8 @@
   min_spell_effect: 0
   name: yarimaru
   poison_effect: 0
-  target: room_player
-  type: stat_modifier
+  target: 3
+  type: 8
 47:
   armor_increase: 0
   based_on_level: 0
@@ -908,8 +908,8 @@
   min_spell_effect: 1
   name: poradani
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 48:
   armor_increase: 0
   based_on_level: 0
@@ -927,8 +927,8 @@
   min_spell_effect: 2
   name: jinasutok
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 49:
   armor_increase: 0
   based_on_level: 0
@@ -946,8 +946,8 @@
   min_spell_effect: 2
   name: poratok
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 50:
   armor_increase: 0
   based_on_level: 0
@@ -965,8 +965,8 @@
   min_spell_effect: 32
   name: gimotumaru
   poison_effect: 0
-  target: room_player
-  type: healing
+  target: 3
+  type: 3
 51:
   armor_increase: 0
   based_on_level: 1
@@ -984,8 +984,8 @@
   min_spell_effect: 1
   name: modokidaku
   poison_effect: 0
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 52:
   armor_increase: 0
   based_on_level: 1
@@ -1003,8 +1003,8 @@
   min_spell_effect: 4
   name: toradaku
   poison_effect: 0
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 53:
   armor_increase: 0
   based_on_level: 0
@@ -1022,8 +1022,8 @@
   min_spell_effect: 0
   name: novadimaru
   poison_effect: 0
-  target: room_player
-  type: invisibility
+  target: 3
+  type: 5
 54:
   armor_increase: 0
   based_on_level: 0
@@ -1041,8 +1041,8 @@
   min_spell_effect: 1
   name: jinasudani
   poison_effect: 0
-  target: specified_target
-  type: stat_modifier
+  target: 4
+  type: 8
 55:
   armor_increase: 0
   based_on_level: 0
@@ -1060,8 +1060,8 @@
   min_spell_effect: 2
   name: teka
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 56:
   armor_increase: 0
   based_on_level: 1
@@ -1079,8 +1079,8 @@
   min_spell_effect: 4
   name: kusamotumaru
   poison_effect: 0
-  target: room_player
-  type: healing
+  target: 3
+  type: 3
 57:
   armor_increase: 0
   based_on_level: 0
@@ -1098,8 +1098,8 @@
   min_spell_effect: 0
   name: ganazi
   poison_effect: 0
-  target: specified_target
-  type: remove_condition
+  target: 4
+  type: 7
 58:
   armor_increase: 0
   based_on_level: 1
@@ -1117,8 +1117,8 @@
   min_spell_effect: 4
   name: dumoti
   poison_effect: 0
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 59:
   armor_increase: 0
   based_on_level: 0
@@ -1136,8 +1136,8 @@
   min_spell_effect: 8
   name: kateka
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 60:
   armor_increase: 0
   based_on_level: 1
@@ -1155,8 +1155,8 @@
   min_spell_effect: 2
   name: yilazi
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 61:
   armor_increase: 0
   based_on_level: 1
@@ -1174,8 +1174,8 @@
   min_spell_effect: 1
   name: kamaza
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 62:
   armor_increase: 0
   based_on_level: 0
@@ -1193,8 +1193,8 @@
   min_spell_effect: 1
   name: dobuza
   poison_effect: single_mob
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 63:
   armor_increase: 0
   based_on_level: 1
@@ -1212,8 +1212,8 @@
   min_spell_effect: 1
   name: kamazadaku
   poison_effect: 0
-  target: room_player
-  type: attack
+  target: 3
+  type: 1
 64:
   armor_increase: 0
   based_on_level: 0
@@ -1231,8 +1231,8 @@
   min_spell_effect: 4
   name: timimaru
   poison_effect: 0
-  target: room_area_effect
-  type: attack
+  target: 2
+  type: 1
 65:
   armor_increase: 0
   based_on_level: 0
@@ -1250,8 +1250,8 @@
   min_spell_effect: 32
   name: kusateka
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 66:
   armor_increase: 0
   based_on_level: 1
@@ -1269,8 +1269,8 @@
   min_spell_effect: 4
   name: dakidaku
   poison_effect: 0
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 67:
   armor_increase: 0
   based_on_level: 0
@@ -1288,8 +1288,8 @@
   min_spell_effect: 16
   name: dakima
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 68:
   armor_increase: 0
   based_on_level: 1
@@ -1307,8 +1307,8 @@
   min_spell_effect: 4
   name: tamikar
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 69:
   armor_increase: 0
   based_on_level: 0
@@ -1326,8 +1326,8 @@
   min_spell_effect: 16
   name: giteka
   poison_effect: 0
-  target: specified_target
-  type: attack
+  target: 4
+  type: 1
 70:
   armor_increase: 0
   based_on_level: 0
@@ -1345,8 +1345,8 @@
   min_spell_effect: 1
   name: dobumaru
   poison_effect: single_player
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1
 71:
   armor_increase: 0
   based_on_level: 1
@@ -1364,5 +1364,5 @@
   min_spell_effect: 4
   name: dobudakidaku
   poison_effect: area_mob
-  target: pvp_area_effect
-  type: attack
+  target: 1
+  type: 1

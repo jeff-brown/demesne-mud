@@ -15,63 +15,8 @@ class Info:
     """
 
     def __init__(self, game):
-        """ read in the config files
-
-        cha_msg_1_limit=30
-        cha_msg_2_limit=21
-        cha_msg_3_limit=15
-        cha_msg_4_limit=5
-
-        CMSG1=stunningly attractive
-        CMSG2=somewhat attractive
-        CMSG3=rather plain looking
-
-        phy_msg_1_limit=30
-        phy_msg_2_limit=19
-        phy_msg_3_limit=9
-
-        PMSG1=and powerfully built {0} {1} {2}
-        PMSG3=and slightly built {0} {1} {2}
-
-        kno_msg_1_limit=30
-        kno_msg_2_limit=19
-        kno_msg_3_limit=8
-
-        KMSG1=with a worldly air about {0}.
-        KMSG2=with an inexperienced look about {0}.
-
-        agi_msg_1_limit=30
-        agi_msg_2_limit=19
-        agi_msg_3_limit=9
-
-        AMSG1=You notice that {0} movements are very quick and agile.
-        AMSG2=You notice that {0} movements are rather slow and clumsy.
-
-        int_msg_1_limit=30
-        int_msg_2_limit=19
-        int_msg_3_limit=8
-
-        IMSG1={0} has a bright look in {1} eyes.
-        IMSG2={0} has a dull look in {1} eyes.
-
-        health_msg_1_percent=100
-        health_msg_2_percent=75
-        health_msg_3_percent=50
-        health_msg_4_percent=25
-        health_msg_5_percent=0
-
-        HMSG1=and {0} is sorely wounded.
-        HMSG2=and {0} seems to be moderately wounded.
-        HMSG3=and {0} appears to be wounded.
-        HMSG4=and looks as if {0} is lightly wounded.
-        HMSG5=and {0} seems to be in good physical condition.
-
-        Jeff is a stunningly attractive and moderately built halfling rouge,
-        with a worldly air about them. You notice that their movements are very
-        quick and agile. They have a bright look in their eyes. They are
-        wearing robes, is armed with a dagger, and they seems to be in good
-        physical condition..
-
+        """
+        read in the config files
         """
         print(f"init {__name__}")
         self._game = game
@@ -539,5 +484,30 @@ class Info:
 
         self._game.handle_messages(pid, message_to_room=self._data.messages['LOOKSP'].format(player.name))
 
+    @staticmethod
+    def handle_mental_rest_delay(entity, spell):
+        """
+        handle mental rest delay for entity
+        """
+        if spell.get_level() == 1:
+            base_wait = 15
+        else:
+            base_wait = 27 + spell.get_level()
+
+        base_wait -= entity.level
+
+        if base_wait < 5:
+            base_wait = 5
+
+        variance = (base_wait / 10) * 2
+
+        rng = random.randint(1, int(variance))
+
+        if random.randint(0, 1):
+            rng = -rng
+
+        base_wait += rng
+
+        entity.set_mental_exhaustion_ticker(int(base_wait))
 
 

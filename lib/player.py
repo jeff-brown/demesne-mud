@@ -4,11 +4,13 @@ from random import randint
 import time
 
 from lib import data
+from lib.entity import Entity
 
 from enums.status import Status
+from enums.entity_type import EntityType
 
 
-class Player:
+class Player(Entity):
     """
     This class contains all the basic informational commands
     """
@@ -28,6 +30,7 @@ class Player:
         self.p_class = None
         self.is_playing = False
         self.resting = False
+        self.entity_type = EntityType.Player
 
         # game settings
         self.room = [1, 4, 2]  # north plaza
@@ -184,6 +187,10 @@ class Player:
             5, 5, 5, 6, 6, 6, 6, 7, 7, 7,
             7, 8, 8, 8, 8, 9, 9, 9, 9, 10
         ]
+
+    def set_mental_exhaustion_ticker(self, value: int):
+        """ set mental exhaustion ticker """
+        self.mental_exhaustion_ticker = value
 
     def get_attack_number_bonus(self):
         """ look up the proper bonus based on agi"""
@@ -424,14 +431,13 @@ class Player:
         """
         self.combat_ticker = value
 
-    @staticmethod
-    def get_exp_per_point_of_damage(player_level, mob_level):
+    def get_exp_per_point_of_damage(self, mob_level):
         """
         Fuck if I know how exp is calculated.  It would be easier to just generate a random number!
         This is my best guess, which involves the players level and mobs level.
         """
         mob_variance = round(random.uniform(.8, 1.2), 2)
-        level_difference = mob_level - player_level
+        level_difference = mob_level - self.level
         exp_gain_variance = 1.25
 
         if level_difference == -1:
@@ -445,7 +451,7 @@ class Player:
         else:
             exp_base = 2.0
 
-        return exp_base * mob_variance * exp_gain_variance * player_level
+        return exp_base * mob_variance * exp_gain_variance * self.level
 
     def give_exp(self, target, vitality_before):
         """
@@ -486,6 +492,29 @@ class Player:
                     )
 
         self.vit = self.vit_max = vitality
+
+    def handle_mental_rest_delay(self, spell):
+        """
+        handle mental rest delay
+        """
+        if spell.get_level() == 1:
+            base_wait = 15
+        else:
+            base_wait = 27 + spell.get_level()
+
+        base_wait -= self.level
+
+        if base_wait < 5:
+            base_wait = 5
+
+        variance = (base_wait / 10) * 2
+        rand = randint(1, int(variance))
+        if randint(0, 1) == 0:
+            rand = -rand
+
+        base_wait += rand
+
+        self.mental_exhaustion_ticker = int(base_wait)
 
     def handle_pleased_by_gods(self):
         """

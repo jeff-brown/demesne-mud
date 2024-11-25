@@ -69,6 +69,10 @@ class Mob:
             8, 9, 9, 9, 9, 10, 10, 10, 10, 11
         ]
 
+    def set_mental_exhaustion_ticker(self, value: int):
+        """ set mental exhaustion ticker """
+        self.mental_exhaustion_ticker = value
+
     def get_look_description(self):
         """
         is it hurt how much

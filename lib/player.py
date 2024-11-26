@@ -17,6 +17,7 @@ class Player(Entity):
 
     def __init__(self):
         """ read in the config files """
+        super().__init__()
         self._species = data.species
         self._classes = data.classes
         self._stat_ranges = data.stat_ranges
@@ -247,13 +248,19 @@ class Player(Entity):
         self.regeneration_ticker = time.time()
         self.hunger_ticker = time.time()  # setHungerTicker(int
         self.thirst_ticker = time.time()  # setThirstTicker(int
-        self.mental_exhaustion_ticker = time.time()  # setMentalExhaustionTicker(int
+        self.mental_exhaustion_ticker = 0
         self.paralysis_ticker = time.time()  # setParalysisTicker(int
 
         self.is_playing = True
 
         print(self.str, self.dex, self.con, self.int, self.wis, self.cha)
         print(self.vit, self.gold)
+
+    def get_spell_hit_difficulty(self):
+        """
+        override this in the entity-type inherited class
+        """
+        return self.PLAYER_SPELL_HIT_DIFFICULTY
 
     def increase_int(self, amt=1):
         """ increase int by amt """
@@ -419,6 +426,13 @@ class Player(Entity):
         if self.combat_ticker > 0:
             self.combat_ticker -= 1
 
+    def decrease_mental_ticker(self):
+        """
+        decrease mental ticker
+        """
+        if self.mental_exhaustion_ticker > 0:
+            self.mental_exhaustion_ticker -= 1
+
     def set_rest_ticker(self, value):
         """
         set rest ticker
@@ -469,7 +483,7 @@ class Player(Entity):
             total_damage = 0
 
         # multiply damage done by unit of experience
-        exp_gain = int(total_damage * self.get_exp_per_point_of_damage(self.level, target.level))
+        exp_gain = int(total_damage * self.get_exp_per_point_of_damage(target.level))
 
         # always give at least one xp
         if exp_gain <= 0:

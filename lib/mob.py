@@ -2,13 +2,15 @@
 import random
 
 from lib import data
+from lib.entity import Entity
 from lib.info import Info
 from lib.combat import Combat
 from lib.weapon import Weapon
 from lib.armor import Armor
+from enums.entity_type import EntityType
 
 
-class Mob:
+class Mob(Entity):
     """
     @DynamicAttrs
     This class contains all the basic informational commands
@@ -17,6 +19,7 @@ class Mob:
     def __init__(self, vnum, game):
         """ read in the config files
         """
+        super().__init__()
         print(vnum)
 
         print(f"init {__name__}")
@@ -25,6 +28,7 @@ class Mob:
         self._info = Info(game)
         self._combat = Combat(game)
         self._data = data
+        self.entity_type = EntityType.Mob
 
         for key in data.mobs[vnum]:
             setattr(self, key, data.mobs[vnum][key])
@@ -68,6 +72,20 @@ class Mob:
             6, 6, 6, 7, 7, 7, 7, 8, 8, 8,
             8, 9, 9, 9, 9, 10, 10, 10, 10, 11
         ]
+
+    def get_spell_hit_difficulty(self):
+        """
+        override this in the entity-type inherited class
+        """
+        hit_difficulty = self.MOB_SPELL_HIT_DIFFICULTY + (100 - self.spell_skill) / 10
+
+        if hit_difficulty < 1:
+            hit_difficulty = 1
+
+        if hit_difficulty > 20:
+            hit_difficulty = 20
+
+        return hit_difficulty
 
     def set_mental_exhaustion_ticker(self, value: int):
         """ set mental exhaustion ticker """

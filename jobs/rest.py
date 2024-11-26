@@ -25,5 +25,6 @@ class Rest:
 
             player.decrease_rest_ticker()
             player.decrease_combat_ticker()
+            player.decrease_mental_ticker()
             if player.attacks == 0 and not player.resting:
                 player.reset_attacks()

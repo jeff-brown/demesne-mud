@@ -21,3 +21,9 @@ class Spell:
         spell level is based on mana
         """
         return (self.mana * 2) - 1
+
+    def get_spell_target(self):
+        """
+        get spell target type enum
+        """
+        return self.target

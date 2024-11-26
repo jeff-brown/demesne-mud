@@ -34,17 +34,6 @@ class Guild:
 
         return None
 
-    @staticmethod
-    def _spell_book_contains(player, spell):
-        """
-        check if spellbook contains spell
-        """
-        for s in player.spellbook:
-            if s.name == spell.name:
-                return True
-
-        return False
-
     def handle_training(self, player):
         """
         ring the bells
@@ -94,7 +83,7 @@ class Guild:
             self._game.handle_messages(pid, self._messages['OUTRLM'].format(player.get_class() + "s"))
             return
 
-        if self._spell_book_contains(player, spell):
+        if player.has_spell(spell):
             self._game.handle_messages(pid, self._messages['ALRHVS'])
             return
 

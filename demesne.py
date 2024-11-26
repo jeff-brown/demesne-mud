@@ -1247,6 +1247,7 @@ class Game:
         """
         cast a spell
         """
+        print("cast")
         components = params.split(" ")
         spell = None
         target = None

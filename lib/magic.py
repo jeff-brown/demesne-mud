@@ -38,6 +38,7 @@ class Magic:
         """
         init the magic class
         """
+        self._room = None
         print(f"init {__name__}")
         self._game = game
         self._info = Info(game)
@@ -51,8 +52,8 @@ class Magic:
         """
         spells have a chance to fail
         """
-        base_hit = self._player.get_spell_hit_difficulty()
-        spell_difficulty = self._player.level - self._spell.get_level()
+        base_hit = self._entity.get_spell_hit_difficulty()
+        spell_difficulty = self._entity.level - self._spell.get_level()
         to_hit = base_hit - spell_difficulty
 
         if to_hit < 1:
@@ -88,7 +89,7 @@ class Magic:
         spell around, see what happens
         """
 
-        level_difference = self._player.level - self._target.level
+        level_difference = self._entity.level - self._target.level
         combat_skill_mod = (self._target.combat_skill - 70) / 10
         spell_defense = 1 - level_difference + combat_skill_mod
 
@@ -102,25 +103,18 @@ class Magic:
         self._result.spell_result = SpellResultEnum.Success
         damage = random.randint(self._spell.min_spell_effect, self._spell.max_spell_effect)
 
-        if self._spell.scales_with_level():
-            damage *= self._player.level
+        if self._spell.based_on_level:
+            damage *= self._entity.level
 
-        damage += damage * (self._player.get_offensive_spell_potency() / 100)
+        damage += damage * (self._entity.get_offensive_spell_potency() / 100)
         self._result.number_effect = damage
 
     def _handle_single_target_spell_attack(self):
         """
-              SpellResult spellResult = WorldManager.getGameMechanics().calculateOffensiveSpellResult(_entity, target, _spell);
 
-      if (spellResult.getSpellResultEnum().equals(SpellResultEnum.NEGATED)) {
-         handleMagicNegated(target);
-         return;
-      }
-
-      handleAttackSpellSuccess(target, spellResult) ;
-      doSpellEffects(target, spellResult) ;
-      handleVictimDeath(target);
         """
+        print("handle single target spell attack")
+
         self._calculate_offensive_spell_result()
 
         if self._result.spell_result == SpellResultEnum.Negated:
@@ -128,7 +122,7 @@ class Magic:
 
         self._handle_attack_spell_success()
         self._do_spell_effects()
-        self._handle_victim_death()
+        # self._handle_victim_death()
 
     def _do_spell_effects(self):
         """
@@ -182,7 +176,7 @@ class Magic:
             if exp_gain < 0:
                 exp_gain = 1
 
-            self._player.experience += exp_gain
+            self._entity.experience += exp_gain
 
         if self._target.vit < 1:
             return True
@@ -193,73 +187,78 @@ class Magic:
         """
         docs
         """
+        print("entity type", self._target.entity_type)
         if self._target.entity_type is EntityType.Mob:
             self._game.handle_messages(self._pid, data.messages['SPMDAM'].format(
                 self._target.name, self._result.number_effect))
             self._game.handle_messages(self._pid, message_to_room=data.messages['USMOT1'].format(
-                self._player.name, self._spell.desc, self._target.name
+                self._entity.name, self._spell.desc, self._target.name
             ))
-        elif self.target.entity_type is EntityType.Player:
+        elif self._target.entity_type is EntityType.Player:
             self._game.handle_messages(self._pid, data.messages['SPLDAM'].format(
                 self._target.name, self._result.number_effect
             ))
             self._game.handle_messages(self._pid, message_to_room=data.messages['USEOT1'].format(
-                self._player.name, self._spell.desc, self._target.name
+                self._entity.name, self._spell.desc, self._target.name
             ))
             self._game.handle_messages(self._pid, message_to_target=data.messages['USEYU1'].format(
-                self._player.name, self._spell.desc, self._result.number_effect
+                self._entity.name, self._spell.desc, self._result.number_effect
             ))
 
-        self._player.mana -= self._spell.mana
-        self._info.handle_mental_rest_delay(self._player, self._spell)
+        self._entity.man -= self._spell.mana
+        self._info.handle_mental_rest_delay(self._entity, self._spell)
 
     def _handle_magic_negated(self):
         """
         TBD: all of these functions need to be made generic to handle mobs or players
         """
 
+        print("entity_type", self._target.entity_type)
         if self._target.entity_type is EntityType.Player:
             self._game.handle_messages(self._pid, data.messages['SPLNEF'].format(self._target.name))
             self._game.handle_messages(self._pid, message_to_room=data.messages['NEFOTH'].format(
-                self._player.name, self._spell.name, self._target.name, self._target.name
+                self._entity.name, self._spell.name, self._target.name, self._target.name
             ))
             self._game.handle_messages(self._pid, message_to_target=data.messages['NEFYOU'].format(
-                self._player.name, self._spell.name)
+                self._entity.name, self._spell.name)
             )
         else:
             self._game.handle_messages(self._pid, data.messages['SPMNEF'].format(self._target.name))
             self._game.handle_messages(self._pid, message_to_room=data.messages['SNMOTH'].format(
-                self._player.name, self._spell.name, self._target.name, self._target.name
+                self._entity.name, self._spell.name, self._target.name, self._target.name
             ))
 
-        self._player.mana -= self._spell.mana
-        self._info.handle_mental_rest_delay(self._player, self._spell)
+        self._entity.man -= self._spell.mana
+        self._info.handle_mental_rest_delay(self._entity, self._spell)
 
     def _find_single_target(self, maybe_target):
         """
         find single target
         """
+        print("find single target")
         if not maybe_target:
             self._game.handle_messages(self._pid, data.messages['SNDTRG'])
             return
 
-        target = self._find_target_including_self(maybe_target)
+        self._target = self._find_target_including_self(maybe_target)
+        print(self._target.name)
 
-        if not target:
+        if not self._target:
             self._game.handle_messages(self._pid, data.messages['ARNNHR'].format(maybe_target))
             return
 
-        return target
+        self._handle_single_target()
 
     def _handle_single_target(self):
         """
         handle single target
         """
-        if self._player is self._target:
+        print("handle single target")
+        if self._entity is self._target:
             self._handle_unsuccessful_spell()
             return
 
-        if self._info.room_is_safe(self._player):
+        if self._info.room_is_safe(self._entity):
             self._game.handle_messages(self._pid, data.messages['NOTHER'])
             return
 
@@ -285,9 +284,9 @@ class Magic:
         """
 
         self._game.handle_messages(self._pid, data.messages['SPLFLD'])
-        self._game.handle_messages(self._pid, message_to_room=data.messages['SFDYOU'].format(self._player.name))
-        self._player.man -= self._spell.mana
-        self._player.handle_mental_rest_delay()
+        self._game.handle_messages(self._pid, message_to_room=data.messages['SFDYOU'].format(self._entity.name))
+        self._entity.man -= self._spell.mana
+        self._entity.handle_mental_rest_delay()
     """
       
       
@@ -314,66 +313,6 @@ class Magic:
             if maybe_spell == spell['name']:
                 return index
         return -1
-
-    def _attack_sorceror(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _attack_cleric(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _attack_druid(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _attack_warlock(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _charm(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _healing(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _increase_sustenance(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _invisibility(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _regeneration(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _remove_condition(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _stat_modifier(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
-
-    def _summoning(self, player, spell, maybe_target):
-        """
-        sorceror attack spells go here
-        """
 
     def cast(self, entity, maybe_spell, maybe_target):
         """
@@ -404,21 +343,23 @@ class Magic:
             self._game.handle_messages(self._pid, data.messages['NOSPEL'])
             return
 
-        if self.man < self._spell.mana:
+        if self._entity.man < self._spell.mana:
             self._game.handle_messages(self._pid, data.messages['LOWSPL'])
             return
 
+        self._room = self._entity.room
+        self._spell.get_spell_target()
+
+        print("target type", self._spell.target, TargetType.SingleTarget)
+        if self._spell.target == TargetType.SingleTarget:
+            print("this is the correct target type")
+            self._find_single_target(maybe_target)
+
         """
-       public void execute(Entity entity, Spell spell, String targetStr) {
-          _entity = entity;
-          _room = entity.getRoom();
-          _spell = spell;
-    
-    
           // Determine spell type -- mob area, player area, single target, etc
           if (spell.getSpellTarget().equals(SpellTarget.SPECIFIED)) {
              findSingleTarget(targetStr);
-             return;
+             return; entity, maybe_spell, 
           }
     
           if (spell.getSpellTarget().equals(SpellTarget.ROOM_MOB)
@@ -434,8 +375,8 @@ class Magic:
              return;
           }
     
-          if (spell.getSpellTarget().equals(SpellTarget.ROOM_PLAYER)
-              || spell.getSpellTarget().equals(SpellTarget.ROOM_PLAYER2)) {
+          if (spell.getSpellTarget().equals(SpellTarget.ROOM_entity)
+              || spell.getSpellTarget().equals(SpellTarget.ROOM_entity2)) {
              ArrayList<Player> roomTargets = _room.getPlayers();
     
              // create a temporary list to modify.
@@ -454,36 +395,6 @@ class Magic:
              return;
           }
         """
-
-        if self._spell.type == SpellType.Attack:
-            if self._spell.p_class == PlayerClass.Sorceror:
-                self._attack_sorceror(player, spell, maybe_target)
-            elif self._spell.p_class == PlayerClass.Cleric:
-                self._attack_cleric(player, spell, maybe_target)
-            elif self._spell.p_class == PlayerClass.Druid:
-                self._attack_druid(player, spell, maybe_target)
-            elif self._spell.p_class == PlayerClass.Warlock:
-                self._attack_warlock(player, spell, maybe_target)
-            else:
-                print("unknown player class")
-        elif self._spell.type == SpellType.Charm:
-            self._charm(player, spell, maybe_target)
-        elif self._spell.type == SpellType.Healing:
-            self._healing(player, spell, maybe_target)
-        elif self._spell.type == SpellType.IncreaseSustenance:
-            self._increase_sustenance(player, spell, maybe_target)
-        elif self._spell.type == SpellType.Invisibility:
-            self._invisibility(player, spell, maybe_target)
-        elif self._spell.type == SpellType.Regeneration:
-            self._regeneration(player, spell, maybe_target)
-        elif self._spell.type == SpellType.RemoveCondition:
-            self._remove_condition(player, spell, maybe_target)
-        elif self._spell.type == SpellType.StatModifier:
-            self._stat_modifier(player, spell, maybe_target)
-        elif self._spell.type == SpellType.Summoning:
-            self._summoning(player, spell, maybe_target)
-        else:
-            print("unknown spell type")
 
 
 
